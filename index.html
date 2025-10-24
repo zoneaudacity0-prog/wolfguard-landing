@@ -8,11 +8,14 @@
 </head>
 <body class="bg-gray-50 text-gray-800">
   <!-- Hero Section -->
-  <section class="bg-white py-16 shadow-sm">
-    <div class="max-w-6xl mx-auto px-6 text-center">
+  <section class="bg-white py-16 shadow-sm text-center">
+    <div class="max-w-6xl mx-auto px-6">
       <h1 class="text-4xl md:text-5xl font-bold text-blue-800 mb-4">Protect What Matters with Wolfguard Insurance</h1>
       <p class="text-lg text-gray-600 mb-8">Comprehensive coverage for your car, home, business, health, and travel. Simple, reliable, and built around you.</p>
-      <a href="#contact" class="bg-blue-700 hover:bg-blue-800 text-white px-8 py-3 rounded-lg font-medium">Get a Free Quote</a>
+      <div class="flex flex-col sm:flex-row justify-center gap-4">
+        <a href="#calculator" class="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-lg font-medium">Open Premium Calculator</a>
+        <a href="#contact" class="bg-blue-700 hover:bg-blue-800 text-white px-8 py-3 rounded-lg font-medium">Get a Free Quote</a>
+      </div>
     </div>
   </section>
 
@@ -39,24 +42,38 @@
     </div>
   </section>
 
-  <!-- Why Choose Section -->
-  <section class="bg-blue-50 py-16">
-    <div class="max-w-6xl mx-auto px-6 text-center">
-      <h2 class="text-3xl font-bold text-blue-800 mb-8">Why Choose Wolfguard?</h2>
-      <div class="grid md:grid-cols-3 gap-8">
-        <div class="p-6 bg-white shadow rounded-xl">
-          <h3 class="font-semibold text-lg mb-2">Trusted Expertise</h3>
-          <p class="text-gray-600">Years of experience in protecting individuals and businesses.</p>
-        </div>
-        <div class="p-6 bg-white shadow rounded-xl">
-          <h3 class="font-semibold text-lg mb-2">Fast Claims Support</h3>
-          <p class="text-gray-600">Our team ensures your claims are processed quickly and fairly.</p>
-        </div>
-        <div class="p-6 bg-white shadow rounded-xl">
-          <h3 class="font-semibold text-lg mb-2">Comprehensive Coverage</h3>
-          <p class="text-gray-600">All general insurance solutions under one trusted brand.</p>
-        </div>
-      </div>
+  <!-- Premium Calculator Section -->
+  <section id="calculator" class="bg-gray-100 py-16">
+    <div class="max-w-4xl mx-auto px-6 text-center">
+      <h2 class="text-3xl font-bold text-blue-800 mb-6">Insurance Premium Calculator</h2>
+      <p class="text-gray-600 mb-8">Use this calculator to estimate your insurance premium based on adopted market rates.</p>
+
+      <form id="calcForm" class="bg-white p-6 rounded-lg shadow-md text-left space-y-4">
+        <label class="block">
+          <span class="text-gray-700 font-medium">Select Insurance Type</span>
+          <select id="productType" class="w-full border border-gray-300 rounded-lg p-3" required>
+            <option value="">-- Select --</option>
+            <option value="motor">Motor Insurance</option>
+            <option value="property">Fire / Property Insurance</option>
+            <option value="marine">Marine Insurance</option>
+            <option value="goods">Goods in Transit</option>
+            <option value="workmen">Workmen’s Compensation</option>
+            <option value="liability">Liability Insurance</option>
+            <option value="money">Money Insurance</option>
+            <option value="bond">Bond Insurance</option>
+            <option value="personal">Personal Accident</option>
+          </select>
+        </label>
+
+        <label class="block">
+          <span class="text-gray-700 font-medium">Enter Sum Insured (TZS)</span>
+          <input type="number" id="sumInsured" placeholder="e.g. 10000000" class="w-full border border-gray-300 rounded-lg p-3" required>
+        </label>
+
+        <button type="button" onclick="calculatePremium()" class="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-lg font-semibold">Calculate Premium</button>
+
+        <div id="premiumResult" class="mt-4 text-center text-lg font-medium text-blue-700 hidden"></div>
+      </form>
     </div>
   </section>
 
@@ -66,11 +83,11 @@
       <h2 class="text-3xl font-bold text-blue-800 mb-6">Get Your Free Insurance Quote</h2>
       <p class="text-gray-600 mb-8">Fill in your details and our team will get back to you within 24 hours.</p>
   
-          <form id="leadForm" action="https://formspree.io/f/xkgqldlz"
-  method="POST" class="space-y-4 max-w-md mx-auto">
-        <input type="text" id="name" placeholder="Full Name" class="w-full border border-gray-300 rounded-lg p-3" required>
-        <input type="email" id="email" placeholder="Email Address" class="w-full border border-gray-300 rounded-lg p-3" required>
-        <input type="tel" id="phone" placeholder="Phone Number" class="w-full border border-gray-300 rounded-lg p-3" required>
+      <form id="leadForm" action="https://formspree.io/f/xkgqldlz" method="POST" class="space-y-4 max-w-md mx-auto">
+        <input type="text" name="name" placeholder="Full Name" class="w-full border border-gray-300 rounded-lg p-3" required>
+        <input type="email" name="email" placeholder="Email Address" class="w-full border border-gray-300 rounded-lg p-3" required>
+        <input type="tel" name="phone" placeholder="Phone Number" class="w-full border border-gray-300 rounded-lg p-3" required>
+        <textarea name="message" placeholder="Type your message or describe your insurance need" class="w-full border border-gray-300 rounded-lg p-3" rows="4" required></textarea>
         <button type="submit" class="w-full bg-blue-700 hover:bg-blue-800 text-white py-3 rounded-lg font-medium">Submit</button>
       </form>
       <p class="text-sm text-gray-500 mt-4">We respect your privacy. Your details are kept confidential.</p>
@@ -86,7 +103,7 @@
       </div>
       <div>
         <h4 class="font-semibold mb-2">Contact Us</h4>
-        <p class="text-gray-300 text-sm">Email: <a href="mailto:wolfgangvictor75@gmail.com" class="underline">wolfgangvictor75@gmail.com</a></p>
+        <p class="text-gray-300 text-sm">Email: <a href="mailto:wolfguard@wolfguard.co.tz" class="underline">wolfguard@wolfguard.co.tz</a></p>
         <p class="text-gray-300 text-sm">Phone: <a href="tel:+255769715177" class="underline">+255 769 715 177</a></p>
       </div>
       <div>
@@ -101,27 +118,46 @@
     <p class="text-center text-gray-400 text-sm mt-8">© 2025 Wolfguard Insurance. All rights reserved.</p>
   </footer>
 
-  <!-- Thank You Modal -->
-  <div id="thankYouModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-    <div class="bg-white p-8 rounded-lg text-center shadow-lg max-w-sm mx-auto">
-      <h3 class="text-2xl font-bold text-blue-800 mb-4">Thank You!</h3>
-      <p class="text-gray-600 mb-6">Your request has been received. Our team will contact you shortly.</p>
-      <button onclick="closeModal()" class="bg-blue-700 hover:bg-blue-800 text-white px-6 py-2 rounded-lg">Close</button>
-    </div>
-  </div>
-
+  <!-- Scripts -->
   <script>
     const form = document.getElementById('leadForm');
     const modal = document.getElementById('thankYouModal');
 
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      modal.classList.remove('hidden');
-      form.reset();
-    });
+    if (form) {
+      form.addEventListener('submit', (e) => {
+        modal?.classList.remove('hidden');
+        form.reset();
+      });
+    }
 
     function closeModal() {
-      modal.classList.add('hidden');
+      modal?.classList.add('hidden');
+    }
+
+    function calculatePremium() {
+      const product = document.getElementById('productType').value;
+      const sum = parseFloat(document.getElementById('sumInsured').value);
+      const rates = {
+        motor: 0.045,
+        property: 0.005,
+        marine: 0.003,
+        goods: 0.004,
+        workmen: 0.01,
+        liability: 0.0025,
+        money: 0.007,
+        bond: 0.002,
+        personal: 0.008
+      };
+
+      if (!product || !sum || sum <= 0) {
+        alert('Please select an insurance type and enter a valid sum insured.');
+        return;
+      }
+
+      const rate = rates[product] || 0;
+      const premium = sum * rate;
+      document.getElementById('premiumResult').innerText = `Estimated Annual Premium: TZS ${premium.toLocaleString()}`;
+      document.getElementById('premiumResult').classList.remove('hidden');
     }
   </script>
 </body>
