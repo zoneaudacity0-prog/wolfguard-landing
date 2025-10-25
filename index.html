@@ -46,83 +46,97 @@
   <!-- Premium Calculator Section -->
   <section id="calculator" class="bg-gray-100 py-16">
     <div class="max-w-4xl mx-auto px-6 text-center">
-      <h2 class="text-3xl font-bold text-blue-800 mb-6">Insurance Premium Calculator</h2>
-      <p class="text-gray-600 mb-8">Use this calculator to estimate your insurance premium based on adopted market rates.</p>
+      <h2 class="text-3xl font-bold text-blue-800 mb-6">Motor Insurance Premium Calculator</h2>
+      <p class="text-gray-600 mb-8">Estimate your vehicle insurance premium based on TIRA adopted rates.</p>
 
-      <form id="calcForm" class="bg-white p-6 rounded-lg shadow-md text-left space-y-4">
+      <form id="motorForm" class="bg-white p-6 rounded-lg shadow-md text-left space-y-6">
+
+        <!-- Step 1: Vehicle Class -->
         <label class="block">
-          <span class="text-gray-700 font-medium">Select Insurance Type</span>
-          <select id="productType" class="w-full border border-gray-300 rounded-lg p-3" required>
+          <span class="text-gray-700 font-medium">1. Select Vehicle Class</span>
+          <select id="vehicleClass" class="w-full border border-gray-300 rounded-lg p-3" required>
             <option value="">-- Select --</option>
-            <option value="motor">Motor Insurance</option>
-            <option value="health">Health Insurance</option>
-            <option value="property">Property Insurance</option>
-            <option value="travel">Travel Insurance</option>
-            <option value="marine">Marine Insurance</option>
-            <option value="goods">Goods in Transit</option>
-            <option value="engineering">Engineering Insurance</option>
-            <option value="fire">Fire & Loss of Profit Insurance</option>
+            <option value="private">Private Cars</option>
+            <option value="motorcycle">Motorcycle / 3 Wheelers</option>
+            <option value="commercial">Commercial Vehicles</option>
+            <option value="passenger">Passenger Carrying (Buses, Taxis)</option>
+            <option value="special">Special Type Vehicles</option>
           </select>
         </label>
 
-        <!-- Insurance Details -->
-        <div id="insuranceDetails" class="mt-6 text-left text-gray-700"></div>
+        <!-- Step 2: Type of Cover -->
+        <label class="block">
+          <span class="text-gray-700 font-medium">2. Select Type of Cover</span>
+          <select id="coverType" class="w-full border border-gray-300 rounded-lg p-3" required>
+            <option value="">-- Select --</option>
+            <option value="comprehensive">Comprehensive</option>
+            <option value="tpft">Third Party, Fire & Theft (TPFT)</option>
+            <option value="tpo">Third Party Only (TPO)</option>
+          </select>
+        </label>
 
-        <div class="flex justify-center gap-4">
+        <!-- Step 3: Sum Insured -->
+        <label class="block">
+          <span class="text-gray-700 font-medium">3. Enter Sum Insured (TZS)</span>
+          <input type="number" id="sumInsured" placeholder="e.g., 25,000,000" class="w-full border border-gray-300 rounded-lg p-3" required>
+        </label>
+
+        <!-- Step 4: Display Premium Rate and Result -->
+        <div id="rateInfo" class="bg-gray-50 border rounded-lg p-4 text-gray-700 hidden">
+          <p><strong>Premium Rate:</strong> <span id="rateDisplay"></span></p>
+          <p><strong>Estimated Premium:</strong> <span id="premiumDisplay" class="text-blue-800 font-bold"></span> TZS</p>
+        </div>
+
+        <div class="flex justify-center">
           <button type="submit" class="bg-blue-700 hover:bg-blue-800 text-white px-8 py-3 rounded-lg font-medium">Calculate Premium</button>
         </div>
       </form>
     </div>
   </section>
 
-  <!-- JavaScript to show insurance details -->
+  <!-- JavaScript Logic -->
   <script>
-    const productType = document.getElementById('productType');
-    const insuranceDetails = document.getElementById('insuranceDetails');
-
-    const insuranceData = {
-      motor: `
-        <h3 class="text-xl font-semibold text-blue-800 mb-2">Motor Insurance</h3>
-        <ul class="list-disc list-inside">
-          <li>Private Cars: Comprehensive 3.5% (claims-free), 4% (with claims); TPFT 2% + TPP; TPO 100,000 TZS</li>
-          <li>Motorcycles (Two-wheelers): Comprehensive 5% (claims-free), 6% (with claims); TPFT 3% + TPP; TPO 50,000 TZS</li>
-          <li>Commercial Vehicles: General Goods 4% (claims-free), 4.75% (with claims); TPFT 2.5% + TPP; TPO 500,000 TZS</li>
-          <li>Buses & Passenger Vehicles: Daladala 8% + 15,000 TZS/seat; Up Country 8% + 30,000 TZS/seat; Private 5% + 10,000 TZS/seat</li>
-        </ul>
-      `,
-      health: `
-        <h3 class="text-xl font-semibold text-blue-800 mb-2">Health Insurance</h3>
-        <p>Premiums vary based on age, coverage, and medical history. Contact us for detailed personalized rates.</p>
-      `,
-      property: `
-        <h3 class="text-xl font-semibold text-blue-800 mb-2">Property Insurance</h3>
-        <p>Rates depend on property value, location, and risk assessment. Contact us for tailored quotes.</p>
-      `,
-      travel: `
-        <h3 class="text-xl font-semibold text-blue-800 mb-2">Travel Insurance</h3>
-        <p>Premiums vary by destination, duration, and coverage level. Contact us for personalized estimates.</p>
-      `,
-      marine: `
-        <h3 class="text-xl font-semibold text-blue-800 mb-2">Marine Insurance</h3>
-        <p>Premiums depend on cargo type, voyage route, and value. Reach out for detailed info.</p>
-      `,
-      goods: `
-        <h3 class="text-xl font-semibold text-blue-800 mb-2">Goods in Transit Insurance</h3>
-        <p>Rates are based on cargo type, transit duration, and value. Contact us for a customized quote.</p>
-      `,
-      engineering: `
-        <h3 class="text-xl font-semibold text-blue-800 mb-2">Engineering Insurance</h3>
-        <p>Rates depend on project type, scale, and duration. Specific rates available upon request.</p>
-      `,
-      fire: `
-        <h3 class="text-xl font-semibold text-blue-800 mb-2">Fire & Loss of Profit Insurance</h3>
-        <p>Premiums are calculated based on property value, risk assessment, and coverage level. Contact us for detailed rates.</p>
-      `
+    const rates = {
+      private: { comprehensive: 0.035, tpft: 0.02, tpo: 100000 },
+      motorcycle: { comprehensive: 0.05, tpft: 0.035, tpo: 50000 },
+      commercial: { comprehensive: 0.0425, tpft: 0.025, tpo: 150000 },
+      passenger: { comprehensive: 0.055, tpft: 0.03, tpo: 150000 },
+      special: { comprehensive: 0.02, tpft: 0.02, tpo: 100000 }
     };
 
-    productType.addEventListener('change', () => {
-      const value = productType.value;
-      insuranceDetails.innerHTML = insuranceData[value] || '';
+    const form = document.getElementById("motorForm");
+    const vehicleClass = document.getElementById("vehicleClass");
+    const coverType = document.getElementById("coverType");
+    const sumInsured = document.getElementById("sumInsured");
+    const rateDisplay = document.getElementById("rateDisplay");
+    const premiumDisplay = document.getElementById("premiumDisplay");
+    const rateInfo = document.getElementById("rateInfo");
+
+    form.addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const vClass = vehicleClass.value;
+      const cover = coverType.value;
+      const sum = parseFloat(sumInsured.value);
+
+      if (!vClass || !cover || isNaN(sum)) {
+        alert("Please fill out all fields correctly.");
+        return;
+      }
+
+      let rate = rates[vClass][cover];
+      let premium = 0;
+
+      if (cover === "tpo") {
+        premium = rate;
+        rateDisplay.textContent = "Flat rate";
+      } else {
+        premium = sum * rate;
+        rateDisplay.textContent = (rate * 100).toFixed(2) + "%";
+      }
+
+      premiumDisplay.textContent = premium.toLocaleString("en-US");
+      rateInfo.classList.remove("hidden");
     });
   </script>
 
