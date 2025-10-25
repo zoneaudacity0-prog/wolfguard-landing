@@ -296,18 +296,81 @@
 </html>
 
   <!-- Contact / Lead Form -->
-  <section id="contact" class="py-16 bg-white">
-    <div class="max-w-4xl mx-auto px-6 text-center">
-      <h2 class="text-3xl font-bold text-blue-800 mb-6">Get Your Free Insurance Quote</h2>
-      <p class="text-gray-600 mb-8">Fill in your details and our team will get back to you within 24 hours.</p>
-  
-      <form id="leadForm" action="https://formspree.io/f/xkgqldlz" method="POST" class="space-y-4 max-w-md mx-auto">
-        <input type="text" name="name" placeholder="Full Name" class="w-full border border-gray-300 rounded-lg p-3" required>
-        <input type="email" name="email" placeholder="Email Address" class="w-full border border-gray-300 rounded-lg p-3" required>
-        <input type="tel" name="phone" placeholder="Phone Number" class="w-full border border-gray-300 rounded-lg p-3" required>
-        <textarea name="message" placeholder="Type your message or describe your insurance need" class="w-full border border-gray-300 rounded-lg p-3" rows="4" required></textarea>
-        <button type="submit" class="w-full bg-blue-700 hover:bg-blue-800 text-white py-3 rounded-lg font-medium">Submit</button>
-      </form>
+<section id="contact" class="py-16 bg-white">
+  <div class="max-w-4xl mx-auto px-6 text-center">
+    <h2 class="text-3xl font-bold text-blue-800 mb-6">Get Your Free Insurance Quote</h2>
+    <p class="text-gray-600 mb-8">Fill in your details and our team will get back to you within 24 hours.</p>
+
+    <form id="leadForm" action="https://formspree.io/f/xkgqldlz" method="POST" class="space-y-4 max-w-md mx-auto">
+      <!-- Full Name -->
+      <input type="text" name="name" placeholder="Full Name" class="w-full border border-gray-300 rounded-lg p-3" required>
+
+      <!-- Email -->
+      <input type="email" name="email" placeholder="Email Address" class="w-full border border-gray-300 rounded-lg p-3" required>
+
+      <!-- Phone Number -->
+      <input type="tel" name="phone" placeholder="Phone Number" class="w-full border border-gray-300 rounded-lg p-3" required>
+
+      <!-- Vehicle Number -->
+      <input type="text" name="vehicleNumber" placeholder="Vehicle Number (e.g. T123 ABC)" class="w-full border border-gray-300 rounded-lg p-3" required>
+
+      <!-- Vehicle Class -->
+      <select name="vehicleClass" class="w-full border border-gray-300 rounded-lg p-3" required>
+        <option value="">-- Select Vehicle Class --</option>
+        <option value="privateCar">Private Car</option>
+        <option value="motorcycle">Motorcycle (2-Wheelers)</option>
+        <option value="threeWheeler">Three Wheeler</option>
+        <option value="commercialGoods">Commercial Goods Vehicle</option>
+        <option value="trailer">Trailer</option>
+        <option value="oilTanker">Oil Tanker</option>
+        <option value="passengerVehicle">Passenger Vehicle</option>
+        <option value="specialVehicle">Special Type Vehicle</option>
+      </select>
+
+      <!-- Type of Cover -->
+      <select name="coverType" class="w-full border border-gray-300 rounded-lg p-3" required>
+        <option value="">-- Select Type of Cover --</option>
+        <option value="comprehensive">Comprehensive</option>
+        <option value="tpo">Third Party Only (TPO)</option>
+      </select>
+
+      <!-- Sum Insured -->
+      <input type="number" name="sumInsured" placeholder="Sum Insured (TZS)" class="w-full border border-gray-300 rounded-lg p-3" required>
+
+      <!-- Number of Seats -->
+      <input type="number" name="numSeats" placeholder="Number of Seats (for Passenger Vehicles)" class="w-full border border-gray-300 rounded-lg p-3">
+
+      <!-- Bodaboda Option -->
+      <label class="block text-left">
+        <input type="checkbox" name="bodabodaOption" class="mr-2">
+        Add Passenger (Bodaboda)
+      </label>
+
+      <!-- Vehicle Weight -->
+      <input type="number" name="vehicleWeight" placeholder="Vehicle Weight (Tonnes, for Commercial Vehicles)" class="w-full border border-gray-300 rounded-lg p-3">
+
+      <!-- Message / Additional Details -->
+      <textarea name="message" placeholder="Additional Details" class="w-full border border-gray-300 rounded-lg p-3" rows="3"></textarea>
+
+      <!-- Submit Button -->
+      <button type="submit" class="w-full bg-blue-700 hover:bg-blue-800 text-white py-3 rounded-lg font-medium">
+        Submit Lead
+      </button>
+    </form>
+
+    <!-- Privacy Note -->
+    <p class="text-sm text-gray-500 mt-4">We respect your privacy. Your details are kept confidential.</p>
+  </div>
+</section>
+
+<!-- Optional JS: Confirmation Alert -->
+<script>
+  const leadForm = document.getElementById('leadForm');
+  leadForm.addEventListener('submit', function(e) {
+    // Formspree handles the POST request
+    alert("Thank you! Your insurance request has been submitted. Our team will contact you within 24 hours.");
+  });
+</script>
       <p class="text-sm text-gray-500 mt-4">We respect your privacy. Your details are kept confidential.</p>
     </div>
   </section>
