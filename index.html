@@ -1,77 +1,164 @@
-<section id="calculator" class="bg-gray-100 py-16">
-  <div class="max-w-4xl mx-auto px-6 text-center">
-    <h2 class="text-3xl font-bold text-blue-800 mb-6">Insurance Premium Calculator</h2>
-    <p class="text-gray-600 mb-8">Use this calculator to estimate your insurance premium based on adopted market rates.</p>
-
-    <form id="calcForm" class="bg-white p-6 rounded-lg shadow-md text-left space-y-4">
-      <label class="block">
-        <span class="text-gray-700 font-medium">Select Insurance Type</span>
-        <select id="productType" class="w-full border border-gray-300 rounded-lg p-3" required>
-          <option value="">-- Select --</option>
-          <option value="motor">Motor Insurance</option>
-          <option value="health">Health Insurance</option>
-          <option value="property">Property Insurance</option>
-          <option value="travel">Travel Insurance</option>
-          <option value="marine">Marine Insurance</option>
-          <option value="goods">Goods in Transit</option>
-          <option value="engineering">Engineering Insurance</option>
-          <option value="fire">Fire & Loss of Profit Insurance</option>
-        </select>
-      </label>
-
-      <div id="motorInsurance" class="insurance-details hidden">
-        <h3 class="text-xl font-semibold text-blue-800 mb-2">Motor Insurance</h3>
-        <p class="text-gray-600">Premium rates vary based on vehicle class and coverage type:</p>
-        <ul class="list-disc list-inside text-gray-600">
-          <li><strong>Private Cars:</strong> Comprehensive: 3.5% (claims-free), 4% (with claim record); TPFT: 2% + TPP; TPO: 100,000 TZS</li>
-          <li><strong>Motorcycles (Two-wheelers):</strong> Comprehensive: 5% (claims-free), 6% (with claim record); TPFT: 3% + TPP; TPO: 50,000 TZS</li>
-          <li><strong>Motorcycles (Three-wheelers):</strong> Comprehensive: 6% (claims-free), 7% (with claim record); TPFT: 3% + TPP; TPO: 75,000 TZS</li>
-          <li><strong>Commercial Vehicles:</strong> General Goods Carrying: 4% (claims-free), 4.75% (with claim record); TPFT: 2.5% + TPP; TPO: 500,000 TZS</li>
-          <li><strong>Trailers:</strong> Comprehensive: 4% (claims-free), 4.75% (with claim record); TPO: 100,000 TZS</li>
-          <li><strong>Oil Tankers:</strong> Comprehensive: 6% (steel tankers below 10 years), 7% (aluminium tankers below 10 years); TPFT: 4% + TPP; TPO: 750,000 TZS</li>
-          <li><strong>Passenger Carrying Vehicles:</strong> Public Taxis/Private Hire: 5% + 15,000 TZS per seat (claims-free), 6% (with claim record); TPO: 500,000 TZS</li>
-          <li><strong>Buses:</strong> Daladala (within city): 8% + 15,000 TZS per seat; Up Country: 8% + 30,000 TZS per seat; Private: 5% + 10,000 TZS per seat; School: 5% + 7,500 TZS per seat</li>
-        </ul>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wolfguard Insurance - Secure Your Future</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 text-gray-800">
+  <!-- Hero Section -->
+  <section class="bg-white py-16 shadow-sm text-center">
+    <div class="max-w-6xl mx-auto px-6">
+      <h1 class="text-4xl md:text-5xl font-bold text-blue-800 mb-4">Protect What Matters with Wolfguard Insurance</h1>
+      <p class="text-lg text-gray-600 mb-8">Comprehensive coverage for your car, home, business, health, and travel. Simple, reliable, and built around you.</p>
+      <div class="flex flex-col sm:flex-row justify-center gap-4">
+        <a href="#calculator" class="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-lg font-medium">Open Premium Calculator</a>
+        <a href="#contact" class="bg-blue-700 hover:bg-blue-800 text-white px-8 py-3 rounded-lg font-medium">Get a Free Quote</a>
       </div>
+    </div>
+  </section>
 
-      <div id="healthInsurance" class="insurance-details hidden">
-        <h3 class="text-xl font-semibold text-blue-800 mb-2">Health Insurance</h3>
-        <p class="text-gray-600">Premium rates are based on age, coverage level, and medical history. Specific rates can be provided upon request.</p>
+  <!-- Products Section -->
+  <section class="max-w-6xl mx-auto px-6 py-16">
+    <h2 class="text-3xl font-bold text-center text-blue-800 mb-12">Our Insurance Covers</h2>
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div class="bg-white p-6 rounded-xl shadow-md">
+        <h3 class="text-xl font-semibold mb-2">Motor Insurance</h3>
+        <p class="text-gray-600">Drive with peace of mind — we’ve got your vehicle covered.</p>
       </div>
+      <div class="bg-white p-6 rounded-xl shadow-md">
+        <h3 class="text-xl font-semibold mb-2">Health Insurance</h3>
+        <p class="text-gray-600">Stay healthy and financially protected during life’s uncertainties.</p>
+      </div>
+      <div class="bg-white p-6 rounded-xl shadow-md">
+        <h3 class="text-xl font-semibold mb-2">Property Insurance</h3>
+        <p class="text-gray-600">Safeguard your home, assets, and business properties from loss or damage.</p>
+      </div>
+      <div class="bg-white p-6 rounded-xl shadow-md">
+        <h3 class="text-xl font-semibold mb-2">Travel Insurance</h3>
+        <p class="text-gray-600">Wherever life takes you, travel insured and worry-free.</p>
+      </div>
+    </div>
+  </section>
 
-      <div id="propertyInsurance" class="insurance-details hidden">
-        <h3 class="text-xl font-semibold text-blue-800 mb-2">Property Insurance</h3>
-        <p class="text-gray-600">Rates depend on property value, location, and risk assessment. Please contact us for a tailored quote.</p>
-      </div>
+  <!-- Premium Calculator Section -->
+  <section id="calculator" class="bg-gray-100 py-16">
+    <div class="max-w-4xl mx-auto px-6 text-center">
+      <h2 class="text-3xl font-bold text-blue-800 mb-6">Insurance Premium Calculator</h2>
+      <p class="text-gray-600 mb-8">Use this calculator to estimate your insurance premium based on adopted market rates.</p>
 
-      <div id="travelInsurance" class="insurance-details hidden">
-        <h3 class="text-xl font-semibold text-blue-800 mb-2">Travel Insurance</h3>
-        <p class="text-gray-600">Premiums vary based on destination, duration, and coverage options. Get in touch for a personalized estimate.</p>
-      </div>
+      <form id="calcForm" class="bg-white p-6 rounded-lg shadow-md text-left space-y-4">
+        <label class="block">
+          <span class="text-gray-700 font-medium">Select Insurance Type</span>
+          <select id="productType" class="w-full border border-gray-300 rounded-lg p-3" required>
+            <option value="">-- Select --</option>
+            <option value="motor">Motor Insurance</option>
+            <option value="property">Fire / Property Insurance</option>
+            <option value="marine">Marine Insurance</option>
+            <option value="goods">Goods in Transit</option>
+            <option value="workmen">Workmen’s Compensation</option>
+            <option value="liability">Liability Insurance</option>
+            <option value="money">Money Insurance</option>
+            <option value="bond">Bond Insurance</option>
+            <option value="personal">Personal Accident</option>
+          </select>
+        </label>
 
-      <div id="marineInsurance" class="insurance-details hidden">
-        <h3 class="text-xl font-semibold text-blue-800 mb-2">Marine Insurance</h3>
-        <p class="text-gray-600">Rates are influenced by cargo type, voyage route, and value. Contact us for detailed information.</p>
-      </div>
+        <label class="block">
+          <span class="text-gray-700 font-medium">Enter Sum Insured (TZS)</span>
+          <input type="number" id="sumInsured" placeholder="e.g. 10000000" class="w-full border border-gray-300 rounded-lg p-3" required>
+        </label>
 
-      <div id="goodsInsurance" class="insurance-details hidden">
-        <h3 class="text-xl font-semibold text-blue-800 mb-2">Goods in Transit Insurance</h3>
-        <p class="text-gray-600">Premiums are based on cargo type, transit duration, and value. Reach out for a customized quote.</p>
-      </div>
+        <button type="button" onclick="calculatePremium()" class="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-lg font-semibold">Calculate Premium</button>
 
-      <div id="engineeringInsurance" class="insurance-details hidden">
-        <h3 class="text-xl font-semibold text-blue-800 mb-2">Engineering Insurance</h3>
-        <p class="text-gray-600">Rates depend on project type, scale, and duration. Specific rates available upon request.</p>
-      </div>
+        <div id="premiumResult" class="mt-4 text-center text-lg font-medium text-blue-700 hidden"></div>
+      </form>
+    </div>
+  </section>
 
-      <div id="fireInsurance" class="insurance-details hidden">
-        <h3 class="text-xl font-semibold text-blue-800 mb-2">Fire & Loss of Profit Insurance</h3>
-        <p class="text-gray-600">Premiums are calculated based on property value, risk assessment, and coverage level. Contact us for detailed information.</p>
-      </div>
+  <!-- Contact / Lead Form -->
+  <section id="contact" class="py-16 bg-white">
+    <div class="max-w-4xl mx-auto px-6 text-center">
+      <h2 class="text-3xl font-bold text-blue-800 mb-6">Get Your Free Insurance Quote</h2>
+      <p class="text-gray-600 mb-8">Fill in your details and our team will get back to you within 24 hours.</p>
+  
+      <form id="leadForm" action="https://formspree.io/f/xkgqldlz" method="POST" class="space-y-4 max-w-md mx-auto">
+        <input type="text" name="name" placeholder="Full Name" class="w-full border border-gray-300 rounded-lg p-3" required>
+        <input type="email" name="email" placeholder="Email Address" class="w-full border border-gray-300 rounded-lg p-3" required>
+        <input type="tel" name="phone" placeholder="Phone Number" class="w-full border border-gray-300 rounded-lg p-3" required>
+        <textarea name="message" placeholder="Type your message or describe your insurance need" class="w-full border border-gray-300 rounded-lg p-3" rows="4" required></textarea>
+        <button type="submit" class="w-full bg-blue-700 hover:bg-blue-800 text-white py-3 rounded-lg font-medium">Submit</button>
+      </form>
+      <p class="text-sm text-gray-500 mt-4">We respect your privacy. Your details are kept confidential.</p>
+    </div>
+  </section>
 
-      <div class="flex justify-center gap-4">
-        <button type="submit" class="bg-blue-700 hover:bg-blue-800 text-white px-8 py-3 rounded-lg font-medium">Calculate Premium</button>
+  <!-- Footer -->
+  <footer class="bg-blue-900 text-white py-10">
+    <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-3 gap-6 text-center md:text-left">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">Wolfguard Insurance</h3>
+        <p class="text-gray-300 text-sm">Comprehensive protection for individuals, businesses, and families across Tanzania.</p>
       </div>
-    </form>
-  </div>
-</section>
+      <div>
+        <h4 class="font-semibold mb-2">Contact Us</h4>
+        <p class="text-gray-300 text-sm">Email: <a href="mailto:wolfguard@wolfguard.co.tz" class="underline">wolfguard@wolfguard.co.tz</a></p>
+        <p class="text-gray-300 text-sm">Phone: <a href="tel:+255769715177" class="underline">+255 769 715 177</a></p>
+      </div>
+      <div>
+        <h4 class="font-semibold mb-2">Follow Us</h4>
+        <div class="flex justify-center md:justify-start space-x-4">
+          <a href="https://instagram.com/wolfguard" target="_blank" class="hover:text-gray-300">Instagram</a>
+          <a href="https://linkedin.com/company/wolfguard" target="_blank" class="hover:text-gray-300">LinkedIn</a>
+          <a href="https://wa.me/255769715177" target="_blank" class="hover:text-gray-300">WhatsApp</a>
+        </div>
+      </div>
+    </div>
+    <p class="text-center text-gray-400 text-sm mt-8">© 2025 Wolfguard Insurance. All rights reserved.</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    const form = document.getElementById('leadForm');
+    const modal = document.getElementById('thankYouModal');
+
+    if (form) {
+      form.addEventListener('submit', (e) => {
+        modal?.classList.remove('hidden');
+        form.reset();
+      });
+    }
+
+    function closeModal() {
+      modal?.classList.add('hidden');
+    }
+
+    function calculatePremium() {
+      const product = document.getElementById('productType').value;
+      const sum = parseFloat(document.getElementById('sumInsured').value);
+      const rates = {
+        motor: 0.045,
+        property: 0.005,
+        marine: 0.003,
+        goods: 0.004,
+        workmen: 0.01,
+        liability: 0.0025,
+        money: 0.007,
+        bond: 0.002,
+        personal: 0.008
+      };
+
+      if (!product || !sum || sum <= 0) {
+        alert('Please select an insurance type and enter a valid sum insured.');
+        return;
+      }
+
+      const rate = rates[product] || 0;
+      const premium = sum * rate;
+      document.getElementById('premiumResult').innerText = `Estimated Annual Premium: TZS ${premium.toLocaleString()}`;
+      document.getElementById('premiumResult').classList.remove('hidden');
+    }
+  </script>
+</body>
+</html>
