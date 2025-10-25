@@ -1,179 +1,77 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Motor Insurance Premium Calculator - Wolfguard Insurance</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-50 text-gray-900">
-  <div class="max-w-3xl mx-auto mt-10 p-6 bg-white rounded-2xl shadow-lg">
-    <h1 class="text-2xl font-bold text-center mb-6 text-blue-800">🚗 Motor Insurance Premium Calculator</h1>
+<section id="calculator" class="bg-gray-100 py-16">
+  <div class="max-w-4xl mx-auto px-6 text-center">
+    <h2 class="text-3xl font-bold text-blue-800 mb-6">Insurance Premium Calculator</h2>
+    <p class="text-gray-600 mb-8">Use this calculator to estimate your insurance premium based on adopted market rates.</p>
 
-    <!-- Vehicle Class -->
-    <div class="mb-4">
-      <label class="block font-semibold mb-1">Vehicle Class</label>
-      <select id="vehicleClass" class="w-full p-2 border rounded">
-        <option value="">-- Select Vehicle Class --</option>
-        <option value="Private Cars">Private Cars</option>
-        <option value="Motorcycles">Motorcycles (2 Wheelers)</option>
-        <option value="Three Wheelers">Three Wheelers</option>
-        <option value="Commercial Own Goods">Commercial Goods (Own Goods)</option>
-        <option value="Commercial Cartage">Commercial General Cartage</option>
-        <option value="Trailers <10yrs">Trailers (&lt;10 yrs)</option>
-        <option value="Trailers >10yrs">Trailers (&gt;10 yrs)</option>
-        <option value="Oil Tanker Steel">Oil Tanker (Steel)</option>
-        <option value="Oil Tanker Aluminium">Oil Tanker (Aluminium)</option>
-        <option value="Oil Tanker Old">Oil Tanker (&gt;10 yrs)</option>
-        <option value="Passenger Taxis">Passenger Vehicles (Taxis, etc.)</option>
-        <option value="Daladala">Bus - Daladala (City)</option>
-        <option value="Upcountry">Bus - Upcountry</option>
-        <option value="Private Bus">Bus - Private</option>
-        <option value="School Bus">Bus - School</option>
-        <option value="Special Type">Special Type Vehicles</option>
-      </select>
-    </div>
-
-    <!-- Type of Cover -->
-    <div class="mb-4">
-      <label class="block font-semibold mb-1">Type of Cover</label>
-      <select id="coverType" class="w-full p-2 border rounded">
-        <option value="">-- Select Type of Cover --</option>
-        <option value="Comprehensive">Comprehensive</option>
-        <option value="Third Party">Third Party (TPO)</option>
-      </select>
-    </div>
-
-    <!-- Claim Record -->
-    <div id="claimRecordSection" class="mb-4 hidden">
-      <label class="block font-semibold mb-1">Claim Record</label>
-      <select id="claimRecord" class="w-full p-2 border rounded">
-        <option value="claimsFree">Claims Free</option>
-        <option value="withClaim">With Claim Record</option>
-      </select>
-    </div>
-
-    <!-- Sum Insured -->
-    <div id="sumInsuredSection" class="mb-4 hidden">
-      <label class="block font-semibold mb-1">Sum Insured (TZS)</label>
-      <input type="number" id="sumInsured" class="w-full p-2 border rounded" placeholder="Enter Sum Insured" />
-    </div>
-
-    <!-- Passenger Seats -->
-    <div id="seatSection" class="mb-4 hidden">
-      <label class="block font-semibold mb-1">Number of Seats (For Passenger Vehicles)</label>
-      <input type="number" id="numSeats" class="w-full p-2 border rounded" placeholder="Enter Number of Seats" />
-    </div>
-
-    <!-- Bodaboda / Passenger -->
-    <div id="passengerOption" class="mb-4 hidden">
-      <label class="inline-flex items-center">
-        <input type="checkbox" id="isPassenger" class="mr-2" />
-        Vehicle carries passenger (Bodaboda / 3-Wheeler Passenger)
+    <form id="calcForm" class="bg-white p-6 rounded-lg shadow-md text-left space-y-4">
+      <label class="block">
+        <span class="text-gray-700 font-medium">Select Insurance Type</span>
+        <select id="productType" class="w-full border border-gray-300 rounded-lg p-3" required>
+          <option value="">-- Select --</option>
+          <option value="motor">Motor Insurance</option>
+          <option value="health">Health Insurance</option>
+          <option value="property">Property Insurance</option>
+          <option value="travel">Travel Insurance</option>
+          <option value="marine">Marine Insurance</option>
+          <option value="goods">Goods in Transit</option>
+          <option value="engineering">Engineering Insurance</option>
+          <option value="fire">Fire & Loss of Profit Insurance</option>
+        </select>
       </label>
-    </div>
 
-    <!-- Commercial Vehicle Weight -->
-    <div id="weightSection" class="mb-4 hidden">
-      <label class="block font-semibold mb-1">Vehicle Weight (Tonnes)</label>
-      <input type="number" id="weight" class="w-full p-2 border rounded" placeholder="Enter Vehicle Weight in Tonnes" />
-    </div>
+      <div id="motorInsurance" class="insurance-details hidden">
+        <h3 class="text-xl font-semibold text-blue-800 mb-2">Motor Insurance</h3>
+        <p class="text-gray-600">Premium rates vary based on vehicle class and coverage type:</p>
+        <ul class="list-disc list-inside text-gray-600">
+          <li><strong>Private Cars:</strong> Comprehensive: 3.5% (claims-free), 4% (with claim record); TPFT: 2% + TPP; TPO: 100,000 TZS</li>
+          <li><strong>Motorcycles (Two-wheelers):</strong> Comprehensive: 5% (claims-free), 6% (with claim record); TPFT: 3% + TPP; TPO: 50,000 TZS</li>
+          <li><strong>Motorcycles (Three-wheelers):</strong> Comprehensive: 6% (claims-free), 7% (with claim record); TPFT: 3% + TPP; TPO: 75,000 TZS</li>
+          <li><strong>Commercial Vehicles:</strong> General Goods Carrying: 4% (claims-free), 4.75% (with claim record); TPFT: 2.5% + TPP; TPO: 500,000 TZS</li>
+          <li><strong>Trailers:</strong> Comprehensive: 4% (claims-free), 4.75% (with claim record); TPO: 100,000 TZS</li>
+          <li><strong>Oil Tankers:</strong> Comprehensive: 6% (steel tankers below 10 years), 7% (aluminium tankers below 10 years); TPFT: 4% + TPP; TPO: 750,000 TZS</li>
+          <li><strong>Passenger Carrying Vehicles:</strong> Public Taxis/Private Hire: 5% + 15,000 TZS per seat (claims-free), 6% (with claim record); TPO: 500,000 TZS</li>
+          <li><strong>Buses:</strong> Daladala (within city): 8% + 15,000 TZS per seat; Up Country: 8% + 30,000 TZS per seat; Private: 5% + 10,000 TZS per seat; School: 5% + 7,500 TZS per seat</li>
+        </ul>
+      </div>
 
-    <!-- Calculate Button -->
-    <button onclick="calculatePremium()" class="w-full bg-blue-700 hover:bg-blue-800 text-white p-2 rounded font-semibold mt-4">
-      Calculate Premium
-    </button>
+      <div id="healthInsurance" class="insurance-details hidden">
+        <h3 class="text-xl font-semibold text-blue-800 mb-2">Health Insurance</h3>
+        <p class="text-gray-600">Premium rates are based on age, coverage level, and medical history. Specific rates can be provided upon request.</p>
+      </div>
 
-    <!-- Result -->
-    <div id="result" class="mt-6 text-center font-semibold text-lg text-green-700"></div>
+      <div id="propertyInsurance" class="insurance-details hidden">
+        <h3 class="text-xl font-semibold text-blue-800 mb-2">Property Insurance</h3>
+        <p class="text-gray-600">Rates depend on property value, location, and risk assessment. Please contact us for a tailored quote.</p>
+      </div>
+
+      <div id="travelInsurance" class="insurance-details hidden">
+        <h3 class="text-xl font-semibold text-blue-800 mb-2">Travel Insurance</h3>
+        <p class="text-gray-600">Premiums vary based on destination, duration, and coverage options. Get in touch for a personalized estimate.</p>
+      </div>
+
+      <div id="marineInsurance" class="insurance-details hidden">
+        <h3 class="text-xl font-semibold text-blue-800 mb-2">Marine Insurance</h3>
+        <p class="text-gray-600">Rates are influenced by cargo type, voyage route, and value. Contact us for detailed information.</p>
+      </div>
+
+      <div id="goodsInsurance" class="insurance-details hidden">
+        <h3 class="text-xl font-semibold text-blue-800 mb-2">Goods in Transit Insurance</h3>
+        <p class="text-gray-600">Premiums are based on cargo type, transit duration, and value. Reach out for a customized quote.</p>
+      </div>
+
+      <div id="engineeringInsurance" class="insurance-details hidden">
+        <h3 class="text-xl font-semibold text-blue-800 mb-2">Engineering Insurance</h3>
+        <p class="text-gray-600">Rates depend on project type, scale, and duration. Specific rates available upon request.</p>
+      </div>
+
+      <div id="fireInsurance" class="insurance-details hidden">
+        <h3 class="text-xl font-semibold text-blue-800 mb-2">Fire & Loss of Profit Insurance</h3>
+        <p class="text-gray-600">Premiums are calculated based on property value, risk assessment, and coverage level. Contact us for detailed information.</p>
+      </div>
+
+      <div class="flex justify-center gap-4">
+        <button type="submit" class="bg-blue-700 hover:bg-blue-800 text-white px-8 py-3 rounded-lg font-medium">Calculate Premium</button>
+      </div>
+    </form>
   </div>
-
-  <script>
-    const vehicleClass = document.getElementById("vehicleClass");
-    const coverType = document.getElementById("coverType");
-    const claimRecordSection = document.getElementById("claimRecordSection");
-    const sumInsuredSection = document.getElementById("sumInsuredSection");
-    const seatSection = document.getElementById("seatSection");
-    const passengerOption = document.getElementById("passengerOption");
-    const weightSection = document.getElementById("weightSection");
-    const VAT = 1.18;
-
-    coverType.addEventListener("change", () => {
-      const type = coverType.value;
-      claimRecordSection.classList.toggle("hidden", type !== "Comprehensive");
-      sumInsuredSection.classList.toggle("hidden", type !== "Comprehensive");
-      seatSection.classList.add("hidden");
-      passengerOption.classList.add("hidden");
-      weightSection.classList.add("hidden");
-
-      if (type === "Third Party") {
-        if (vehicleClass.value.includes("Motorcycles") || vehicleClass.value.includes("Three Wheelers")) passengerOption.classList.remove("hidden");
-        if (vehicleClass.value.includes("Passenger") || vehicleClass.value.includes("Bus")) seatSection.classList.remove("hidden");
-        if (vehicleClass.value.includes("Commercial")) weightSection.classList.remove("hidden");
-      }
-    });
-
-    function calculatePremium() {
-      const vClass = vehicleClass.value;
-      const type = coverType.value;
-      const sumInsured = parseFloat(document.getElementById("sumInsured").value) || 0;
-      const claim = document.getElementById("claimRecord")?.value;
-      const seats = parseFloat(document.getElementById("numSeats")?.value) || 0;
-      const weight = parseFloat(document.getElementById("weight")?.value) || 0;
-      const carriesPassenger = document.getElementById("isPassenger").checked;
-      let premium = 0;
-
-      if (type === "Third Party") {
-        switch (vClass) {
-          case "Private Cars": premium = 100000 * VAT; break;
-          case "Motorcycles": premium = (50000 + (carriesPassenger ? 15000 : 0)) * VAT; break;
-          case "Three Wheelers": premium = (75000 + (carriesPassenger ? 45000 : 0)) * VAT; break;
-          case "Commercial Own Goods":
-            if (weight <= 2) premium = 150000 * VAT;
-            else if (weight <= 5) premium = 200000 * VAT;
-            else if (weight <= 10) premium = 250000 * VAT;
-            else premium = 300000 * VAT;
-            break;
-          case "Commercial Cartage": premium = 350000 * VAT; break;
-          case "Trailers <10yrs":
-          case "Trailers >10yrs": premium = 100000 * VAT; break;
-          case "Oil Tanker Steel":
-          case "Oil Tanker Aluminium":
-          case "Oil Tanker Old": premium = 750000 * VAT; break;
-          case "Passenger Taxis": premium = Math.max(150000, seats * 15000 * VAT); break;
-          case "Daladala": premium = Math.max(150000, seats * 15000 * VAT); break;
-          case "Upcountry": premium = Math.max(150000, seats * 30000 * VAT); break;
-          case "Private Bus": premium = Math.max(150000, seats * 10000 * VAT); break;
-          case "School Bus": premium = Math.max(150000, seats * 7500 * VAT); break;
-          case "Special Type": premium = 100000 * VAT; break;
-        }
-      }
-
-      else if (type === "Comprehensive") {
-        switch (vClass) {
-          case "Private Cars": premium = sumInsured * (claim === "claimsFree" ? 0.035 : 0.04) * VAT; premium = Math.max(premium, 250000); break;
-          case "Motorcycles": premium = ((sumInsured * (claim === "claimsFree" ? 0.05 : 0.06)) + (carriesPassenger ? 15000 : 0)) * VAT; break;
-          case "Three Wheelers": premium = ((sumInsured * (claim === "claimsFree" ? 0.06 : 0.07)) + (carriesPassenger ? 45000 : 0)) * VAT; break;
-          case "Commercial Own Goods": premium = Math.max(sumInsured * (claim === "claimsFree" ? 0.0425 : 0.0475) * VAT, 500000); break;
-          case "Commercial Cartage": premium = Math.max(sumInsured * (claim === "claimsFree" ? 0.05 : 0.0575) * VAT, 500000); break;
-          case "Trailers <10yrs": premium = sumInsured * (claim === "claimsFree" ? 0.04 : 0.0475) * VAT; break;
-          case "Trailers >10yrs": premium = sumInsured * (claim === "claimsFree" ? 0.0525 : 0.0575) * VAT; break;
-          case "Oil Tanker Steel": premium = Math.max(sumInsured * 0.06 * VAT, 2000000); break;
-          case "Oil Tanker Aluminium": premium = Math.max(sumInsured * 0.07 * VAT, 2000000); break;
-          case "Oil Tanker Old": premium = Math.max(sumInsured * 0.08 * VAT, 2000000); break;
-          case "Passenger Taxis": premium = ((sumInsured * (claim === "claimsFree" ? 0.055 : 0.06)) + seats * 15000) * VAT; premium = Math.max(premium, 500000); break;
-          case "Daladala": premium = ((sumInsured * 0.08) + (seats * 15000)) * VAT; premium = Math.max(premium, 2000000); break;
-          case "Upcountry": premium = ((sumInsured * 0.08) + (seats * 30000)) * VAT; break;
-          case "Private Bus": premium = ((sumInsured * 0.05) + (seats * 10000)) * VAT; break;
-          case "School Bus": premium = ((sumInsured * 0.05) + (seats * 7500)) * VAT; break;
-          case "Special Type": premium = Math.max(sumInsured * 0.02 * VAT, 250000); break;
-        }
-      }
-
-      document.getElementById("result").innerText = premium > 0
-        ? `Estimated Premium: TZS ${premium.toLocaleString("en-TZ", { minimumFractionDigits: 0 })}`
-        : "Please fill all required details correctly.";
-    }
-  </script>
-</body>
-</html>
+</section>
