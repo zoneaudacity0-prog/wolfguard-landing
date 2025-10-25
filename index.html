@@ -45,37 +45,255 @@
   <!-- Premium Calculator Section -->
   <section id="calculator" class="bg-gray-100 py-16">
     <div class="max-w-4xl mx-auto px-6 text-center">
-      <h2 class="text-3xl font-bold text-blue-800 mb-6">Insurance Premium Calculator</h2>
-      <p class="text-gray-600 mb-8">Use this calculator to estimate your insurance premium based on adopted market rates.</p>
+      <h2 class="text-3xl font-bold text-blue-800 mb-6">Motor Insurance Premium Calculator</h2>
+      <p class="text-gray-600 mb-8">Calculate your premium step by step including VAT.</p>
 
       <form id="calcForm" class="bg-white p-6 rounded-lg shadow-md text-left space-y-4">
+
+        <!-- Step 1: Vehicle Class -->
         <label class="block">
-          <span class="text-gray-700 font-medium">Select Insurance Type</span>
-          <select id="productType" class="w-full border border-gray-300 rounded-lg p-3" required>
-            <option value="">-- Select --</option>
-            <option value="motor">Motor Insurance</option>
-            <option value="property">Fire / Property Insurance</option>
-            <option value="marine">Marine Insurance</option>
-            <option value="goods">Goods in Transit</option>
-            <option value="workmen">Workmen’s Compensation</option>
-            <option value="liability">Liability Insurance</option>
-            <option value="money">Money Insurance</option>
-            <option value="bond">Bond Insurance</option>
-            <option value="personal">Personal Accident</option>
+          <span class="text-gray-700 font-medium">Vehicle Class</span>
+          <select id="vehicleClass" class="w-full border border-gray-300 rounded-lg p-3" required>
+            <option value="">-- Select Vehicle Class --</option>
+            <option value="privateCar">Private Car</option>
+            <option value="motorcycle">Motorcycle (2-Wheelers)</option>
+            <option value="threeWheeler">Three Wheeler</option>
+            <option value="commercialGoods">Commercial Goods Vehicle</option>
+            <option value="trailer">Trailer</option>
+            <option value="oilTanker">Oil Tanker</option>
+            <option value="passengerVehicle">Passenger Vehicle</option>
+            <option value="specialVehicle">Special Type Vehicle</option>
           </select>
         </label>
 
+        <!-- Step 2: Type of Cover -->
         <label class="block">
-          <span class="text-gray-700 font-medium">Enter Sum Insured (TZS)</span>
-          <input type="number" id="sumInsured" placeholder="e.g. 10000000" class="w-full border border-gray-300 rounded-lg p-3" required>
+          <span class="text-gray-700 font-medium">Type of Cover</span>
+          <select id="coverType" class="w-full border border-gray-300 rounded-lg p-3" required>
+            <option value="">-- Select Type of Cover --</option>
+            <option value="comprehensive">Comprehensive</option>
+            <option value="tpo">Third Party Only (TPO)</option>
+          </select>
         </label>
 
+        <!-- Step 3: Sum Insured -->
+        <label class="block">
+          <span class="text-gray-700 font-medium">Sum Insured (TZS)</span>
+          <input type="number" id="sumInsured" placeholder="e.g. 10000000" class="w-full border border-gray-300 rounded-lg p-3">
+        </label>
+
+        <!-- Step 4: Additional Inputs -->
+        <div id="additionalFields" class="space-y-4 hidden">
+
+          <!-- Claim Record -->
+          <label class="block">
+            <span class="text-gray-700 font-medium">Claim Record</span>
+            <select id="claimRecord" class="w-full border border-gray-300 rounded-lg p-3">
+              <option value="no">No Claims</option>
+              <option value="yes">With Claim Record</option>
+            </select>
+          </label>
+
+          <!-- Number of Seats -->
+          <label class="block hidden" id="seatField">
+            <span class="text-gray-700 font-medium">Number of Seats</span>
+            <input type="number" id="numSeats" class="w-full border border-gray-300 rounded-lg p-3" value="1">
+          </label>
+
+          <!-- Bodaboda Option -->
+          <label class="block hidden" id="bodabodaField">
+            <input type="checkbox" id="bodabodaOption" class="mr-2">
+            <span class="text-gray-700 font-medium">Add Passenger (Bodaboda)</span>
+          </label>
+
+          <!-- Vehicle Weight -->
+          <label class="block hidden" id="weightField">
+            <span class="text-gray-700 font-medium">Vehicle Weight (Tonnes)</span>
+            <input type="number" id="vehicleWeight" class="w-full border border-gray-300 rounded-lg p-3" value="2">
+          </label>
+
+        </div>
+
+        <!-- Step 5: Calculate -->
         <button type="button" onclick="calculatePremium()" class="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-lg font-semibold">Calculate Premium</button>
 
+        <!-- Result -->
         <div id="premiumResult" class="mt-4 text-center text-lg font-medium text-blue-700 hidden"></div>
+        <button type="button" id="downloadPDF" class="mt-2 w-full bg-blue-700 hover:bg-blue-800 text-white py-3 rounded-lg font-semibold hidden">Download PDF</button>
       </form>
     </div>
   </section>
+
+  <!-- Scripts -->
+  <script>
+    const vehicleClassEl = document.getElementById('vehicleClass');
+    const coverTypeEl = document.getElementById('coverType');
+    const additionalFields = document.getElementById('additionalFields');
+    const seatField = document.getElementById('seatField');
+    const bodabodaField = document.getElementById('bodabodaField');
+    const weightField = document.getElementById('weightField');
+    const premiumResult = document.getElementById('premiumResult');
+    const downloadPDF = document.getElementById('downloadPDF');
+
+    function updateFields() {
+      const vehicleClass = vehicleClassEl.value;
+      const coverType = coverTypeEl.value;
+      additionalFields.classList.add('hidden');
+      seatField.classList.add('hidden');
+      bodabodaField.classList.add('hidden');
+      weightField.classList.add('hidden');
+
+      if (!vehicleClass || !coverType) return;
+
+      additionalFields.classList.remove('hidden');
+
+      if (vehicleClass === 'passengerVehicle') {
+        seatField.classList.remove('hidden');
+      }
+
+      if (vehicleClass === 'motorcycle' && coverType === 'tpo') {
+        bodabodaField.classList.remove('hidden');
+      }
+
+      if (vehicleClass === 'threeWheeler' && coverType === 'tpo') {
+        bodabodaField.classList.remove('hidden');
+      }
+
+      if (vehicleClass === 'commercialGoods' && coverType === 'tpo') {
+        weightField.classList.remove('hidden');
+      }
+    }
+
+    vehicleClassEl.addEventListener('change', updateFields);
+    coverTypeEl.addEventListener('change', updateFields);
+
+    function calculatePremium() {
+      const vehicleClass = vehicleClassEl.value;
+      const coverType = coverTypeEl.value;
+      const sumInsured = parseFloat(document.getElementById('sumInsured').value);
+      const claimRecord = document.getElementById('claimRecord')?.value || 'no';
+      const numSeats = parseInt(document.getElementById('numSeats')?.value) || 0;
+      const bodaboda = document.getElementById('bodabodaOption')?.checked;
+      const weight = parseFloat(document.getElementById('vehicleWeight')?.value) || 0;
+
+      if (!vehicleClass || !coverType || (coverType === 'comprehensive' && (!sumInsured || sumInsured <= 0))) {
+        alert('Please select required fields and enter a valid sum insured.');
+        return;
+      }
+
+      let basePremium = 0;
+      let vat = 0;
+      const VAT_RATE = 0.18;
+
+      // --- Comprehensive ---
+      if (coverType === 'comprehensive') {
+        switch(vehicleClass) {
+          case 'privateCar':
+            basePremium = sumInsured * (claimRecord === 'no' ? 0.035 : 0.04);
+            if (basePremium < 250000) basePremium = 250000;
+            break;
+          case 'motorcycle':
+            basePremium = sumInsured * (claimRecord === 'no' ? 0.05 : 0.06);
+            if (bodaboda) basePremium += 15000;
+            if (basePremium < 125000) basePremium = 125000;
+            break;
+          case 'threeWheeler':
+            basePremium = sumInsured * (claimRecord === 'no' ? 0.06 : 0.07);
+            if (bodaboda) basePremium += 45000;
+            if (basePremium < 125000) basePremium = 125000;
+            break;
+          case 'commercialGoods':
+            basePremium = sumInsured * (claimRecord === 'no' ? 0.0425 : 0.0475);
+            if (basePremium < 500000) basePremium = 500000;
+            break;
+          case 'trailer':
+            basePremium = sumInsured * (claimRecord === 'no' ? 0.04 : 0.0475);
+            break;
+          case 'oilTanker':
+            if (vehicleClass === 'oilTanker') {
+              basePremium = sumInsured * 0.06; // default steel
+              if (basePremium < 2000000) basePremium = 2000000;
+            }
+            break;
+          case 'passengerVehicle':
+            basePremium = sumInsured * (claimRecord === 'no' ? 0.055 : 0.06);
+            basePremium += numSeats * 15000;
+            if (basePremium < 500000) basePremium = 500000;
+            break;
+          case 'specialVehicle':
+            basePremium = sumInsured * 0.02;
+            if (basePremium < 250000) basePremium = 250000;
+            break;
+        }
+      }
+
+      // --- TPO (Third Party Only) ---
+      if (coverType === 'tpo') {
+        switch(vehicleClass) {
+          case 'privateCar':
+            basePremium = 100000;
+            break;
+          case 'motorcycle':
+            basePremium = 50000 + (bodaboda ? 15000 : 0);
+            break;
+          case 'threeWheeler':
+            basePremium = 75000 + (bodaboda ? 45000 : 0);
+            break;
+          case 'commercialGoods':
+            if (weight <= 2) basePremium = 150000;
+            else if (weight <= 5) basePremium = 200000;
+            else if (weight <= 10) basePremium = 250000;
+            else basePremium = 300000;
+            break;
+          case 'trailer':
+            basePremium = 100000;
+            break;
+          case 'oilTanker':
+            basePremium = 750000;
+            break;
+          case 'passengerVehicle':
+            const seatRate = vehicleClassEl.value === 'passengerVehicle' ? 15000 : 0;
+            basePremium = Math.max(150000, seatRate * numSeats);
+            break;
+          case 'specialVehicle':
+            basePremium = 100000;
+            break;
+        }
+      }
+
+      vat = basePremium * VAT_RATE;
+      const totalPremium = basePremium + vat;
+
+      premiumResult.innerHTML = `
+        <p>Base Premium: TZS ${basePremium.toLocaleString()}</p>
+        <p>VAT (18%): TZS ${vat.toLocaleString()}</p>
+        <p class="font-bold mt-2">Total Premium: TZS ${totalPremium.toLocaleString()}</p>
+      `;
+      premiumResult.classList.remove('hidden');
+      downloadPDF.classList.remove('hidden');
+
+      // --- PDF Download ---
+      downloadPDF.onclick = () => {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+        doc.setFontSize(16);
+        doc.text("Wolfguard Insurance - Premium Summary", 20, 20);
+        doc.setFontSize(12);
+        doc.text(`Vehicle Class: ${vehicleClassEl.options[vehicleClassEl.selectedIndex].text}`, 20, 40);
+        doc.text(`Type of Cover: ${coverTypeEl.options[coverTypeEl.selectedIndex].text}`, 20, 50);
+        doc.text(`Sum Insured: TZS ${sumInsured?.toLocaleString() || 'N/A'}`, 20, 60);
+        if (numSeats) doc.text(`Number of Seats: ${numSeats}`, 20, 70);
+        if (bodaboda) doc.text(`Passenger/Bodaboda: Yes`, 20, 80);
+        if (weight) doc.text(`Vehicle Weight: ${weight} Tonnes`, 20, 90);
+        doc.text(`Base Premium: TZS ${basePremium.toLocaleString()}`, 20, 100);
+        doc.text(`VAT (18%): TZS ${vat.toLocaleString()}`, 20, 110);
+        doc.text(`Total Premium: TZS ${totalPremium.toLocaleString()}`, 20, 120);
+        doc.save("wolfguard_premium_summary.pdf");
+      };
+    }
+  </script>
+</body>
+</html>
 
   <!-- Contact / Lead Form -->
   <section id="contact" class="py-16 bg-white">
