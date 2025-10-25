@@ -1,230 +1,179 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Wolfguard Insurance - Secure Your Future</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Motor Insurance Premium Calculator - Wolfguard Insurance</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-50 text-gray-800">
+<body class="bg-gray-50 text-gray-900">
+  <div class="max-w-3xl mx-auto mt-10 p-6 bg-white rounded-2xl shadow-lg">
+    <h1 class="text-2xl font-bold text-center mb-6 text-blue-800">🚗 Motor Insurance Premium Calculator</h1>
 
-  <!-- Hero Section -->
-  <section class="bg-white py-16 shadow-sm text-center">
-    <div class="max-w-6xl mx-auto px-6">
-      <h1 class="text-4xl md:text-5xl font-bold text-blue-800 mb-4">Protect What Matters with Wolfguard Insurance</h1>
-      <p class="text-lg text-gray-600 mb-8">Comprehensive coverage for your car, home, business, health, and travel. Simple, reliable, and built around you.</p>
-      <div class="flex flex-col sm:flex-row justify-center gap-4">
-        <a href="#calculator" class="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-lg font-medium">Open Premium Calculator</a>
-        <a href="#contact" class="bg-blue-700 hover:bg-blue-800 text-white px-8 py-3 rounded-lg font-medium">Get a Free Quote</a>
-      </div>
+    <!-- Vehicle Class -->
+    <div class="mb-4">
+      <label class="block font-semibold mb-1">Vehicle Class</label>
+      <select id="vehicleClass" class="w-full p-2 border rounded">
+        <option value="">-- Select Vehicle Class --</option>
+        <option value="Private Cars">Private Cars</option>
+        <option value="Motorcycles">Motorcycles (2 Wheelers)</option>
+        <option value="Three Wheelers">Three Wheelers</option>
+        <option value="Commercial Own Goods">Commercial Goods (Own Goods)</option>
+        <option value="Commercial Cartage">Commercial General Cartage</option>
+        <option value="Trailers <10yrs">Trailers (&lt;10 yrs)</option>
+        <option value="Trailers >10yrs">Trailers (&gt;10 yrs)</option>
+        <option value="Oil Tanker Steel">Oil Tanker (Steel)</option>
+        <option value="Oil Tanker Aluminium">Oil Tanker (Aluminium)</option>
+        <option value="Oil Tanker Old">Oil Tanker (&gt;10 yrs)</option>
+        <option value="Passenger Taxis">Passenger Vehicles (Taxis, etc.)</option>
+        <option value="Daladala">Bus - Daladala (City)</option>
+        <option value="Upcountry">Bus - Upcountry</option>
+        <option value="Private Bus">Bus - Private</option>
+        <option value="School Bus">Bus - School</option>
+        <option value="Special Type">Special Type Vehicles</option>
+      </select>
     </div>
-  </section>
 
-  <!-- Products Section -->
-  <section class="max-w-6xl mx-auto px-6 py-16">
-    <h2 class="text-3xl font-bold text-center text-blue-800 mb-12">Our Insurance Covers</h2>
-    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-      <div class="bg-white p-6 rounded-xl shadow-md">
-        <h3 class="text-xl font-semibold mb-2">Motor Insurance</h3>
-        <p class="text-gray-600">Drive with peace of mind — we’ve got your vehicle covered.</p>
-      </div>
-      <div class="bg-white p-6 rounded-xl shadow-md">
-        <h3 class="text-xl font-semibold mb-2">Health Insurance</h3>
-        <p class="text-gray-600">Stay healthy and financially protected during life’s uncertainties.</p>
-      </div>
-      <div class="bg-white p-6 rounded-xl shadow-md">
-        <h3 class="text-xl font-semibold mb-2">Property Insurance</h3>
-        <p class="text-gray-600">Safeguard your home, assets, and business properties from loss or damage.</p>
-      </div>
-      <div class="bg-white p-6 rounded-xl shadow-md">
-        <h3 class="text-xl font-semibold mb-2">Travel Insurance</h3>
-        <p class="text-gray-600">Wherever life takes you, travel insured and worry-free.</p>
-      </div>
+    <!-- Type of Cover -->
+    <div class="mb-4">
+      <label class="block font-semibold mb-1">Type of Cover</label>
+      <select id="coverType" class="w-full p-2 border rounded">
+        <option value="">-- Select Type of Cover --</option>
+        <option value="Comprehensive">Comprehensive</option>
+        <option value="Third Party">Third Party (TPO)</option>
+      </select>
     </div>
-  </section>
 
-  <!-- Premium Calculator Section -->
-  <section id="calculator" class="bg-gray-100 py-16">
-    <div class="max-w-4xl mx-auto px-6 text-center">
-      <h2 class="text-3xl font-bold text-blue-800 mb-6">Motor Insurance Premium Calculator</h2>
-      <p class="text-gray-600 mb-8">Estimate your vehicle insurance premium based on TIRA adopted rates.</p>
-
-      <form id="motorForm" class="bg-white p-6 rounded-lg shadow-md text-left space-y-6">
-        <!-- Step 1 -->
-        <label class="block">
-          <span class="text-gray-700 font-medium">1. Select Vehicle Class</span>
-          <select id="vehicleClass" class="w-full border border-gray-300 rounded-lg p-3" required>
-            <option value="">-- Select --</option>
-            <option value="private">Private Cars</option>
-            <option value="motorcycle">Motorcycle / 3 Wheelers</option>
-            <option value="commercial">Commercial Vehicles</option>
-            <option value="passenger">Passenger Carrying (Buses, Taxis)</option>
-            <option value="special">Special Type Vehicles</option>
-          </select>
-        </label>
-
-        <!-- Step 2 -->
-        <label class="block">
-          <span class="text-gray-700 font-medium">2. Select Type of Cover</span>
-          <select id="coverType" class="w-full border border-gray-300 rounded-lg p-3" required>
-            <option value="">-- Select --</option>
-            <option value="comprehensive">Comprehensive</option>
-            <option value="tpft">Third Party, Fire & Theft (TPFT)</option>
-            <option value="tpo">Third Party Only (TPO)</option>
-          </select>
-        </label>
-
-        <!-- Step 3 -->
-        <div id="additionalInputs" class="space-y-4"></div>
-
-        <!-- Step 4 -->
-        <label id="sumLabel" class="block">
-          <span class="text-gray-700 font-medium">Enter Sum Insured (TZS)</span>
-          <input type="number" id="sumInsured" placeholder="e.g., 25,000,000" class="w-full border border-gray-300 rounded-lg p-3">
-        </label>
-
-        <!-- Step 5 -->
-        <div id="rateInfo" class="bg-gray-50 border rounded-lg p-4 text-gray-700 hidden">
-          <p><strong>Premium Rate:</strong> <span id="rateDisplay"></span></p>
-          <p><strong>Estimated Premium:</strong> <span id="premiumDisplay" class="text-blue-800 font-bold"></span> TZS</p>
-        </div>
-
-        <div class="flex justify-center">
-          <button type="submit" class="bg-blue-700 hover:bg-blue-800 text-white px-8 py-3 rounded-lg font-medium">Calculate Premium</button>
-        </div>
-      </form>
+    <!-- Claim Record -->
+    <div id="claimRecordSection" class="mb-4 hidden">
+      <label class="block font-semibold mb-1">Claim Record</label>
+      <select id="claimRecord" class="w-full p-2 border rounded">
+        <option value="claimsFree">Claims Free</option>
+        <option value="withClaim">With Claim Record</option>
+      </select>
     </div>
-  </section>
 
-  <!-- JavaScript -->
+    <!-- Sum Insured -->
+    <div id="sumInsuredSection" class="mb-4 hidden">
+      <label class="block font-semibold mb-1">Sum Insured (TZS)</label>
+      <input type="number" id="sumInsured" class="w-full p-2 border rounded" placeholder="Enter Sum Insured" />
+    </div>
+
+    <!-- Passenger Seats -->
+    <div id="seatSection" class="mb-4 hidden">
+      <label class="block font-semibold mb-1">Number of Seats (For Passenger Vehicles)</label>
+      <input type="number" id="numSeats" class="w-full p-2 border rounded" placeholder="Enter Number of Seats" />
+    </div>
+
+    <!-- Bodaboda / Passenger -->
+    <div id="passengerOption" class="mb-4 hidden">
+      <label class="inline-flex items-center">
+        <input type="checkbox" id="isPassenger" class="mr-2" />
+        Vehicle carries passenger (Bodaboda / 3-Wheeler Passenger)
+      </label>
+    </div>
+
+    <!-- Commercial Vehicle Weight -->
+    <div id="weightSection" class="mb-4 hidden">
+      <label class="block font-semibold mb-1">Vehicle Weight (Tonnes)</label>
+      <input type="number" id="weight" class="w-full p-2 border rounded" placeholder="Enter Vehicle Weight in Tonnes" />
+    </div>
+
+    <!-- Calculate Button -->
+    <button onclick="calculatePremium()" class="w-full bg-blue-700 hover:bg-blue-800 text-white p-2 rounded font-semibold mt-4">
+      Calculate Premium
+    </button>
+
+    <!-- Result -->
+    <div id="result" class="mt-6 text-center font-semibold text-lg text-green-700"></div>
+  </div>
+
   <script>
-    const VAT = 1.18; // 18%
-    const rates = {
-      private: { comprehensive: 0.035, tpft: 0.02, tpo: 100000 },
-      motorcycle: { comprehensive: 0.05, tpft: 0.035, tpo: 50000 },
-      commercial: { comprehensive: 0.0425, tpft: 0.025 },
-      passenger: { comprehensive: 0.055, tpft: 0.03 },
-      special: { comprehensive: 0.02, tpft: 0.02, tpo: 100000 }
-    };
-
-    const form = document.getElementById("motorForm");
     const vehicleClass = document.getElementById("vehicleClass");
     const coverType = document.getElementById("coverType");
-    const sumInsured = document.getElementById("sumInsured");
-    const sumLabel = document.getElementById("sumLabel");
-    const additionalInputs = document.getElementById("additionalInputs");
-    const rateDisplay = document.getElementById("rateDisplay");
-    const premiumDisplay = document.getElementById("premiumDisplay");
-    const rateInfo = document.getElementById("rateInfo");
+    const claimRecordSection = document.getElementById("claimRecordSection");
+    const sumInsuredSection = document.getElementById("sumInsuredSection");
+    const seatSection = document.getElementById("seatSection");
+    const passengerOption = document.getElementById("passengerOption");
+    const weightSection = document.getElementById("weightSection");
+    const VAT = 1.18;
 
-    // Dynamic input rendering for TPO cases
     coverType.addEventListener("change", () => {
-      additionalInputs.innerHTML = "";
-      sumLabel.classList.remove("hidden");
+      const type = coverType.value;
+      claimRecordSection.classList.toggle("hidden", type !== "Comprehensive");
+      sumInsuredSection.classList.toggle("hidden", type !== "Comprehensive");
+      seatSection.classList.add("hidden");
+      passengerOption.classList.add("hidden");
+      weightSection.classList.add("hidden");
 
-      if (coverType.value === "tpo") {
-        sumLabel.classList.add("hidden");
-
-        switch (vehicleClass.value) {
-          case "motorcycle":
-            additionalInputs.innerHTML = `
-              <label class="block">
-                <span class="text-gray-700 font-medium">Is it a Bodaboda?</span>
-                <select id="bodaboda" class="w-full border border-gray-300 rounded-lg p-3">
-                  <option value="no">No</option>
-                  <option value="yes">Yes</option>
-                </select>
-              </label>
-              <label class="block">
-                <span class="text-gray-700 font-medium">Type:</span>
-                <select id="cycleType" class="w-full border border-gray-300 rounded-lg p-3">
-                  <option value="two">Two Wheeler</option>
-                  <option value="three">Three Wheeler</option>
-                </select>
-              </label>
-            `;
-            break;
-          case "commercial":
-            additionalInputs.innerHTML = `
-              <label class="block">
-                <span class="text-gray-700 font-medium">Select Vehicle Weight</span>
-                <select id="tonnage" class="w-full border border-gray-300 rounded-lg p-3">
-                  <option value="150000">Up to 2 Tonnes</option>
-                  <option value="200000">2–5 Tonnes</option>
-                  <option value="250000">5–10 Tonnes</option>
-                  <option value="300000">Above 10 Tonnes</option>
-                </select>
-              </label>
-            `;
-            break;
-          case "passenger":
-            additionalInputs.innerHTML = `
-              <label class="block">
-                <span class="text-gray-700 font-medium">Select Passenger Type</span>
-                <select id="passengerType" class="w-full border border-gray-300 rounded-lg p-3">
-                  <option value="taxi">Public Taxi / Private Hire</option>
-                  <option value="daladala">Daladala (City)</option>
-                  <option value="upcountry">Upcountry Bus</option>
-                  <option value="privateBus">Private Bus</option>
-                  <option value="schoolBus">School Bus</option>
-                </select>
-              </label>
-              <label class="block">
-                <span class="text-gray-700 font-medium">Enter Number of Seats</span>
-                <input type="number" id="seats" placeholder="e.g. 30" class="w-full border border-gray-300 rounded-lg p-3">
-              </label>
-            `;
-            break;
-        }
+      if (type === "Third Party") {
+        if (vehicleClass.value.includes("Motorcycles") || vehicleClass.value.includes("Three Wheelers")) passengerOption.classList.remove("hidden");
+        if (vehicleClass.value.includes("Passenger") || vehicleClass.value.includes("Bus")) seatSection.classList.remove("hidden");
+        if (vehicleClass.value.includes("Commercial")) weightSection.classList.remove("hidden");
       }
     });
 
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
+    function calculatePremium() {
       const vClass = vehicleClass.value;
-      const cover = coverType.value;
-      let premium = 0, rate = 0;
+      const type = coverType.value;
+      const sumInsured = parseFloat(document.getElementById("sumInsured").value) || 0;
+      const claim = document.getElementById("claimRecord")?.value;
+      const seats = parseFloat(document.getElementById("numSeats")?.value) || 0;
+      const weight = parseFloat(document.getElementById("weight")?.value) || 0;
+      const carriesPassenger = document.getElementById("isPassenger").checked;
+      let premium = 0;
 
-      if (cover === "tpo") {
+      if (type === "Third Party") {
         switch (vClass) {
-          case "private":
-            premium = 100000 * VAT;
+          case "Private Cars": premium = 100000 * VAT; break;
+          case "Motorcycles": premium = (50000 + (carriesPassenger ? 15000 : 0)) * VAT; break;
+          case "Three Wheelers": premium = (75000 + (carriesPassenger ? 45000 : 0)) * VAT; break;
+          case "Commercial Own Goods":
+            if (weight <= 2) premium = 150000 * VAT;
+            else if (weight <= 5) premium = 200000 * VAT;
+            else if (weight <= 10) premium = 250000 * VAT;
+            else premium = 300000 * VAT;
             break;
-          case "motorcycle":
-            const isBoda = document.getElementById("bodaboda").value === "yes";
-            const type = document.getElementById("cycleType").value;
-            premium = (type === "two" ? 50000 : 75000) + (isBoda ? (type === "two" ? 15000 : 45000) : 0);
-            premium *= VAT;
-            break;
-          case "commercial":
-            const tonnage = parseFloat(document.getElementById("tonnage").value);
-            premium = tonnage * VAT;
-            break;
-          case "passenger":
-            const pType = document.getElementById("passengerType").value;
-            const seats = parseInt(document.getElementById("seats").value);
-            let ratePerSeat = 0;
-            if (pType === "taxi" || pType === "daladala") ratePerSeat = 15000;
-            else if (pType === "upcountry") ratePerSeat = 30000;
-            else if (pType === "privateBus") ratePerSeat = 10000;
-            else if (pType === "schoolBus") ratePerSeat = 7500;
-            premium = Math.max(ratePerSeat * seats * VAT, 150000);
-            break;
-          case "special":
-            premium = 100000 * VAT;
-            break;
+          case "Commercial Cartage": premium = 350000 * VAT; break;
+          case "Trailers <10yrs":
+          case "Trailers >10yrs": premium = 100000 * VAT; break;
+          case "Oil Tanker Steel":
+          case "Oil Tanker Aluminium":
+          case "Oil Tanker Old": premium = 750000 * VAT; break;
+          case "Passenger Taxis": premium = Math.max(150000, seats * 15000 * VAT); break;
+          case "Daladala": premium = Math.max(150000, seats * 15000 * VAT); break;
+          case "Upcountry": premium = Math.max(150000, seats * 30000 * VAT); break;
+          case "Private Bus": premium = Math.max(150000, seats * 10000 * VAT); break;
+          case "School Bus": premium = Math.max(150000, seats * 7500 * VAT); break;
+          case "Special Type": premium = 100000 * VAT; break;
         }
-        rateDisplay.textContent = "Flat rate (includes VAT)";
-      } else {
-        rate = rates[vClass][cover];
-        premium = parseFloat(sumInsured.value || 0) * rate * VAT;
-        rateDisplay.textContent = (rate * 100).toFixed(2) + "% + VAT";
       }
 
-      premiumDisplay.textContent = premium.toLocaleString("en-US");
-      rateInfo.classList.remove("hidden");
-    });
-  </script>
+      else if (type === "Comprehensive") {
+        switch (vClass) {
+          case "Private Cars": premium = sumInsured * (claim === "claimsFree" ? 0.035 : 0.04) * VAT; premium = Math.max(premium, 250000); break;
+          case "Motorcycles": premium = ((sumInsured * (claim === "claimsFree" ? 0.05 : 0.06)) + (carriesPassenger ? 15000 : 0)) * VAT; break;
+          case "Three Wheelers": premium = ((sumInsured * (claim === "claimsFree" ? 0.06 : 0.07)) + (carriesPassenger ? 45000 : 0)) * VAT; break;
+          case "Commercial Own Goods": premium = Math.max(sumInsured * (claim === "claimsFree" ? 0.0425 : 0.0475) * VAT, 500000); break;
+          case "Commercial Cartage": premium = Math.max(sumInsured * (claim === "claimsFree" ? 0.05 : 0.0575) * VAT, 500000); break;
+          case "Trailers <10yrs": premium = sumInsured * (claim === "claimsFree" ? 0.04 : 0.0475) * VAT; break;
+          case "Trailers >10yrs": premium = sumInsured * (claim === "claimsFree" ? 0.0525 : 0.0575) * VAT; break;
+          case "Oil Tanker Steel": premium = Math.max(sumInsured * 0.06 * VAT, 2000000); break;
+          case "Oil Tanker Aluminium": premium = Math.max(sumInsured * 0.07 * VAT, 2000000); break;
+          case "Oil Tanker Old": premium = Math.max(sumInsured * 0.08 * VAT, 2000000); break;
+          case "Passenger Taxis": premium = ((sumInsured * (claim === "claimsFree" ? 0.055 : 0.06)) + seats * 15000) * VAT; premium = Math.max(premium, 500000); break;
+          case "Daladala": premium = ((sumInsured * 0.08) + (seats * 15000)) * VAT; premium = Math.max(premium, 2000000); break;
+          case "Upcountry": premium = ((sumInsured * 0.08) + (seats * 30000)) * VAT; break;
+          case "Private Bus": premium = ((sumInsured * 0.05) + (seats * 10000)) * VAT; break;
+          case "School Bus": premium = ((sumInsured * 0.05) + (seats * 7500)) * VAT; break;
+          case "Special Type": premium = Math.max(sumInsured * 0.02 * VAT, 250000); break;
+        }
+      }
 
+      document.getElementById("result").innerText = premium > 0
+        ? `Estimated Premium: TZS ${premium.toLocaleString("en-TZ", { minimumFractionDigits: 0 })}`
+        : "Please fill all required details correctly.";
+    }
+  </script>
 </body>
 </html>
