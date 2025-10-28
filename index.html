@@ -1,893 +1,223 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Wolfguard Insurance — Auto Quote & Lead Capture</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="WOLFGUARD Insurance — Tanzania’s trusted insurance brand for vehicles, businesses, and personal protection. Guarding your journey, protecting your story." />
+  <meta name="keywords" content="insurance Tanzania, car insurance, Wolfguard, Wolfguard Insurance, Tanzania insurance company, business insurance, vehicle cover, insurance quotes Tanzania" />
+  <meta name="author" content="WOLFGUARD Insurance" />
+  <meta property="og:title" content="WOLFGUARD Insurance | Secure Your Future" />
+  <meta property="og:description" content="Guarding your journey. Protecting your story. Get a fast insurance quote today." />
+  <meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/e/e0/Wolf_icon.svg" />
+  <meta property="og:type" content="website" />
+  <title>WOLFGUARD Insurance | Secure Your Future</title>
+  <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/e/e0/Wolf_icon.svg" />
+
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- jsPDF for PDF Quote -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
 
   <style>
-    /* Small visual tweaks for sticky CTA */
-    .sticky-cta {
-      position: fixed;
-      right: 18px;
-      bottom: 18px;
-      z-index: 60;
-    }
-    /* Make testimonial card height consistent */
-    .testimonial-card { min-height: 120px; }
-
-    /* ---------- CINEMATIC THEME OVERRIDES (navy + dark grey) ---------- */
-    :root{
-      --navy-600: #073069; /* primary navy */
-      --navy-700: #052a5a;
-      --accent-gold: #c59d5f;
-      --bg-dark: #0f1720; /* dark grey background */
-      --panel-dark: #111827; /* slightly lighter for panels */
-      --muted: #9aa4b2;
-    }
-
-    /* Page background (dark grey) */
     body {
-      background: var(--bg-dark);
-      color: #e6eef8;
-      transition: background-color 420ms ease, color 300ms ease;
+      font-family: 'Montserrat', sans-serif;
+      background: radial-gradient(circle at top, #0b0b0e, #000);
+      color: #f2f2f2;
+      overflow-x: hidden;
     }
 
-    /* Replace some default blue tones visually (without editing Tailwind classes) */
-    .text-blue-800 { color: var(--navy-600) !important; }
-    .bg-blue-700 { background-color: var(--navy-600) !important; }
-    .bg-blue-800 { background-color: var(--navy-700) !important; }
-    .hover\:bg-blue-800:hover { background-color: var(--navy-700) !important; }
-
-    /* Make white panels slightly tinted and drop-shadowed for cinematic look */
-    .bg-white {
-      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
-      color: #dbe9ff;
-      box-shadow: 0 6px 24px rgba(2,6,23,0.6);
-      border: 1px solid rgba(255,255,255,0.03);
-      transition: transform 360ms ease, box-shadow 360ms ease;
-    }
-    .bg-gray-50 {
-      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      color: #cfe0f6;
-    }
-    .border-gray-200 { border-color: rgba(255,255,255,0.04) !important; }
-    .text-gray-600 { color: var(--muted) !important; }
-    .text-gray-500 { color: rgba(255,255,255,0.6) !important; }
-    .text-gray-700 { color: rgba(255,255,255,0.8) !important; }
-
-    /* Buttons: subtle cinematic glow */
-    .bg-green-600 { background: linear-gradient(90deg, #15803d, #0f6b34); }
-    .bg-green-700 { background: linear-gradient(90deg, #166534, #0b5e2f); }
-    .bg-gray-200 { background: rgba(255,255,255,0.04); color: #e6eef8; }
-    .bg-blue-700, .bg-blue-800 {
-      color: #fff;
-      box-shadow: 0 8px 30px rgba(4,20,60,0.45), 0 0 28px rgba(7,48,105,0.08);
-    }
-    a.bg-green-600, button.bg-green-600 {
-      box-shadow: 0 8px 28px rgba(16,185,129,0.06), 0 0 18px rgba(16,185,129,0.03);
-      transition: transform 260ms ease, box-shadow 260ms ease;
-    }
-    a.bg-green-600:hover, button.bg-green-600:hover { transform: translateY(-3px); }
-
-    /* Panels hover lift */
-    .bg-white:hover { transform: translateY(-6px); }
-
-    /* ---------- SMOOTH TRANSITIONS & FADE-ON-SCROLL ---------- */
-    /* make most interactive elements transition smoothly */
-    button, a, input, select, textarea {
-      transition: all 240ms cubic-bezier(.2,.9,.3,1);
-    }
-
-    /* sections will fade in when .inview is added */
-    .fade-section {
-      opacity: 0;
-      transform: translateY(18px);
-      transition: opacity 600ms ease, transform 600ms cubic-bezier(.2,.9,.3,1);
-      will-change: opacity, transform;
-    }
-    .fade-section.inview {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* subtle underline glint for CTAs */
-    .cta-glint {
-      position: relative;
-      overflow: hidden;
-    }
-    .cta-glint:after {
-      content: "";
-      position: absolute;
-      left: -60%;
-      top: 0;
-      width: 40%;
-      height: 100%;
-      background: linear-gradient(120deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.18) 50%, rgba(255,255,255,0.05) 100%);
-      transform: skewX(-18deg) translateX(0);
-      transition: transform 650ms cubic-bezier(.2,.9,.3,1);
-      pointer-events: none;
-    }
-    .cta-glint:hover:after { transform: translateX(220%) skewX(-18deg); }
-
-    /* Ensure modals appear above particle layer */
-    #claimModal, #renewModal, #exitModal, #thankYouModal {
-      z-index: 80;
-    }
-
-    /* ---------- CINEMATIC PARTICLES LAYER ---------- */
-    #cinematicParticles {
-      position: fixed;
-      inset: 0;
-      z-index: 0; /* behind everything */
-      pointer-events: none;
-      overflow: hidden;
-    }
-    .cinema-particle {
+    /* Mystic Aura background glow */
+    .aura {
       position: absolute;
       border-radius: 50%;
-      opacity: 0.9;
-      mix-blend-mode: screen;
-      will-change: transform, opacity;
-      filter: blur(0.6px);
+      background: radial-gradient(circle, rgba(255, 215, 0, 0.1), transparent);
+      filter: blur(90px);
+      animation: float 10s ease-in-out infinite alternate;
+      z-index: 0;
+    }
+    .aura:nth-child(1) { top: 15%; left: 10%; width: 280px; height: 280px; }
+    .aura:nth-child(2) { bottom: 15%; right: 15%; width: 300px; height: 300px; animation-delay: 2s; }
+
+    @keyframes float {
+      from { transform: translateY(0) scale(1); opacity: 0.8; }
+      to { transform: translateY(40px) scale(1.2); opacity: 0.5; }
     }
 
-    /* small responsive tweak so sticky CTA is above particles */
-    .sticky-cta { z-index: 70; }
+    /* Spark particles */
+    #sparks {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 1;
+    }
+    .spark {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: rgba(255, 215, 0, 0.8);
+      border-radius: 50%;
+      filter: blur(1px);
+      animation: rise 6s linear infinite;
+    }
+    @keyframes rise {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-120vh) scale(0.5); opacity: 0; }
+    }
 
-    /* keep existing layout z-index higher */
-    header, main, section, aside, footer, form, .bg-white { position: relative; z-index: 10; }
+    /* Buttons */
+    .btn {
+      background: linear-gradient(90deg, #c59d5f, #8a6a3d);
+      color: #fff;
+      font-weight: 600;
+      border-radius: 30px;
+      padding: 0.75rem 2rem;
+      transition: all 0.3s ease;
+    }
+    .btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px #c59d5f;
+    }
 
-    /* subtle focus outlines for accessibility */
-    :focus { outline: 3px solid rgba(93,124,255,0.16); outline-offset: 2px; }
+    /* Fade-in animation */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeIn 1.2s ease forwards;
+    }
+    @keyframes fadeIn {
+      to { opacity: 1; transform: translateY(0); }
+    }
 
-    /* make hero headings navy when using text-blue-800 class */
-    header h1.text-blue-800, .text-blue-800 { color: var(--navy-600) !important; }
+    /* Intro Animation */
+    #intro {
+      position: fixed;
+      inset: 0;
+      background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      z-index: 100;
+      animation: fadeOutIntro 1s ease forwards;
+      animation-delay: 3.5s;
+    }
+    #intro.hidden { display: none; }
+    .wolf-logo {
+      width: 120px;
+      height: 120px;
+      animation: pulseGlow 3s infinite ease-in-out;
+      filter: drop-shadow(0 0 20px #c59d5f);
+    }
+    @keyframes pulseGlow {
+      0%, 100% { filter: drop-shadow(0 0 10px #c59d5f); transform: scale(1); }
+      50% { filter: drop-shadow(0 0 25px #d4af37); transform: scale(1.1); }
+    }
+    @keyframes fadeOutIntro {
+      to { opacity: 0; visibility: hidden; }
+    }
 
+    footer { background-color: #080808; }
   </style>
 </head>
-<body class="bg-gray-50 text-gray-800">
 
-  <!-- Cinematic Particles container (added only) -->
-  <div id="cinematicParticles" aria-hidden="true"></div>
+<body class="relative overflow-hidden">
 
-  <!-- HERO -->
-  <header class="bg-white shadow-sm fade-section" data-fade>
-    <div class="max-w-6xl mx-auto px-6 py-10 text-center">
-      <h1 class="text-4xl md:text-5xl font-bold text-blue-800">Protect What Matters with Wolfguard Insurance</h1>
-      <p class="mt-3 text-gray-600 max-w-2xl mx-auto">Fast quotes, trusted cover — fully digital. Use the calculator or get a free quote instantly.</p>
-      <div class="mt-6 flex justify-center gap-4">
-        <a href="#calculator" class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-medium cta-glint">Open Premium Calculator</a>
-        <a href="#contact" class="bg-blue-700 hover:bg-blue-800 text-white px-6 py-3 rounded-lg font-medium cta-glint">Get a Free Quote</a>
-      </div>
-    </div>
+  <!-- Intro Animation -->
+  <div id="intro">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/e/e0/Wolf_icon.svg" alt="Wolf Logo" class="wolf-logo mb-4">
+    <h1 class="text-3xl text-[#c59d5f] font-bold tracking-wider">WOLFGUARD</h1>
+  </div>
+
+  <!-- Aura Lights -->
+  <div class="aura"></div>
+  <div class="aura"></div>
+
+  <!-- Spark Particle Container -->
+  <div id="sparks"></div>
+
+  <!-- Header -->
+  <header class="relative z-10 text-center py-12 fade-in">
+    <h1 class="text-5xl md:text-6xl font-extrabold text-[#c59d5f]">WOLFGUARD INSURANCE</h1>
+    <p class="mt-4 text-lg md:text-xl text-gray-300">Guarding your journey. Protecting your story.</p>
   </header>
 
-  <!-- TRUST BADGES -->
-  <section class="max-w-6xl mx-auto px-6 py-8 fade-section" data-fade>
-    <div class="flex flex-col md:flex-row items-center justify-between gap-6">
-      <div class="flex items-center gap-4">
-        <img src="https://img.icons8.com/ios-filled/48/4CAF50/lock.png" alt="Secure" class="w-10 h-10">
-        <div>
-          <div class="text-sm font-semibold">Secure & Private</div>
-          <div class="text-xs text-gray-500">SSL protected & GDPR-aware</div>
-        </div>
+  <!-- Hero -->
+  <section class="relative z-10 text-center py-16 fade-in">
+    <div class="max-w-3xl mx-auto px-6">
+      <h2 class="text-3xl md:text-4xl font-semibold mb-6">Secure What Matters Most</h2>
+      <p class="text-gray-400 mb-8">
+        From personal vehicle cover to business protection — Wolfguard offers premium insurance
+        solutions for Tanzanians who value reliability, strength, and peace of mind.
+      </p>
+      <a href="#quote" class="btn inline-block">Get a Quote</a>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section class="relative z-10 py-16 px-8 bg-[#0e0e0e]/80 backdrop-blur-md fade-in">
+    <h2 class="text-3xl font-semibold text-center mb-12">Our Coverage</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-10 max-w-6xl mx-auto">
+      <div class="bg-[#111] p-6 rounded-xl border border-gray-700 hover:scale-105 transition-all shadow-lg">
+        <h3 class="text-xl font-semibold text-[#c59d5f] mb-3">Vehicle Insurance</h3>
+        <p class="text-gray-400">Comprehensive and third-party car, motorbike, and fleet insurance.</p>
       </div>
-      <div class="flex items-center gap-4">
-        <img src="https://img.icons8.com/ios-filled/48/2563EB/medal.png" alt="licensed" class="w-10 h-10">
-        <div>
-          <div class="text-sm font-semibold">Licensed Provider</div>
-          <div class="text-xs text-gray-500">Registered with TIRA & local partners</div>
-        </div>
+      <div class="bg-[#111] p-6 rounded-xl border border-gray-700 hover:scale-105 transition-all shadow-lg">
+        <h3 class="text-xl font-semibold text-[#c59d5f] mb-3">Business Insurance</h3>
+        <p class="text-gray-400">Protect your business assets, liability, and staff with reliable coverage.</p>
       </div>
-      <div class="flex items-center gap-4">
-        <img src="https://img.icons8.com/ios-filled/48/FFB020/handshake.png" alt="support" class="w-10 h-10">
-        <div>
-          <div class="text-sm font-semibold">24/7 Digital Assistance</div>
-          <div class="text-xs text-gray-500">Instant quotes, PDF reports & WhatsApp support</div>
-        </div>
+      <div class="bg-[#111] p-6 rounded-xl border border-gray-700 hover:scale-105 transition-all shadow-lg">
+        <h3 class="text-xl font-semibold text-[#c59d5f] mb-3">Personal Protection</h3>
+        <p class="text-gray-400">Life, health, and property insurance built for you and your loved ones.</p>
       </div>
     </div>
   </section>
 
-  <!-- MAIN GRID: Calculator + Benefits -->
-  <main class="max-w-6xl mx-auto px-6 grid lg:grid-cols-2 gap-8 pb-12">
-
-    <!-- CALCULATOR COLUMN -->
-    <section id="calculator" class="bg-white p-6 rounded-xl shadow fade-section" data-fade>
-      <h2 class="text-2xl font-bold text-blue-800">Motor Insurance Premium Calculator</h2>
-      <p class="text-sm text-gray-600 mt-1">Step-by-step calculator — select vehicle class, cover and get instant premium (VAT included).</p>
-
-      <form id="calcForm" class="mt-6 space-y-4">
-        <!-- Vehicle -->
-        <div>
-          <label class="block text-sm font-medium text-gray-700">Vehicle Class</label>
-          <select id="vehicleClass" class="mt-1 block w-full border-gray-200 rounded-md p-2">
-            <option value="">-- Select --</option>
-            <option value="privateCar">Private Car</option>
-            <option value="motorcycle">Motorcycle (2-Wheelers)</option>
-            <option value="threeWheeler">Three Wheeler</option>
-            <option value="commercialGoods">Commercial Goods Vehicle</option>
-            <option value="trailer">Trailer</option>
-            <option value="oilTanker">Oil Tanker</option>
-            <option value="passengerVehicle">Passenger Vehicle</option>
-            <option value="specialVehicle">Special Type Vehicle</option>
-          </select>
-        </div>
-
-        <!-- Cover -->
-        <div>
-          <label class="block text-sm font-medium text-gray-700">Type of Cover</label>
-          <select id="coverType" class="mt-1 block w-full border-gray-200 rounded-md p-2">
-            <option value="">-- Select --</option>
-            <option value="comprehensive">Comprehensive</option>
-            <option value="tpo">Third Party Only (TPO)</option>
-          </select>
-        </div>
-
-        <!-- Sum Insured (only required for Comprehensive) -->
-        <div>
-          <label class="block text-sm font-medium text-gray-700">Sum Insured (TZS)</label>
-          <input id="sumInsured" type="number" placeholder="e.g., 10000000" class="mt-1 block w-full border-gray-200 rounded-md p-2" />
-        </div>
-
-        <!-- Additional dynamic fields -->
-        <div id="additionalFields" class="space-y-3 hidden">
-          <div>
-            <label class="block text-sm font-medium text-gray-700">Claim Record</label>
-            <select id="claimRecord" class="mt-1 block w-full border-gray-200 rounded-md p-2">
-              <option value="no">No Claims</option>
-              <option value="yes">With Claim Record</option>
-            </select>
-          </div>
-
-          <div id="seatField" class="hidden">
-            <label class="block text-sm font-medium text-gray-700">Number of Seats</label>
-            <input id="numSeats" type="number" value="1" min="1" class="mt-1 block w-full border-gray-200 rounded-md p-2" />
-          </div>
-
-          <div id="bodabodaField" class="hidden">
-            <label class="inline-flex items-center text-sm">
-              <input id="bodabodaOption" type="checkbox" class="mr-2" />
-              <span>Add Passenger (Bodaboda / Three-wheeler passenger)</span>
-            </label>
-          </div>
-
-          <div id="weightField" class="hidden">
-            <label class="block text-sm font-medium text-gray-700">Vehicle Weight (Tonnes)</label>
-            <input id="vehicleWeight" type="number" value="2" step="0.1" min="0" class="mt-1 block w-full border-gray-200 rounded-md p-2" />
-          </div>
-        </div>
-
-        <!-- Buttons -->
-        <div class="flex gap-3">
-          <button type="button" onclick="calculatePremium()" class="flex-1 bg-green-600 hover:bg-green-700 text-white py-2 rounded">Calculate</button>
-          <button type="button" id="copyToLead" title="Copy to lead form" class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 py-2 rounded" onclick="copyToLeadForm()">Copy to Lead</button>
-        </div>
-
-        <!-- Results -->
-        <div id="premiumResult" class="mt-4 hidden bg-gray-50 p-4 rounded">
-          <div class="text-sm text-gray-600">Base Premium: <span id="displayBase">—</span></div>
-          <div class="text-sm text-gray-600">VAT (18%): <span id="displayVAT">—</span></div>
-          <div class="text-lg font-semibold text-blue-700">Total: <span id="displayTotal">—</span> TZS</div>
-          <div class="mt-3 flex gap-2">
-            <button id="downloadPDF" class="bg-blue-700 hover:bg-blue-800 text-white py-2 px-3 rounded">Download Quote (PDF)</button>
-            <button id="whatsappBtn" class="bg-green-500 hover:bg-green-600 text-white py-2 px-3 rounded">Contact via WhatsApp</button>
-          </div>
-        </div>
-
-        <!-- small helper -->
-        <p class="mt-3 text-xs text-gray-500">Tip: Use "Copy to Lead" to auto-fill the lead form with these values for faster submission.</p>
-      </form>
-    </section>
-
-    <!-- RIGHT COLUMN: Trust, Testimonials, FAQ -->
-    <aside class="space-y-6">
-
-      <!-- Trust / Why choose us -->
-      <div class="bg-white p-4 rounded-xl shadow fade-section" data-fade>
-        <h3 class="font-semibold text-lg text-blue-800">Why choose Wolfguard?</h3>
-        <ul class="mt-3 space-y-2 text-sm text-gray-600">
-          <li>• Fast digital quotes & downloadable PDF</li>
-          <li>• Licensed & trusted locally</li>
-          <li>• 24/7 WhatsApp support for urgent cases</li>
-          <li>• Clear transparent premiums (VAT inclusive)</li>
-        </ul>
-      </div>
-
-      <!-- Testimonials carousel -->
-      <div class="bg-white p-4 rounded-xl shadow fade-section" data-fade>
-        <h3 class="font-semibold text-lg text-blue-800">What clients say</h3>
-        <div id="testimonials" class="mt-3 relative">
-          <div class="testimonial-card p-4 rounded bg-gray-50" id="testiInner">
-            <!-- JS will populate -->
-          </div>
-          <div class="mt-3 flex justify-center gap-2 text-sm text-gray-500">
-            <button onclick="prevTestimonial()" class="px-2 py-1 rounded bg-gray-200">Prev</button>
-            <button onclick="nextTestimonial()" class="px-2 py-1 rounded bg-gray-200">Next</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- FAQ -->
-      <div class="bg-white p-4 rounded-xl shadow fade-section" data-fade>
-        <h3 class="font-semibold text-lg text-blue-800">Frequently asked</h3>
-        <div class="mt-3 space-y-2">
-          <button class="faq-q w-full text-left p-3 bg-gray-50 rounded" onclick="toggleFAQ(this)">What documents are needed to make a claim?</button>
-          <div class="faq-a hidden p-3 text-sm text-gray-600">Copy of ID, police abstract, vehicle photos, and claim form — upload through our claim portal.</div>
-
-          <button class="faq-q w-full text-left p-3 bg-gray-50 rounded" onclick="toggleFAQ(this)">How long until I receive policy documents?</button>
-          <div class="faq-a hidden p-3 text-sm text-gray-600">Once payment is confirmed, we email policy documents immediately as PDF.</div>
-
-          <button class="faq-q w-full text-left p-3 bg-gray-50 rounded" onclick="toggleFAQ(this)">Is my data safe?</button>
-          <div class="faq-a hidden p-3 text-sm text-gray-600">Yes — we only use collected data for quote & service and keep it secure.</div>
-        </div>
-      </div>
-
-      <!-- Claim / Renewal actions -->
-      <div class="bg-white p-4 rounded-xl shadow space-y-3 fade-section" data-fade>
-        <button onclick="openClaimModal()" class="w-full bg-red-600 hover:bg-red-700 text-white py-2 rounded">File a Claim</button>
-        <button onclick="openRenewModal()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-2 rounded">Renewal Reminder</button>
-      </div>
-    </aside>
-  </main>
-
-  <!-- LEAD FORM SECTION -->
-  <section id="contact" class="bg-white p-6 max-w-4xl mx-auto rounded-xl shadow mb-12 fade-section" data-fade>
-    <h2 class="text-2xl font-bold text-blue-800">Get Your Free Insurance Quote</h2>
-    <p class="text-sm text-gray-600 mt-1">Complete the form and we’ll email your quote right away.</p>
-
-    <!-- Replace YOUR_FORMSPREE_ENDPOINT below with your Formspree endpoint -->
-    <form id="leadForm" class="mt-4 space-y-3 max-w-xl" action="https://formspree.io/f/YOUR_FORMSPREE_ENDPOINT" method="POST">
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-        <input name="name" required placeholder="Full Name" class="p-2 border rounded" />
-        <input name="email" type="email" required placeholder="Email" class="p-2 border rounded" />
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-2">
-        <input name="phone" placeholder="Phone number" required class="p-2 border rounded" />
-        <input name="vehicleNumber" id="leadVehicleNumber" placeholder="Vehicle number (e.g. T123 ABC)" class="p-2 border rounded" />
-      </div>
-
-      <!-- Hidden fields auto-populated by calculator -->
-      <input type="hidden" name="vehicleClass" id="leadVehicleClass" />
-      <input type="hidden" name="coverType" id="leadCoverType" />
-      <input type="hidden" name="sumInsured" id="leadSumInsured" />
-      <input type="hidden" name="numSeats" id="leadNumSeats" />
-      <input type="hidden" name="bodaboda" id="leadBodaboda" />
-      <input type="hidden" name="vehicleWeight" id="leadVehicleWeight" />
-      <input type="hidden" name="basePremium" id="leadBasePremium" />
-      <input type="hidden" name="vatPremium" id="leadVatPremium" />
-      <input type="hidden" name="totalPremium" id="leadTotalPremium" />
-
-      <textarea name="message" rows="3" placeholder="Additional details (optional)" class="w-full p-2 border rounded"></textarea>
-
-      <div class="flex gap-3">
-        <button class="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 rounded" type="submit">Submit Lead</button>
-        <button type="button" class="bg-gray-200 px-4 py-2 rounded" onclick="clearLeadFields()">Clear</button>
-      </div>
-
-      <p class="text-xs text-gray-500 mt-2">We respect your privacy. Your details are kept confidential.</p>
+  <!-- Quote Form -->
+  <section id="quote" class="relative z-10 py-20 text-center fade-in">
+    <h2 class="text-3xl font-semibold mb-8">Get a Quick Quote</h2>
+    <form action="https://formspree.io/f/YOUR_FORMSPREE_ENDPOINT" method="POST" class="max-w-lg mx-auto bg-[#111]/80 backdrop-blur-md rounded-xl p-8 border border-gray-700 shadow-lg">
+      <input type="text" name="name" placeholder="Full Name" required class="w-full mb-4 p-3 rounded bg-[#1a1a1a] border border-gray-600 text-gray-200">
+      <input type="email" name="email" placeholder="Email Address" required class="w-full mb-4 p-3 rounded bg-[#1a1a1a] border border-gray-600 text-gray-200">
+      <input type="text" name="vehicle" placeholder="Vehicle / Asset Type" required class="w-full mb-4 p-3 rounded bg-[#1a1a1a] border border-gray-600 text-gray-200">
+      <input type="number" name="value" placeholder="Estimated Value (TZS)" required class="w-full mb-4 p-3 rounded bg-[#1a1a1a] border border-gray-600 text-gray-200">
+      <textarea name="message" placeholder="Additional Details (Optional)" rows="3" class="w-full mb-4 p-3 rounded bg-[#1a1a1a] border border-gray-600 text-gray-200"></textarea>
+      <button type="submit" class="btn w-full">Submit Quote</button>
     </form>
   </section>
 
-  <!-- CLAIM MODAL -->
-  <div id="claimModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
-    <div class="bg-white rounded-lg p-6 max-w-lg w-full">
-      <h3 class="text-lg font-semibold">File a Claim</h3>
-      <p class="text-sm text-gray-600">Upload incident details and photos — we'll contact you within 24h.</p>
-
-      <!-- Replace YOUR_FORMSPREE_ENDPOINT with same or separate Formspree endpoint -->
-      <form id="claimForm" action="https://formspree.io/f/YOUR_FORMSPREE_ENDPOINT" method="POST" enctype="multipart/form-data" class="mt-3 space-y-3">
-        <input name="claimName" required placeholder="Full Name" class="p-2 border rounded w-full" />
-        <input name="claimPhone" required placeholder="Phone number" class="p-2 border rounded w-full" />
-        <input name="claimEmail" type="email" required placeholder="Email" class="p-2 border rounded w-full" />
-        <input name="claimVehicleNumber" placeholder="Vehicle number" class="p-2 border rounded w-full" />
-        <textarea name="claimDetails" placeholder="Describe what happened" rows="4" class="p-2 border rounded w-full"></textarea>
-        <label class="block text-sm">Attach photo(s) (optional)</label>
-        <input type="file" name="photos" accept="image/*" multiple class="w-full" />
-        <div class="flex justify-end gap-2">
-          <button type="button" class="px-4 py-2 rounded bg-gray-200" onclick="closeClaimModal()">Cancel</button>
-          <button type="submit" class="px-4 py-2 rounded bg-red-600 text-white">Submit Claim</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <!-- RENEWAL MODAL -->
-  <div id="renewModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
-    <div class="bg-white rounded-lg p-6 max-w-md w-full">
-      <h3 class="text-lg font-semibold mb-2">Renewal Reminder</h3>
-      <p class="text-sm text-gray-600 mb-3">Add your policy expiry date and we'll send you a reminder.</p>
-      <form id="renewForm" action="https://formspree.io/f/YOUR_FORMSPREE_ENDPOINT" method="POST" class="space-y-3">
-        <input name="renewName" placeholder="Full Name" required class="p-2 border rounded w-full" />
-        <input name="renewEmail" type="email" required placeholder="Email" class="p-2 border rounded w-full" />
-        <input name="renewVehicleNumber" placeholder="Vehicle number" class="p-2 border rounded w-full" />
-        <label class="block text-sm">Policy expiry date</label>
-        <input name="expiryDate" type="date" required class="p-2 border rounded w-full" />
-        <div class="flex justify-end gap-2">
-          <button type="button" class="px-4 py-2 rounded bg-gray-200" onclick="closeRenewModal()">Cancel</button>
-          <button type="submit" class="px-4 py-2 rounded bg-indigo-600 text-white">Save Reminder</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <!-- EXIT-INTENT MODAL -->
-  <div id="exitModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
-    <div class="bg-white rounded-lg p-6 max-w-md w-full text-center">
-      <h3 class="text-xl font-semibold text-blue-800">Wait — get a quick quote before you go</h3>
-      <p class="text-sm text-gray-600 mt-2">We can email you an instant quote — no calls, no pressure.</p>
-      <div class="mt-4">
-        <input id="exitEmail" type="email" placeholder="Enter your email" class="p-2 border rounded w-full" />
-        <div class="mt-3 flex gap-2 justify-center">
-          <button class="px-4 py-2 rounded bg-green-600 text-white" onclick="sendExitEmail()">Send Quote</button>
-          <button class="px-4 py-2 rounded bg-gray-200" onclick="closeExitModal()">No thanks</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- STICKY CTA -->
-  <div class="sticky-cta">
-    <button onclick="scrollToCalc()" title="Get a Quote" class="bg-blue-700 hover:bg-blue-800 text-white px-4 py-3 rounded-full shadow-lg">
-      Get Quote
-    </button>
-  </div>
-
-  <!-- WHATSAPP FLOAT -->
-  <a id="whatsappFloat" href="#" target="_blank" class="fixed left-4 bottom-6 z-50" title="Chat on WhatsApp">
-    <!-- Replace YOUR_WHATSAPP_NUMBER in JS; this is just visual -->
-    <img src="https://img.icons8.com/fluency/48/000000/whatsapp.png" alt="WhatsApp" />
+  <!-- WhatsApp Floating Button -->
+  <a href="https://wa.me/255769715177?text=Hello%20WOLFGUARD!%20I%20need%20an%20insurance%20quote."
+     target="_blank"
+     class="fixed bottom-6 right-6 bg-green-500 hover:bg-green-600 p-4 rounded-full shadow-lg z-50 transition-all">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" class="w-8 h-8" alt="WhatsApp" />
   </a>
 
-  <!-- THANK YOU MODAL FOR LEAD -->
-  <div id="thankYouModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
-    <div class="bg-white rounded-lg p-6 max-w-sm w-full text-center">
-      <h3 class="text-xl font-semibold text-blue-800">Thanks — We received your request</h3>
-      <p class="text-sm mt-2 text-gray-600">A copy has been sent to your email. Our team will contact you shortly.</p>
-      <div class="mt-4">
-        <button class="px-4 py-2 bg-blue-700 text-white rounded" onclick="closeThankYou()">Close</button>
-      </div>
-    </div>
-  </div>
+  <!-- Footer -->
+  <footer class="relative z-10 py-10 text-center text-gray-500 text-sm border-t border-gray-800">
+    <p>© 2025 WOLFGUARD Insurance. All rights reserved.</p>
+    <p>Made with 🖤 in Tanzania | Contact: victor99wolfgang@gmail.com</p>
+  </footer>
 
-  <!-- SCRIPTS -->
+  <!-- JS for Intro + Sparks -->
   <script>
-    // ---------- Config: update these ---------- //
-    const FORMSPREE_ENDPOINT = 'YOUR_FORMSPREE_ENDPOINT'; // replace with your Formspree id
-    const WHATSAPP_NUMBER = '255769715177'; // international format, e.g. 255769715177
-    // ------------------------------------------ //
+    window.addEventListener('load', () => {
+      setTimeout(() => document.getElementById('intro').classList.add('hidden'), 4000);
 
-    // Wire up WhatsApp float default link
-    const whatsappFloat = document.getElementById('whatsappFloat');
-    function buildWhatsAppLink(message) {
-      const encoded = encodeURIComponent(message);
-      return `https://wa.me/${WHATSAPP_NUMBER}?text=${encoded}`;
-    }
-    whatsappFloat.href = buildWhatsAppLink("Hello Wolfguard, I need assistance with a quote.");
-
-    // Testimonials data
-    const testimonials = [
-      { text: "Fast, clear and professional. My claim was handled smoothly.", name: "M. Komba" },
-      { text: "Saved me money and time — the online quote was accurate.", name: "A. Juma" },
-      { text: "Downloaded the PDF, showed it to my manager and we signed up.", name: "R. Mwakyusa" }
-    ];
-    let testiIndex = 0;
-    const testiInner = document.getElementById('testiInner');
-    function renderTestimonial(i) {
-      const t = testimonials[i];
-      testiInner.innerHTML = `<div class="text-sm text-gray-700 italic">"${t.text}"</div><div class="mt-3 text-xs font-semibold text-gray-600">— ${t.name}</div>`;
-    }
-    function nextTestimonial() { testiIndex = (testiIndex + 1) % testimonials.length; renderTestimonial(testiIndex); }
-    function prevTestimonial() { testiIndex = (testiIndex - 1 + testimonials.length) % testimonials.length; renderTestimonial(testiIndex); }
-    renderTestimonial(0);
-    setInterval(nextTestimonial, 7000);
-
-    // FAQ toggle
-    function toggleFAQ(btn) {
-      const a = btn.nextElementSibling;
-      a.classList.toggle('hidden');
-    }
-
-    // Modal open/close helpers
-    function openClaimModal() { document.getElementById('claimModal').classList.remove('hidden'); }
-    function closeClaimModal() { document.getElementById('claimModal').classList.add('hidden'); }
-    function openRenewModal() { document.getElementById('renewModal').classList.remove('hidden'); }
-    function closeRenewModal() { document.getElementById('renewModal').classList.add('hidden'); }
-    function openExitModal() { document.getElementById('exitModal').classList.remove('hidden'); }
-    function closeExitModal() { document.getElementById('exitModal').classList.add('hidden'); }
-
-    // Exit-intent (desktop) detection
-    let exitShown = false;
-    document.addEventListener('mouseleave', (e) => {
-      if (e.clientY <= 0 && !exitShown) {
-        exitShown = true;
-        openExitModal();
+      const sparks = document.getElementById('sparks');
+      for (let i = 0; i < 30; i++) {
+        const spark = document.createElement('div');
+        spark.className = 'spark';
+        spark.style.left = Math.random() * 100 + '%';
+        spark.style.top = Math.random() * 100 + '%';
+        spark.style.animationDelay = Math.random() * 6 + 's';
+        spark.style.animationDuration = 4 + Math.random() * 4 + 's';
+        sparks.appendChild(spark);
       }
     });
-
-    // Calculator logic (comprehensive + TPO) with VAT and min premiums
-    const vehicleClassEl = document.getElementById('vehicleClass');
-    const coverTypeEl = document.getElementById('coverType');
-    const additionalFields = document.getElementById('additionalFields');
-    const seatField = document.getElementById('seatField');
-    const bodabodaField = document.getElementById('bodabodaField');
-    const weightField = document.getElementById('weightField');
-
-    vehicleClassEl.addEventListener('change', updateFields);
-    coverTypeEl.addEventListener('change', updateFields);
-
-    function updateFields() {
-      const vc = vehicleClassEl.value;
-      const ct = coverTypeEl.value;
-      additionalFields.classList.add('hidden');
-      seatField.classList.add('hidden');
-      bodabodaField.classList.add('hidden');
-      weightField.classList.add('hidden');
-      if (!vc || !ct) return;
-      additionalFields.classList.remove('hidden');
-      if (vc === 'passengerVehicle') seatField.classList.remove('hidden');
-      if ((vc === 'motorcycle' || vc === 'threeWheeler') && ct === 'tpo') bodabodaField.classList.remove('hidden');
-      if (vc === 'commercialGoods' && ct === 'tpo') weightField.classList.remove('hidden');
-    }
-
-    // Main calculation — matches your TIRA rules from conversation
-    function calculatePremium() {
-      const vehicleClass = vehicleClassEl.value;
-      const coverType = coverTypeEl.value;
-      const sumInsured = parseFloat(document.getElementById('sumInsured').value) || 0;
-      const claimRecord = document.getElementById('claimRecord').value || 'no';
-      const numSeats = parseInt(document.getElementById('numSeats').value) || 0;
-      const bodaboda = document.getElementById('bodabodaOption').checked;
-      const weight = parseFloat(document.getElementById('vehicleWeight').value) || 0;
-      const VAT = 0.18;
-
-      if (!vehicleClass || !coverType || (coverType === 'comprehensive' && (!sumInsured || sumInsured <= 0))) {
-        alert('Please select vehicle class, type of cover and enter a valid sum insured for comprehensive cover.');
-        return;
-      }
-
-      let base = 0;
-
-      if (coverType === 'comprehensive') {
-        switch(vehicleClass) {
-          case 'privateCar':
-            base = sumInsured * (claimRecord === 'no' ? 0.035 : 0.04);
-            if (base < 250000) base = 250000;
-            break;
-          case 'motorcycle':
-            base = sumInsured * (claimRecord === 'no' ? 0.05 : 0.06);
-            if (bodaboda) base += 15000;
-            if (base < 125000) base = 125000;
-            break;
-          case 'threeWheeler':
-            base = sumInsured * (claimRecord === 'no' ? 0.06 : 0.07);
-            if (bodaboda) base += 45000;
-            if (base < 125000) base = 125000;
-            break;
-          case 'commercialGoods':
-            base = sumInsured * (claimRecord === 'no' ? 0.0425 : 0.0475);
-            if (base < 500000) base = 500000;
-            break;
-          case 'trailer':
-            base = sumInsured * (claimRecord === 'no' ? 0.04 : 0.0475);
-            break;
-          case 'oilTanker':
-            // differentiate steel/aluminium/old? default steel 6%
-            base = sumInsured * 0.06;
-            if (base < 2000000) base = 2000000;
-            break;
-          case 'passengerVehicle':
-            base = sumInsured * (claimRecord === 'no' ? 0.055 : 0.06);
-            base += numSeats * 15000;
-            if (base < 500000) base = 500000;
-            break;
-          case 'specialVehicle':
-            base = sumInsured * 0.02;
-            if (base < 250000) base = 250000;
-            break;
-          default:
-            base = 0;
-        }
-      } else if (coverType === 'tpo') {
-        switch(vehicleClass) {
-          case 'privateCar': base = 100000; break;
-          case 'motorcycle': base = 50000 + (bodaboda ? 15000 : 0); break;
-          case 'threeWheeler': base = 75000 + (bodaboda ? 45000 : 0); break;
-          case 'commercialGoods':
-            if (weight <= 2) base = 150000;
-            else if (weight <= 5) base = 200000;
-            else if (weight <= 10) base = 250000;
-            else base = 300000;
-            break;
-          case 'trailer': base = 100000; break;
-          case 'oilTanker': base = 750000; break;
-          case 'passengerVehicle':
-            base = Math.max(150000, 15000 * numSeats);
-            break;
-          case 'specialVehicle': base = 100000; break;
-          default: base = 0;
-        }
-      }
-
-      // VAT and totals
-      const vat = Math.round(base * VAT);
-      const total = Math.round(base + vat);
-
-      // display
-      document.getElementById('displayBase').textContent = base.toLocaleString();
-      document.getElementById('displayVAT').textContent = vat.toLocaleString();
-      document.getElementById('displayTotal').textContent = total.toLocaleString();
-      document.getElementById('premiumResult').classList.remove('hidden');
-
-      // prepare WhatsApp button text (prefill)
-      const shortVehicle = vehicleClassEl.options[vehicleClassEl.selectedIndex].text;
-      const message = `Hello Wolfguard — I need help with a quote.
-Vehicle: ${shortVehicle}
-Cover: ${coverType === 'comprehensive' ? 'Comprehensive' : 'Third Party'}
-Sum insured: ${sumInsured ? sumInsured.toLocaleString() : 'N/A'}
-Total premium: TZS ${total.toLocaleString()}`;
-      document.getElementById('whatsappBtn').onclick = () => {
-        window.open(buildWhatsAppLink(message), '_blank');
-      };
-
-      // Prepare PDF download
-      document.getElementById('downloadPDF').onclick = () => downloadQuotePDF({
-        vehicleClass: shortVehicle,
-        coverType: coverType === 'comprehensive' ? 'Comprehensive' : 'Third Party Only',
-        sumInsured,
-        base,
-        vat,
-        total,
-        seats: numSeats,
-        bodaboda,
-        weight
-      });
-
-      // Save last calculated to window for copying to lead form
-      window.lastCalc = { vehicleClass, coverType, sumInsured, numSeats, bodaboda, weight, base, vat, total };
-    }
-
-    // Copy contents into lead form hidden fields + visible vehicle number if provided
-    function copyToLeadForm() {
-      if (!window.lastCalc) { alert('Please calculate a premium first.'); return; }
-      const calc = window.lastCalc;
-      document.getElementById('leadVehicleClass').value = calc.vehicleClass;
-      document.getElementById('leadCoverType').value = calc.coverType;
-      document.getElementById('leadSumInsured').value = calc.sumInsured || '';
-      document.getElementById('leadNumSeats').value = calc.numSeats || '';
-      document.getElementById('leadBodaboda').value = calc.bodaboda ? 'yes' : 'no';
-      document.getElementById('leadVehicleWeight').value = calc.weight || '';
-      document.getElementById('leadBasePremium').value = calc.base;
-      document.getElementById('leadVatPremium').value = calc.vat;
-      document.getElementById('leadTotalPremium').value = calc.total;
-
-      // reveal the contact section and scroll
-      document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
-      // flash a small message
-      alert('Calculator values copied to the lead form — please complete name, phone and email then submit.');
-    }
-
-    // Download PDF summary
-    function downloadQuotePDF(data) {
-      const { jsPDF } = window.jspdf;
-      const doc = new jsPDF();
-      doc.setFontSize(16);
-      doc.text('Wolfguard Insurance - Quote', 20, 20);
-      doc.setFontSize(11);
-      let y = 36;
-      doc.text(`Vehicle Class: ${data.vehicleClass}`, 20, y); y+=8;
-      doc.text(`Cover Type: ${data.coverType}`, 20, y); y+=8;
-      doc.text(`Sum Insured: TZS ${data.sumInsured ? data.sumInsured.toLocaleString() : 'N/A'}`, 20, y); y+=8;
-      if (data.seats) { doc.text(`Seats: ${data.seats}`, 20, y); y+=8; }
-      if (data.bodaboda) { doc.text(`Bodaboda Passenger: Yes`, 20, y); y+=8; }
-      if (data.weight) { doc.text(`Weight (T): ${data.weight}`, 20, y); y+=8; }
-      doc.text(`Base Premium: TZS ${data.base.toLocaleString()}`, 20, y); y+=8;
-      doc.text(`VAT (18%): TZS ${data.vat.toLocaleString()}`, 20, y); y+=8;
-      doc.text(`Total Premium: TZS ${data.total.toLocaleString()}`, 20, y); y+=10;
-      doc.text('This is an indicative quote based on adopted market rates.', 20, y);
-      doc.save('wolfguard-quote.pdf');
-    }
-
-    // LEAD FORM SUBMISSION (sends to Formspree endpoint). Replace endpoint above.
-    const leadForm = document.getElementById('leadForm');
-    leadForm.addEventListener('submit', async function(e) {
-      e.preventDefault();
-      // simple validation
-      const formData = new FormData(leadForm);
-
-      // send to Formspree
-      try {
-        const response = await fetch(leadForm.action.replace('YOUR_FORMSPREE_ENDPOINT', FORMSPREE_ENDPOINT), {
-          method: 'POST',
-          body: formData,
-          headers: { 'Accept': 'application/json' }
-        });
-        if (response.ok) {
-          // show thank you
-          document.getElementById('thankYouModal').classList.remove('hidden');
-          leadForm.reset();
-          // auto close
-          setTimeout(() => closeThankYou(), 5000);
-          // Also prepare WhatsApp ping to agents (optional)
-          const total = formData.get('totalPremium') || window.lastCalc?.total;
-          const msg = `New lead from ${formData.get('name')}: ${formData.get('vehicleClass')} (${formData.get('vehicleNumber')}) — Premium: ${total || 'N/A'}`;
-          // open whatsapp agent in a new tab (optional); comment out if you don't want this
-          // window.open(buildWhatsAppLink(msg), '_blank');
-        } else {
-          alert('Submission failed. Please try again.');
-        }
-      } catch (err) {
-        console.error(err);
-        alert('Error submitting lead. Please check your connection.');
-      }
-    });
-
-    function closeThankYou() { document.getElementById('thankYouModal').classList.add('hidden'); }
-
-    // Claim form submit (same approach)
-    const claimForm = document.getElementById('claimForm');
-    if (claimForm) {
-      claimForm.addEventListener('submit', async function(e) {
-        // Formspree file upload works with multipart POST
-        // keep UI simple: show a small alert or modal after success
-        // Form action has YOUR_FORMSPREE_ENDPOINT placeholder — update to your endpoint
-        // We'll allow default behavior but prevent page reload to show custom message
-        e.preventDefault();
-        const formData = new FormData(claimForm);
-        try {
-          const resp = await fetch(claimForm.action.replace('YOUR_FORMSPREE_ENDPOINT', FORMSPREE_ENDPOINT), {
-            method: 'POST',
-            body: formData,
-            headers: { 'Accept': 'application/json' }
-          });
-          if (resp.ok) {
-            alert('Claim submitted. We will contact you shortly.');
-            claimForm.reset();
-            closeClaimModal();
-          } else {
-            alert('Claim submission failed. Try again.');
-          }
-        } catch (err) {
-          console.error(err);
-          alert('Error submitting claim.');
-        }
-      });
-    }
-
-    // Renewal reminder submit
-    const renewForm = document.getElementById('renewForm');
-    if (renewForm) {
-      renewForm.addEventListener('submit', async function(e) {
-        e.preventDefault();
-        const fd = new FormData(renewForm);
-        try {
-          const r = await fetch(renewForm.action.replace('YOUR_FORMSPREE_ENDPOINT', FORMSPREE_ENDPOINT), {
-            method: 'POST',
-            body: fd,
-            headers: { 'Accept': 'application/json' }
-          });
-          if (r.ok) {
-            alert('Renewal reminder saved. We will notify you near expiry (you may receive an email).');
-            renewForm.reset();
-            closeRenewModal();
-          } else alert('Failed to save reminder.');
-        } catch (err) { alert('Error saving reminder.'); }
-      });
-    }
-
-    // Exit modal email send (simple Formspree POST)
-    function sendExitEmail() {
-      const email = document.getElementById('exitEmail').value;
-      if (!email) return alert('Enter an email');
-      // send to Formspree quickly
-      fetch(`https://formspree.io/f/${FORMSPREE_ENDPOINT}`, {
-        method: 'POST',
-        body: JSON.stringify({ email }),
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }
-      }).then(res => {
-        if (res.ok) {
-          alert('Thank you — we sent an instant quote to your email (if provided).');
-          closeExitModal();
-        } else alert('Could not send. Try again.');
-      }).catch(() => alert('Error sending email.'));
-    }
-
-    // Utility: scroll to calculator
-    function scrollToCalc(){ document.getElementById('calculator').scrollIntoView({behavior:'smooth'}); }
-
-    // Utility: Clear lead visible fields
-    function clearLeadFields(){
-      document.getElementById('leadVehicleNumber').value = '';
-      leadForm.reset();
-    }
-
-    // small safety: if FORMSPREE_ENDPOINT not set => hide formsubmission or warn
-    if (!FORMSPREE_ENDPOINT || FORMSPREE_ENDPOINT === 'YOUR_FORMSPREE_ENDPOINT') {
-      console.warn('Please update FORMSPREE_ENDPOINT with your actual Formspree ID. Form submissions will fail until updated.');
-    }
-
-    // buildWhatsAppLink used earlier
-    function buildWhatsAppLink(msg) {
-      const encoded = encodeURIComponent(msg || '');
-      return `https://wa.me/${WHATSAPP_NUMBER}?text=${encoded}`;
-    }
-
-    // Auto-close thank you modal when clicking outside
-    document.getElementById('thankYouModal').addEventListener('click', (e) => {
-      if (e.target.id === 'thankYouModal') closeThankYou();
-    });
-
-    /* ---------- ADDED: Cinematic Particles & Scroll Fade logic ---------- */
-    (function cinematicParticlesAndFade(){
-      // Particles
-      const container = document.getElementById('cinematicParticles');
-      if (!container) return;
-      const colors = ['rgba(197,157,95,0.9)', 'rgba(11,61,145,0.7)', 'rgba(255,215,140,0.6)']; // gold + navy accents
-      const count = Math.round((window.innerWidth * window.innerHeight) / 90000); // density relative to screen area
-      for (let i=0;i<count;i++){
-        const p = document.createElement('div');
-        p.className = 'cinema-particle';
-        const size = Math.random() * 3 + 1.2; // 1.2px - 4.2px
-        p.style.width = `${size}px`;
-        p.style.height = `${size}px`;
-        p.style.left = `${Math.random()*100}%`;
-        p.style.top = `${Math.random()*100}%`;
-        p.style.background = colors[Math.floor(Math.random()*colors.length)];
-        const dur = 8 + Math.random()*18; // 8s-26s
-        const delay = Math.random() * 6;
-        const dir = Math.random() > 0.5 ? 1 : -1;
-        p.style.opacity = (0.15 + Math.random()*0.85).toString();
-        p.style.transform = `translate3d(0,0,0)`;
-        p.style.transition = `transform ${dur}s linear ${delay}s, opacity ${dur/2}s linear ${delay}s`;
-        container.appendChild(p);
-
-        // animate via requestAnimationFrame to avoid CSS keyframes heavy load
-        (function animateParticle(el,duration,delayX,dir){
-          const start = performance.now() + delayX*1000;
-          const amplitudeY = 30 + Math.random()*180; // vertical travel
-          const amplitudeX = (Math.random()*60)*dir; // slight horizontal drift
-          function step(now){
-            const t = (now - start)/1000;
-            if (t < 0) { requestAnimationFrame(step); return; }
-            const prog = (t % duration) / duration; // loop
-            // vertical: go up slowly and reset
-            const y = - (prog * amplitudeY);
-            // small horizontal oscillation
-            const x = Math.sin(prog * Math.PI*2) * amplitudeX;
-            el.style.transform = `translate3d(${x}px, ${y}px, 0)`;
-            // fade in/out edges
-            if (prog > 0.85) el.style.opacity = `${(1 - (prog-0.85)/0.15) * parseFloat(el.style.opacity)}`;
-            else el.style.opacity = `${el.style.opacity}`;
-            requestAnimationFrame(step);
-          }
-          requestAnimationFrame(step);
-        })(p,dur,delay,dir);
-      }
-
-      // Fade-in on scroll for elements with data-fade attribute or .fade-section
-      const fadeEls = Array.from(document.querySelectorAll('[data-fade], .fade-section'));
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('inview');
-            // once in view, unobserve to reduce CPU
-            observer.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.12 });
-      fadeEls.forEach(el => observer.observe(el));
-
-      // small initial reveal for header
-      const prefade = document.querySelectorAll('header, main, footer');
-      prefade.forEach(el => el.classList.add('fade-section'));
-    })();
-
   </script>
+
 </body>
 </html>
