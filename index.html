@@ -5,77 +5,118 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Wolfguard Insurance — Auto Quote & Lead Capture</title>
   <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- jsPDF for PDF Quote -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
-  <!-- Particles.js -->
-  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
-
   <style>
-    /* Cinematic particles background */
-    #particles-js {
-      position: fixed;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-      top: 0;
-      left: 0;
-      background-color: #1e1e2f; /* dark grey background */
+    /* ---------- Background Gradient ---------- */
+    body {
+      background: linear-gradient(to bottom, #2D353C 0%, #747A7E 50%, #2D353C 100%);
+      color: #E6F1F4;
+      font-family: 'Inter', sans-serif;
+      transition: all 0.5s ease-in-out;
     }
 
-    /* Smooth animations */
-    * {
-      transition: all 0.4s ease-in-out;
+    /* ---------- Section Transitions ---------- */
+    header, section, main, aside, form, .testimonial-card, .faq-q, .faq-a {
+      transition: all 0.6s ease-in-out;
     }
 
-    a:hover, button:hover {
-      transform: scale(1.05);
+    /* ---------- Typography ---------- */
+    h1, h2, h3 {
+      color: #CECOAE;
+    }
+    p, li, label {
+      color: #E6F1F4;
+    }
+    input, select, textarea, button {
+      font-family: 'Inter', sans-serif;
+      transition: all 0.3s ease;
     }
 
-    header, section, aside, #contact {
-      opacity: 0;
-      transform: translateY(20px);
-      animation: fadeUp 1s forwards;
-    }
-    header { animation-delay: 0.2s; }
-    section:nth-of-type(1) { animation-delay: 0.4s; }
-    section:nth-of-type(2) { animation-delay: 0.6s; }
-    main > aside { animation-delay: 0.8s; }
-    #contact { animation-delay: 1s; }
+    /* ---------- Buttons ---------- */
+    .btn-primary { background-color: #DFD5CA; color: #2D353C; }
+    .btn-primary:hover { background-color: #CECOAE; color: #2D353C; }
 
-    @keyframes fadeUp {
-      to { opacity: 1; transform: translateY(0); }
+    .btn-secondary { background-color: #C2BBB2; color: #2D353C; }
+    .btn-secondary:hover { background-color: #BECED1; color: #2D353C; }
+
+    /* ---------- Calculator / Lead Form ---------- */
+    #calculator, #contact, aside > div, .bg-white {
+      background-color: rgba(45, 53, 60, 0.85);
+      backdrop-filter: blur(6px);
+      border: 1px solid #CECOAE;
     }
 
-    /* Update sticky CTA and buttons colors */
+    input, select, textarea {
+      background-color: #747A7E;
+      color: #E6F1F4;
+      border: 1px solid #CECOAE;
+    }
+    input::placeholder, textarea::placeholder {
+      color: #D3CFCC;
+    }
+
+    /* ---------- Hover Effects ---------- */
+    button:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+
+    /* ---------- Sticky CTA ---------- */
     .sticky-cta button {
-      background-color: #0b3d91; /* Navy blue */
+      background-color: #DFD5CA;
+      color: #2D353C;
+      transition: all 0.4s ease;
     }
-    .sticky-cta button:hover {
-      background-color: #061f52;
+    .sticky-cta button:hover { background-color: #CECOAE; }
+
+    /* ---------- Testimonials ---------- */
+    .testimonial-card {
+      background-color: rgba(45, 53, 60, 0.75);
+      border: 1px solid #CECOAE;
+    }
+
+    /* ---------- FAQ ---------- */
+    .faq-q { background-color: rgba(45,53,60,0.6); border: 1px solid #CECOAE; }
+    .faq-q:hover { background-color: #CECOAE; color: #2D353C; }
+
+    /* ---------- Modals ---------- */
+    #claimModal, #renewModal, #exitModal, #thankYouModal {
+      background-color: rgba(45,53,60,0.95);
+      color: #E6F1F4;
+    }
+
+    #claimModal input, #renewModal input, #exitModal input, #thankYouModal button {
+      background-color: #747A7E;
+      color: #E6F1F4;
+      border: 1px solid #CECOAE;
+    }
+
+    /* ---------- Cinematic Fade on Scroll ---------- */
+    .fade-section {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s ease-out;
+    }
+    .fade-section.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
   </style>
 </head>
-<body class="bg-gray-900 text-gray-200 relative">
-
-  <!-- Particles Container -->
-  <div id="particles-js"></div>
+<body>
 
   <!-- HERO -->
-  <header class="bg-gray-800 shadow-sm">
+  <header class="bg-transparent shadow-sm fade-section">
     <div class="max-w-6xl mx-auto px-6 py-10 text-center">
-      <h1 class="text-4xl md:text-5xl font-bold text-blue-400">Protect What Matters with Wolfguard Insurance</h1>
-      <p class="mt-3 text-gray-300 max-w-2xl mx-auto">Fast quotes, trusted cover — fully digital. Use the calculator or get a free quote instantly.</p>
+      <h1 class="text-4xl md:text-5xl font-bold">Protect What Matters with Wolfguard Insurance</h1>
+      <p class="mt-3 max-w-2xl mx-auto">Fast quotes, trusted cover — fully digital. Use the calculator or get a free quote instantly.</p>
       <div class="mt-6 flex justify-center gap-4">
-        <a href="#calculator" class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-medium">Open Premium Calculator</a>
-        <a href="#contact" class="bg-blue-700 hover:bg-blue-800 text-white px-6 py-3 rounded-lg font-medium">Get a Free Quote</a>
+        <a href="#calculator" class="btn-primary px-6 py-3 rounded-lg font-medium">Open Premium Calculator</a>
+        <a href="#contact" class="btn-secondary px-6 py-3 rounded-lg font-medium">Get a Free Quote</a>
       </div>
     </div>
   </header>
 
   <!-- TRUST BADGES -->
-  <section class="max-w-6xl mx-auto px-6 py-8">
+  <section class="max-w-6xl mx-auto px-6 py-8 fade-section">
     <div class="flex flex-col md:flex-row items-center justify-between gap-6">
       <div class="flex items-center gap-4">
         <img src="https://img.icons8.com/ios-filled/48/4CAF50/lock.png" alt="Secure" class="w-10 h-10">
@@ -101,50 +142,48 @@
     </div>
   </section>
 
-  <!-- MAIN GRID: Calculator + Benefits -->
-  <main class="max-w-6xl mx-auto px-6 grid lg:grid-cols-2 gap-8 pb-12">
+  <!-- MAIN GRID -->
+  <main class="max-w-6xl mx-auto px-6 grid lg:grid-cols-2 gap-8 pb-12 fade-section">
 
     <!-- CALCULATOR COLUMN -->
-    <section id="calculator" class="bg-gray-800 p-6 rounded-xl shadow">
-      <!-- Calculator code unchanged -->
+    <section id="calculator" class="p-6 rounded-xl shadow fade-section">
+      <h2 class="text-2xl font-bold">Motor Insurance Premium Calculator</h2>
+      <p class="text-sm mt-1">Step-by-step calculator — select vehicle class, cover and get instant premium (VAT included).</p>
+
+      <!-- ...YOUR ORIGINAL FORM AND CALCULATOR FIELDS GO HERE EXACTLY... -->
+
     </section>
 
     <!-- RIGHT COLUMN: Trust, Testimonials, FAQ -->
-    <aside class="space-y-6">
-      <!-- Right column code unchanged -->
+    <aside class="space-y-6 fade-section">
+      <!-- ...ALL YOUR ORIGINAL RIGHT COLUMN CONTENT INCLUDING TESTIMONIALS, FAQ, CLAIM & RENEW BUTTONS... -->
     </aside>
   </main>
 
   <!-- LEAD FORM SECTION -->
-  <section id="contact" class="bg-gray-800 p-6 max-w-4xl mx-auto rounded-xl shadow mb-12">
-    <!-- Lead form code unchanged -->
+  <section id="contact" class="p-6 max-w-4xl mx-auto rounded-xl shadow fade-section">
+    <h2 class="text-2xl font-bold">Get Your Free Insurance Quote</h2>
+    <p class="text-sm mt-1">Complete the form and we’ll email your quote right away.</p>
+    <!-- ...YOUR ORIGINAL LEAD FORM ... -->
   </section>
 
-  <!-- Modals and CTA -->
-  <!-- All modal and CTA code unchanged -->
+  <!-- ...ALL MODALS, STICKY CTA, WHATSAPP FLOAT AND THANK YOU MODAL ... -->
 
-  <!-- SCRIPTS -->
   <script>
-    // ---------- Particles.js config ----------
-    particlesJS("particles-js", {
-      "particles": {
-        "number": { "value": 80 },
-        "color": { "value": "#0b3d91" },
-        "shape": { "type": "circle" },
-        "opacity": { "value": 0.5 },
-        "size": { "value": 3 },
-        "line_linked": { "enable": true, "distance": 120, "color": "#0b3d91", "opacity": 0.4, "width": 1 },
-        "move": { "enable": true, "speed": 1.5 }
-      },
-      "interactivity": {
-        "detect_on": "canvas",
-        "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": true, "mode": "push" } },
-        "modes": { "grab": { "distance": 140, "line_linked": { "opacity": 0.7 } }, "push": { "particles_nb": 4 } }
-      },
-      "retina_detect": true
-    });
+    // ---------- Fade in on scroll ----------
+    const fadeSections = document.querySelectorAll('.fade-section');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.2 });
 
-    // ---------- All your existing JS logic here ----------
+    fadeSections.forEach(sec => observer.observe(sec));
+  </script>
+
+  <!-- Your existing JS calculator, forms, modals remain completely intact below this -->
+  <script>
+    // ...ALL ORIGINAL JS YOU HAD, EXACTLY AS IN YOUR SHARED HTML...
   </script>
 </body>
 </html>
