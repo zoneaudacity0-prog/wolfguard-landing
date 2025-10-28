@@ -3,13 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="WOLFGUARD Insurance — Tanzania’s trusted protection brand. Secure your car, business, and future with tailored insurance solutions that protect what matters most." />
-  <meta name="keywords" content="insurance Tanzania, car insurance, business insurance, Wolfguard, Wolfguard Tanzania, secure your future, best insurance Tanzania" />
+  <meta name="description" content="WOLFGUARD Insurance — Tanzania’s trusted insurance brand for vehicles, businesses, and personal protection. Guarding your journey, protecting your story." />
+  <meta name="keywords" content="insurance Tanzania, car insurance, Wolfguard, Wolfguard Insurance, Tanzania insurance company, business insurance, vehicle cover, insurance quotes Tanzania" />
   <meta name="author" content="WOLFGUARD Insurance" />
+  <meta property="og:title" content="WOLFGUARD Insurance | Secure Your Future" />
+  <meta property="og:description" content="Guarding your journey. Protecting your story. Get a fast insurance quote today." />
+  <meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/e/e0/Wolf_icon.svg" />
+  <meta property="og:type" content="website" />
   <title>WOLFGUARD Insurance | Secure Your Future</title>
   <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/e/e0/Wolf_icon.svg" />
 
-  <!-- Tailwind CSS CDN -->
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
 
   <!-- Google Font -->
@@ -18,26 +22,49 @@
   <style>
     body {
       font-family: 'Montserrat', sans-serif;
-      background: radial-gradient(circle at top, #0d0d0f, #000);
+      background: radial-gradient(circle at top, #0b0b0e, #000);
       color: #f2f2f2;
       overflow-x: hidden;
     }
 
-    /* Glowing Aura Effects */
+    /* Mystic Aura background glow */
     .aura {
       position: absolute;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(0,255,255,0.2), transparent);
-      filter: blur(100px);
-      animation: float 10s infinite ease-in-out alternate;
+      background: radial-gradient(circle, rgba(255, 215, 0, 0.1), transparent);
+      filter: blur(90px);
+      animation: float 10s ease-in-out infinite alternate;
       z-index: 0;
     }
-    .aura:nth-child(1) { top: 20%; left: 10%; width: 300px; height: 300px; }
-    .aura:nth-child(2) { bottom: 10%; right: 15%; width: 250px; height: 250px; animation-delay: 3s; }
+    .aura:nth-child(1) { top: 15%; left: 10%; width: 280px; height: 280px; }
+    .aura:nth-child(2) { bottom: 15%; right: 15%; width: 300px; height: 300px; animation-delay: 2s; }
 
     @keyframes float {
-      from { transform: translateY(0px) scale(1); opacity: 0.8; }
-      to { transform: translateY(40px) scale(1.2); opacity: 0.6; }
+      from { transform: translateY(0) scale(1); opacity: 0.8; }
+      to { transform: translateY(40px) scale(1.2); opacity: 0.5; }
+    }
+
+    /* Spark particles */
+    #sparks {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 1;
+    }
+    .spark {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: rgba(255, 215, 0, 0.8);
+      border-radius: 50%;
+      filter: blur(1px);
+      animation: rise 6s linear infinite;
+    }
+    @keyframes rise {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-120vh) scale(0.5); opacity: 0; }
     }
 
     /* Buttons */
@@ -51,71 +78,107 @@
     }
     .btn:hover {
       transform: scale(1.05);
-      box-shadow: 0 0 20px #c59d5f;
+      box-shadow: 0 0 15px #c59d5f;
     }
 
-    /* Smooth Fade Animation */
+    /* Fade-in animation */
     .fade-in {
       opacity: 0;
       transform: translateY(30px);
-      animation: fadeIn 1.5s ease forwards;
+      animation: fadeIn 1.2s ease forwards;
     }
     @keyframes fadeIn {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      to { opacity: 1; transform: translateY(0); }
     }
+
+    /* Intro Animation */
+    #intro {
+      position: fixed;
+      inset: 0;
+      background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      z-index: 100;
+      animation: fadeOutIntro 1s ease forwards;
+      animation-delay: 3.5s;
+    }
+    #intro.hidden { display: none; }
+    .wolf-logo {
+      width: 120px;
+      height: 120px;
+      animation: pulseGlow 3s infinite ease-in-out;
+      filter: drop-shadow(0 0 20px #c59d5f);
+    }
+    @keyframes pulseGlow {
+      0%, 100% { filter: drop-shadow(0 0 10px #c59d5f); transform: scale(1); }
+      50% { filter: drop-shadow(0 0 25px #d4af37); transform: scale(1.1); }
+    }
+    @keyframes fadeOutIntro {
+      to { opacity: 0; visibility: hidden; }
+    }
+
+    footer { background-color: #080808; }
   </style>
 </head>
 
 <body class="relative overflow-hidden">
 
-  <!-- Background Aura Lights -->
+  <!-- Intro Animation -->
+  <div id="intro">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/e/e0/Wolf_icon.svg" alt="Wolf Logo" class="wolf-logo mb-4">
+    <h1 class="text-3xl text-[#c59d5f] font-bold tracking-wider">WOLFGUARD</h1>
+  </div>
+
+  <!-- Aura Lights -->
   <div class="aura"></div>
   <div class="aura"></div>
+
+  <!-- Spark Particle Container -->
+  <div id="sparks"></div>
 
   <!-- Header -->
-  <header class="relative z-10 text-center py-10">
-    <h1 class="text-4xl md:text-6xl font-extrabold text-[#c59d5f] fade-in">WOLFGUARD INSURANCE</h1>
-    <p class="mt-4 text-lg md:text-xl text-gray-300 fade-in">Guarding your journey. Protecting your story.</p>
+  <header class="relative z-10 text-center py-12 fade-in">
+    <h1 class="text-5xl md:text-6xl font-extrabold text-[#c59d5f]">WOLFGUARD INSURANCE</h1>
+    <p class="mt-4 text-lg md:text-xl text-gray-300">Guarding your journey. Protecting your story.</p>
   </header>
 
-  <!-- Hero Section -->
-  <section class="relative z-10 text-center py-12 md:py-20 fade-in">
+  <!-- Hero -->
+  <section class="relative z-10 text-center py-16 fade-in">
     <div class="max-w-3xl mx-auto px-6">
       <h2 class="text-3xl md:text-4xl font-semibold mb-6">Secure What Matters Most</h2>
       <p class="text-gray-400 mb-8">
-        From personal vehicle cover to business protection — Wolfguard offers premium insurance services
-        crafted for Tanzanians who value security, reliability, and class.
+        From personal vehicle cover to business protection — Wolfguard offers premium insurance
+        solutions for Tanzanians who value reliability, strength, and peace of mind.
       </p>
-      <a href="#quote" class="btn inline-block">Get Your Quote</a>
+      <a href="#quote" class="btn inline-block">Get a Quote</a>
     </div>
   </section>
 
-  <!-- Services Section -->
-  <section class="relative z-10 py-16 px-8 bg-[#0d0d0f]/70 backdrop-blur-md fade-in">
-    <h2 class="text-3xl font-semibold text-center mb-12">Our Insurance Covers</h2>
+  <!-- Services -->
+  <section class="relative z-10 py-16 px-8 bg-[#0e0e0e]/80 backdrop-blur-md fade-in">
+    <h2 class="text-3xl font-semibold text-center mb-12">Our Coverage</h2>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-10 max-w-6xl mx-auto">
-      <div class="bg-[#111] rounded-xl p-6 hover:scale-105 transition-all border border-gray-700 shadow-lg">
+      <div class="bg-[#111] p-6 rounded-xl border border-gray-700 hover:scale-105 transition-all shadow-lg">
         <h3 class="text-xl font-semibold text-[#c59d5f] mb-3">Vehicle Insurance</h3>
-        <p class="text-gray-400">Comprehensive and third-party cover options for your car, motorbike, or fleet.</p>
+        <p class="text-gray-400">Comprehensive and third-party car, motorbike, and fleet insurance.</p>
       </div>
-      <div class="bg-[#111] rounded-xl p-6 hover:scale-105 transition-all border border-gray-700 shadow-lg">
+      <div class="bg-[#111] p-6 rounded-xl border border-gray-700 hover:scale-105 transition-all shadow-lg">
         <h3 class="text-xl font-semibold text-[#c59d5f] mb-3">Business Insurance</h3>
-        <p class="text-gray-400">Protect your enterprise against loss, liability, and unexpected disruptions.</p>
+        <p class="text-gray-400">Protect your business assets, liability, and staff with reliable coverage.</p>
       </div>
-      <div class="bg-[#111] rounded-xl p-6 hover:scale-105 transition-all border border-gray-700 shadow-lg">
-        <h3 class="text-xl font-semibold text-[#c59d5f] mb-3">Personal Cover</h3>
-        <p class="text-gray-400">Life, health, and property insurance — ensuring you and your loved ones are protected.</p>
+      <div class="bg-[#111] p-6 rounded-xl border border-gray-700 hover:scale-105 transition-all shadow-lg">
+        <h3 class="text-xl font-semibold text-[#c59d5f] mb-3">Personal Protection</h3>
+        <p class="text-gray-400">Life, health, and property insurance built for you and your loved ones.</p>
       </div>
     </div>
   </section>
 
   <!-- Quote Form -->
-  <section id="quote" class="relative z-10 py-20 text-center">
+  <section id="quote" class="relative z-10 py-20 text-center fade-in">
     <h2 class="text-3xl font-semibold mb-8">Get a Quick Quote</h2>
-    <form id="quoteForm" action="https://formspree.io/f/YOUR_FORMSPREE_ENDPOINT" method="POST" class="max-w-lg mx-auto bg-[#111]/70 backdrop-blur-md rounded-xl p-8 border border-gray-700 shadow-lg fade-in">
+    <form action="https://formspree.io/f/YOUR_FORMSPREE_ENDPOINT" method="POST" class="max-w-lg mx-auto bg-[#111]/80 backdrop-blur-md rounded-xl p-8 border border-gray-700 shadow-lg">
       <input type="text" name="name" placeholder="Full Name" required class="w-full mb-4 p-3 rounded bg-[#1a1a1a] border border-gray-600 text-gray-200">
       <input type="email" name="email" placeholder="Email Address" required class="w-full mb-4 p-3 rounded bg-[#1a1a1a] border border-gray-600 text-gray-200">
       <input type="text" name="vehicle" placeholder="Vehicle / Asset Type" required class="w-full mb-4 p-3 rounded bg-[#1a1a1a] border border-gray-600 text-gray-200">
@@ -126,8 +189,9 @@
   </section>
 
   <!-- WhatsApp Floating Button -->
-  <a href="https://wa.me/255769715177?text=Hello%20WOLFGUARD%20Insurance!%20I%20need%20a%20quote." target="_blank"
-    class="fixed bottom-6 right-6 bg-green-500 hover:bg-green-600 p-4 rounded-full shadow-lg z-50 transition-all">
+  <a href="https://wa.me/255769715177?text=Hello%20WOLFGUARD!%20I%20need%20an%20insurance%20quote."
+     target="_blank"
+     class="fixed bottom-6 right-6 bg-green-500 hover:bg-green-600 p-4 rounded-full shadow-lg z-50 transition-all">
     <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" class="w-8 h-8" alt="WhatsApp" />
   </a>
 
@@ -137,16 +201,23 @@
     <p>Made with 🖤 in Tanzania | Contact: victor99wolfgang@gmail.com</p>
   </footer>
 
-  <!-- JS Animations -->
+  <!-- JS for Intro + Sparks -->
   <script>
-    // Fade-in on scroll
-    const faders = document.querySelectorAll('.fade-in');
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) entry.target.style.animationPlayState = 'running';
-      });
+    window.addEventListener('load', () => {
+      setTimeout(() => document.getElementById('intro').classList.add('hidden'), 4000);
+
+      const sparks = document.getElementById('sparks');
+      for (let i = 0; i < 30; i++) {
+        const spark = document.createElement('div');
+        spark.className = 'spark';
+        spark.style.left = Math.random() * 100 + '%';
+        spark.style.top = Math.random() * 100 + '%';
+        spark.style.animationDelay = Math.random() * 6 + 's';
+        spark.style.animationDuration = 4 + Math.random() * 4 + 's';
+        sparks.appendChild(spark);
+      }
     });
-    faders.forEach(fader => observer.observe(fader));
   </script>
+
 </body>
 </html>
