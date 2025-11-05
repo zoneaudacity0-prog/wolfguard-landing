@@ -1,36 +1,47 @@
-<!DOCTYPE html>
-  <!-- Toggle Script -->
-  <script>
-    const toggleBtn = document.getElementById("toggleProductsBtn");
-    const productsGrid = document.getElementById("productsGrid");
-
-    toggleBtn.addEventListener("click", () => {
-      productsGrid.classList.toggle("hidden");
-      toggleBtn.textContent = productsGrid.classList.contains("hidden") ? "Insurance Products" : "Hide Products";
-    });
-  </script>
-</section>
-
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Wolfguard Insurance — Auto Quote & Lead Capture</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <meta name="description" content="Wolfguard Insurance — Fast digital motor insurance quotes, downloadable PDF quotes, WhatsApp support and online claim submission. Serving Tanzania." />
+  <meta name="keywords" content="insurance, motor insurance, Tanzania, quote, premium calculator, claims" />
+  <meta name="author" content="Wolfguard Insurance" />
 
+  <!-- Local structured data (LocalBusiness) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "InsuranceAgency",
+    "name": "Wolfguard Insurance",
+    "description": "Motor and commercial insurance — fast digital quotes, claims handling and WhatsApp support.",
+    "telephone": "+255769715177",
+    "email": "wolfgangvictor75@gmail.com",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Dar es Salaam",
+      "addressRegion": "Tanzania",
+      "addressCountry": "TZ"
+    }
+  }
+  </script>
+
+  <link rel="icon" href="/favicon.ico" />
+  <script src="https://cdn.tailwindcss.com"></script>
   <!-- jsPDF for PDF Quote -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
   <style>
-    /* Small visual tweaks for sticky CTA */
-    .sticky-cta {
-      position: fixed;
-      right: 18px;
-      bottom: 18px;
-      z-index: 60;
+    /* Theme: Navy Blue + Grey (user chose Theme D) */
+    :root{
+      --brand-500:#0b3b5a; /* navy */
+      --brand-600:#072b41;
+      --muted:#6b7280; /* gray */
     }
-    /* Make testimonial card height consistent */
-    .testimonial-card { min-height: 120px; }
+    .sticky-cta{position:fixed;right:18px;bottom:18px;z-index:60}
+    .testimonial-card{min-height:120px}
+    /* small responsive tweaks */
+    @media (max-width:640px){ .max-w-6xl{padding-left:1rem;padding-right:1rem} }
   </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
@@ -38,36 +49,14 @@
   <!-- HERO -->
   <header class="bg-white shadow-sm">
     <div class="max-w-6xl mx-auto px-6 py-10 text-center">
-      <h1 class="text-4xl md:text-5xl font-bold text-blue-800">Protect What Matters with Wolfguard Insurance</h1>
+      <h1 class="text-4xl md:text-5xl font-bold" style="color:var(--brand-500)">Protect What Matters with Wolfguard Insurance</h1>
       <p class="mt-3 text-gray-600 max-w-2xl mx-auto">Fast quotes, trusted cover — fully digital. Use the calculator or get a free quote instantly.</p>
       <div class="mt-6 flex justify-center gap-4">
-        <a href="#calculator" class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-medium">Open Premium Calculator</a>
-        <a href="#contact" class="bg-blue-700 hover:bg-blue-800 text-white px-6 py-3 rounded-lg font-medium">Get a Free Quote</a>
+        <a href="#calculator" class="bg-[color:var(--brand-500)] hover:bg-[color:var(--brand-600)] text-white px-6 py-3 rounded-lg font-medium">Open Premium Calculator</a>
+        <a href="#contact" class="bg-[color:var(--brand-600)] hover:opacity-95 text-white px-6 py-3 rounded-lg font-medium">Get a Free Quote</a>
       </div>
     </div>
   </header>
-  <!-- Products Section -->
-  <section class="max-w-6xl mx-auto px-6 py-16">
-    <h2 class="text-3xl font-bold text-center text-blue-800 mb-12">Our Insurance Covers</h2>
-    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-      <div class="bg-white p-6 rounded-xl shadow-md">
-        <h3 class="text-xl font-semibold mb-2">Motor Insurance</h3>
-        <p class="text-gray-600">Drive with peace of mind — we’ve got your vehicle covered.</p>
-      </div>
-      <div class="bg-white p-6 rounded-xl shadow-md">
-        <h3 class="text-xl font-semibold mb-2">Health Insurance</h3>
-        <p class="text-gray-600">Stay healthy and financially protected during life’s uncertainties.</p>
-      </div>
-      <div class="bg-white p-6 rounded-xl shadow-md">
-        <h3 class="text-xl font-semibold mb-2">Property Insurance</h3>
-        <p class="text-gray-600">Safeguard your home, assets, and business properties from loss or damage.</p>
-      </div>
-      <div class="bg-white p-6 rounded-xl shadow-md">
-        <h3 class="text-xl font-semibold mb-2">Travel Insurance</h3>
-        <p class="text-gray-600">Wherever life takes you, travel insured and worry-free.</p>
-      </div>
-    </div>
-  </section>
 
   <!-- TRUST BADGES -->
   <section class="max-w-6xl mx-auto px-6 py-8">
@@ -101,10 +90,10 @@
 
     <!-- CALCULATOR COLUMN -->
     <section id="calculator" class="bg-white p-6 rounded-xl shadow">
-      <h2 class="text-2xl font-bold text-blue-800">Motor Insurance Premium Calculator</h2>
+      <h2 class="text-2xl font-bold" style="color:var(--brand-500)">Motor Insurance Premium Calculator</h2>
       <p class="text-sm text-gray-600 mt-1">Step-by-step calculator — select vehicle class, cover and get instant premium (VAT included).</p>
 
-      <form id="calcForm" class="mt-6 space-y-4">
+      <form id="calcForm" class="mt-6 space-y-4" onsubmit="return false;">
         <!-- Vehicle -->
         <div>
           <label class="block text-sm font-medium text-gray-700">Vehicle Class</label>
@@ -167,22 +156,21 @@
 
         <!-- Buttons -->
         <div class="flex gap-3">
-          <button type="button" onclick="calculatePremium()" class="flex-1 bg-green-600 hover:bg-green-700 text-white py-2 rounded">Calculate</button>
-          <button type="button" id="copyToLead" title="Copy to lead form" class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 py-2 rounded" onclick="copyToLeadForm()">Copy to Lead</button>
+          <button type="button" id="calcBtn" class="flex-1 bg-[color:var(--brand-500)] hover:bg-[color:var(--brand-600)] text-white py-2 rounded">Calculate</button>
+          <button type="button" id="copyToLead" title="Copy to lead form" class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 py-2 rounded">Copy to Lead</button>
         </div>
 
         <!-- Results -->
         <div id="premiumResult" class="mt-4 hidden bg-gray-50 p-4 rounded">
           <div class="text-sm text-gray-600">Base Premium: <span id="displayBase">—</span></div>
           <div class="text-sm text-gray-600">VAT (18%): <span id="displayVAT">—</span></div>
-          <div class="text-lg font-semibold text-blue-700">Total: <span id="displayTotal">—</span> TZS</div>
+          <div class="text-lg font-semibold" style="color:var(--brand-500)">Total: <span id="displayTotal">—</span> TZS</div>
           <div class="mt-3 flex gap-2">
-            <button id="downloadPDF" class="bg-blue-700 hover:bg-blue-800 text-white py-2 px-3 rounded">Download Quote (PDF)</button>
+            <button id="downloadPDF" class="bg-[color:var(--brand-500)] hover:bg-[color:var(--brand-600)] text-white py-2 px-3 rounded">Download Quote (PDF)</button>
             <button id="whatsappBtn" class="bg-green-500 hover:bg-green-600 text-white py-2 px-3 rounded">Contact via WhatsApp</button>
           </div>
         </div>
 
-        <!-- small helper -->
         <p class="mt-3 text-xs text-gray-500">Tip: Use "Copy to Lead" to auto-fill the lead form with these values for faster submission.</p>
       </form>
     </section>
@@ -191,7 +179,7 @@
     <aside class="space-y-6">
       <!-- Trust / Why choose us -->
       <div class="bg-white p-4 rounded-xl shadow">
-        <h3 class="font-semibold text-lg text-blue-800">Why choose Wolfguard?</h3>
+        <h3 class="font-semibold text-lg" style="color:var(--brand-500)">Why choose Wolfguard?</h3>
         <ul class="mt-3 space-y-2 text-sm text-gray-600">
           <li>• Fast digital quotes & downloadable PDF</li>
           <li>• Licensed & trusted locally</li>
@@ -202,47 +190,44 @@
 
       <!-- Testimonials carousel -->
       <div class="bg-white p-4 rounded-xl shadow">
-        <h3 class="font-semibold text-lg text-blue-800">What clients say</h3>
+        <h3 class="font-semibold text-lg" style="color:var(--brand-500)">What clients say</h3>
         <div id="testimonials" class="mt-3 relative">
-          <div class="testimonial-card p-4 rounded bg-gray-50" id="testiInner">
-            <!-- JS will populate -->
-          </div>
+          <div class="testimonial-card p-4 rounded bg-gray-50" id="testiInner"></div>
           <div class="mt-3 flex justify-center gap-2 text-sm text-gray-500">
-            <button onclick="prevTestimonial()" class="px-2 py-1 rounded bg-gray-200">Prev</button>
-            <button onclick="nextTestimonial()" class="px-2 py-1 rounded bg-gray-200">Next</button>
+            <button id="prevTesti" class="px-2 py-1 rounded bg-gray-200">Prev</button>
+            <button id="nextTesti" class="px-2 py-1 rounded bg-gray-200">Next</button>
           </div>
         </div>
       </div>
 
       <!-- FAQ -->
       <div class="bg-white p-4 rounded-xl shadow">
-        <h3 class="font-semibold text-lg text-blue-800">Frequently asked</h3>
+        <h3 class="font-semibold text-lg" style="color:var(--brand-500)">Frequently asked</h3>
         <div class="mt-3 space-y-2">
-          <button class="faq-q w-full text-left p-3 bg-gray-50 rounded" onclick="toggleFAQ(this)">What documents are needed to make a claim?</button>
+          <button class="faq-q w-full text-left p-3 bg-gray-50 rounded">What documents are needed to make a claim?</button>
           <div class="faq-a hidden p-3 text-sm text-gray-600">Copy of ID, police abstract, vehicle photos, and claim form — upload through our claim portal.</div>
 
-          <button class="faq-q w-full text-left p-3 bg-gray-50 rounded" onclick="toggleFAQ(this)">How long until I receive policy documents?</button>
+          <button class="faq-q w-full text-left p-3 bg-gray-50 rounded">How long until I receive policy documents?</button>
           <div class="faq-a hidden p-3 text-sm text-gray-600">Once payment is confirmed, we email policy documents immediately as PDF.</div>
 
-          <button class="faq-q w-full text-left p-3 bg-gray-50 rounded" onclick="toggleFAQ(this)">Is my data safe?</button>
+          <button class="faq-q w-full text-left p-3 bg-gray-50 rounded">Is my data safe?</button>
           <div class="faq-a hidden p-3 text-sm text-gray-600">Yes — we only use collected data for quote & service and keep it secure.</div>
         </div>
       </div>
 
       <!-- Claim / Renewal actions -->
       <div class="bg-white p-4 rounded-xl shadow space-y-3">
-        <button onclick="openClaimModal()" class="w-full bg-red-600 hover:bg-red-700 text-white py-2 rounded">File a Claim</button>
-        <button onclick="openRenewModal()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-2 rounded">Renewal Reminder</button>
+        <button id="openClaim" class="w-full bg-red-600 hover:bg-red-700 text-white py-2 rounded">File a Claim</button>
+        <button id="openRenew" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-2 rounded">Renewal Reminder</button>
       </div>
     </aside>
   </main>
 
   <!-- LEAD FORM SECTION -->
   <section id="contact" class="bg-white p-6 max-w-4xl mx-auto rounded-xl shadow mb-12">
-    <h2 class="text-2xl font-bold text-blue-800">Get Your Free Insurance Quote</h2>
+    <h2 class="text-2xl font-bold" style="color:var(--brand-500)">Get Your Free Insurance Quote</h2>
     <p class="text-sm text-gray-600 mt-1">Complete the form and we’ll email your quote right away.</p>
 
-    <!-- Replace YOUR_FORMSPREE_ENDPOINT below with your Formspree endpoint -->
     <form id="leadForm" class="mt-4 space-y-3 max-w-xl" action="https://formspree.io/f/YOUR_FORMSPREE_ENDPOINT" method="POST">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
         <input name="name" required placeholder="Full Name" class="p-2 border rounded" />
@@ -268,8 +253,8 @@
       <textarea name="message" rows="3" placeholder="Additional details (optional)" class="w-full p-2 border rounded"></textarea>
 
       <div class="flex gap-3">
-        <button class="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 rounded" type="submit">Submit Lead</button>
-        <button type="button" class="bg-gray-200 px-4 py-2 rounded" onclick="clearLeadFields()">Clear</button>
+        <button class="bg-[color:var(--brand-500)] hover:bg-[color:var(--brand-600)] text-white px-4 py-2 rounded" type="submit">Submit Lead</button>
+        <button type="button" class="bg-gray-200 px-4 py-2 rounded" id="clearLead">Clear</button>
       </div>
 
       <p class="text-xs text-gray-500 mt-2">We respect your privacy. Your details are kept confidential.</p>
@@ -280,19 +265,18 @@
   <div id="claimModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
     <div class="bg-white rounded-lg p-6 max-w-lg w-full">
       <h3 class="text-lg font-semibold">File a Claim</h3>
-      <p class="text-sm text-gray-600">Upload incident details and photos — we'll contact you within 24h.</p>
+      <p class="text-sm text-gray-600">Upload incident details and photos — we'll contact you shortly.</p>
 
-      <!-- Replace YOUR_FORMSPREE_ENDPOINT with same or separate Formspree endpoint -->
       <form id="claimForm" action="https://formspree.io/f/YOUR_FORMSPREE_ENDPOINT" method="POST" enctype="multipart/form-data" class="mt-3 space-y-3">
-        <input name="claimName" required placeholder="Full Name" class="p-2 border rounded w-full" />
-        <input name="claimPhone" required placeholder="Phone number" class="p-2 border rounded w-full" />
-        <input name="claimEmail" type="email" required placeholder="Email" class="p-2 border rounded w-full" />
-        <input name="claimVehicleNumber" placeholder="Vehicle number" class="p-2 border rounded w-full" />
-        <textarea name="claimDetails" placeholder="Describe what happened" rows="4" class="p-2 border rounded w-full"></textarea>
+        <input name="claimName" id="claimName" required placeholder="Full Name" class="p-2 border rounded w-full" />
+        <input name="claimPhone" id="claimPhone" required placeholder="Phone number" class="p-2 border rounded w-full" />
+        <input name="claimEmail" id="claimEmail" type="email" required placeholder="Email" class="p-2 border rounded w-full" />
+        <input name="claimVehicleNumber" id="claimVehicleNumber" placeholder="Vehicle number" class="p-2 border rounded w-full" />
+        <textarea name="claimDetails" id="claimDetails" placeholder="Describe what happened" rows="4" class="p-2 border rounded w-full"></textarea>
         <label class="block text-sm">Attach photo(s) (optional)</label>
-        <input type="file" name="photos" accept="image/*" multiple class="w-full" />
+        <input type="file" name="photos" id="claimPhotos" accept="image/*" multiple class="w-full" />
         <div class="flex justify-end gap-2">
-          <button type="button" class="px-4 py-2 rounded bg-gray-200" onclick="closeClaimModal()">Cancel</button>
+          <button type="button" class="px-4 py-2 rounded bg-gray-200" id="cancelClaim">Cancel</button>
           <button type="submit" class="px-4 py-2 rounded bg-red-600 text-white">Submit Claim</button>
         </div>
       </form>
@@ -311,7 +295,7 @@
         <label class="block text-sm">Policy expiry date</label>
         <input name="expiryDate" type="date" required class="p-2 border rounded w-full" />
         <div class="flex justify-end gap-2">
-          <button type="button" class="px-4 py-2 rounded bg-gray-200" onclick="closeRenewModal()">Cancel</button>
+          <button type="button" class="px-4 py-2 rounded bg-gray-200" id="cancelRenew">Cancel</button>
           <button type="submit" class="px-4 py-2 rounded bg-indigo-600 text-white">Save Reminder</button>
         </div>
       </form>
@@ -321,13 +305,13 @@
   <!-- EXIT-INTENT MODAL -->
   <div id="exitModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
     <div class="bg-white rounded-lg p-6 max-w-md w-full text-center">
-      <h3 class="text-xl font-semibold text-blue-800">Wait — get a quick quote before you go</h3>
+      <h3 class="text-xl font-semibold" style="color:var(--brand-500)">Wait — get a quick quote before you go</h3>
       <p class="text-sm text-gray-600 mt-2">We can email you an instant quote — no calls, no pressure.</p>
       <div class="mt-4">
         <input id="exitEmail" type="email" placeholder="Enter your email" class="p-2 border rounded w-full" />
         <div class="mt-3 flex gap-2 justify-center">
-          <button class="px-4 py-2 rounded bg-green-600 text-white" onclick="sendExitEmail()">Send Quote</button>
-          <button class="px-4 py-2 rounded bg-gray-200" onclick="closeExitModal()">No thanks</button>
+          <button class="px-4 py-2 rounded bg-green-600 text-white" id="sendExit">Send Quote</button>
+          <button class="px-4 py-2 rounded bg-gray-200" id="closeExit">No thanks</button>
         </div>
       </div>
     </div>
@@ -335,417 +319,377 @@
 
   <!-- STICKY CTA -->
   <div class="sticky-cta">
-    <button onclick="scrollToCalc()" title="Get a Quote" class="bg-blue-700 hover:bg-blue-800 text-white px-4 py-3 rounded-full shadow-lg">
-      Get Quote
-    </button>
+    <button id="ctaQuote" title="Get a Quote" class="bg-[color:var(--brand-500)] hover:bg-[color:var(--brand-600)] text-white px-4 py-3 rounded-full shadow-lg">Get Quote</button>
   </div>
 
   <!-- WHATSAPP FLOAT -->
   <a id="whatsappFloat" href="#" target="_blank" class="fixed left-4 bottom-6 z-50" title="Chat on WhatsApp">
-    <!-- Replace YOUR_WHATSAPP_NUMBER in JS; this is just visual -->
     <img src="https://img.icons8.com/fluency/48/000000/whatsapp.png" alt="WhatsApp" />
   </a>
 
   <!-- THANK YOU MODAL FOR LEAD -->
   <div id="thankYouModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
     <div class="bg-white rounded-lg p-6 max-w-sm w-full text-center">
-      <h3 class="text-xl font-semibold text-blue-800">Thanks — We received your request</h3>
-      <p class="text-sm mt-2 text-gray-600">A copy has been sent to your email. Our team will contact you shortly.</p>
+      <h3 class="text-xl font-semibold" style="color:var(--brand-500)">Thanks — We received your request</h3>
+      <p class="text-sm mt-2 text-gray-600">Thank you for your submission. Your issue is being processed and our team will contact you shortly.</p>
       <div class="mt-4">
-        <button class="px-4 py-2 bg-blue-700 text-white rounded" onclick="closeThankYou()">Close</button>
+        <button class="px-4 py-2 bg-[color:var(--brand-500)] text-white rounded" id="closeThank">Close</button>
       </div>
     </div>
   </div>
 
   <!-- SCRIPTS -->
   <script>
-    // ---------- Config: update these ---------- //
-    const FORMSPREE_ENDPOINT = 'YOUR_FORMSPREE_ENDPOINT'; // replace with your Formspree id
-    const WHATSAPP_NUMBER = '255769715177'; // international format, e.g. 255769715177
-    // ------------------------------------------ //
+    document.addEventListener('DOMContentLoaded', () => {
+      // ---------- Config (edit these) ---------- //
+      const FORMSPREE_ENDPOINT = ''; // e.g. 'yourFormspreeId' (leave blank if using EmailJS)
+      const EMAILJS_USER = ''; // optional: set your EmailJS user ID if you want direct email sending from client
+      const EMAILJS_SERVICE = ''; // optional: EmailJS service id
+      const EMAILJS_TEMPLATE = ''; // optional: EmailJS template id
 
-    // Wire up WhatsApp float default link
-    const whatsappFloat = document.getElementById('whatsappFloat');
-    function buildWhatsAppLink(message) {
-      const encoded = encodeURIComponent(message);
-      return `https://wa.me/${WHATSAPP_NUMBER}?text=${encoded}`;
-    }
-    whatsappFloat.href = buildWhatsAppLink("Hello Wolfguard, I need assistance with a quote.");
+      // Use the WhatsApp number you provided; convert to international format (Tanzania)
+      const WHATSAPP_NUMBER = '255769715177'; // provided by user -> 0769715177 => 255769715177
+      const AGENT_WHATSAPP_NUMBER = WHATSAPP_NUMBER; // where notifications should be sent
+      const RECEIVER_EMAIL = 'wolfgangvictor75@gmail.com';
+      // ------------------------------------------ //
 
-    // Testimonials data
-    const testimonials = [
-      { text: "Fast, clear and professional. My claim was handled smoothly.", name: "M. Komba" },
-      { text: "Saved me money and time — the online quote was accurate.", name: "A. Juma" },
-      { text: "Downloaded the PDF, showed it to my manager and we signed up.", name: "R. Mwakyusa" }
-    ];
-    let testiIndex = 0;
-    const testiInner = document.getElementById('testiInner');
-    function renderTestimonial(i) {
-      const t = testimonials[i];
-      testiInner.innerHTML = `<div class="text-sm text-gray-700 italic">"${t.text}"</div><div class="mt-3 text-xs font-semibold text-gray-600">— ${t.name}</div>`;
-    }
-    function nextTestimonial() { testiIndex = (testiIndex + 1) % testimonials.length; renderTestimonial(testiIndex); }
-    function prevTestimonial() { testiIndex = (testiIndex - 1 + testimonials.length) % testimonials.length; renderTestimonial(testiIndex); }
-    renderTestimonial(0);
-    setInterval(nextTestimonial, 7000);
-
-    // FAQ toggle
-    function toggleFAQ(btn) {
-      const a = btn.nextElementSibling;
-      a.classList.toggle('hidden');
-    }
-
-    // Modal open/close helpers
-    function openClaimModal() { document.getElementById('claimModal').classList.remove('hidden'); }
-    function closeClaimModal() { document.getElementById('claimModal').classList.add('hidden'); }
-    function openRenewModal() { document.getElementById('renewModal').classList.remove('hidden'); }
-    function closeRenewModal() { document.getElementById('renewModal').classList.add('hidden'); }
-    function openExitModal() { document.getElementById('exitModal').classList.remove('hidden'); }
-    function closeExitModal() { document.getElementById('exitModal').classList.add('hidden'); }
-
-    // Exit-intent (desktop) detection
-    let exitShown = false;
-    document.addEventListener('mouseleave', (e) => {
-      if (e.clientY <= 0 && !exitShown) {
-        exitShown = true;
-        openExitModal();
-      }
-    });
-
-    // Calculator logic (comprehensive + TPO) with VAT and min premiums
-    const vehicleClassEl = document.getElementById('vehicleClass');
-    const coverTypeEl = document.getElementById('coverType');
-    const additionalFields = document.getElementById('additionalFields');
-    const seatField = document.getElementById('seatField');
-    const bodabodaField = document.getElementById('bodabodaField');
-    const weightField = document.getElementById('weightField');
-
-    vehicleClassEl.addEventListener('change', updateFields);
-    coverTypeEl.addEventListener('change', updateFields);
-
-    function updateFields() {
-      const vc = vehicleClassEl.value;
-      const ct = coverTypeEl.value;
-      additionalFields.classList.add('hidden');
-      seatField.classList.add('hidden');
-      bodabodaField.classList.add('hidden');
-      weightField.classList.add('hidden');
-      if (!vc || !ct) return;
-      additionalFields.classList.remove('hidden');
-      if (vc === 'passengerVehicle') seatField.classList.remove('hidden');
-      if ((vc === 'motorcycle' || vc === 'threeWheeler') && ct === 'tpo') bodabodaField.classList.remove('hidden');
-      if (vc === 'commercialGoods' && ct === 'tpo') weightField.classList.remove('hidden');
-    }
-
-    // Main calculation — matches your TIRA rules from conversation
-    function calculatePremium() {
-      const vehicleClass = vehicleClassEl.value;
-      const coverType = coverTypeEl.value;
-      const sumInsured = parseFloat(document.getElementById('sumInsured').value) || 0;
-      const claimRecord = document.getElementById('claimRecord').value || 'no';
-      const numSeats = parseInt(document.getElementById('numSeats').value) || 0;
-      const bodaboda = document.getElementById('bodabodaOption').checked;
-      const weight = parseFloat(document.getElementById('vehicleWeight').value) || 0;
-      const VAT = 0.18;
-
-      if (!vehicleClass || !coverType || (coverType === 'comprehensive' && (!sumInsured || sumInsured <= 0))) {
-        alert('Please select vehicle class, type of cover and enter a valid sum insured for comprehensive cover.');
-        return;
+      // Utility
+      function buildWhatsAppLink(number, message) {
+        const encoded = encodeURIComponent(message || '');
+        return `https://wa.me/${number}?text=${encoded}`;
       }
 
-      let base = 0;
+      // Elements
+      const whatsappFloat = document.getElementById('whatsappFloat');
+      const calcBtn = document.getElementById('calcBtn');
+      const copyBtn = document.getElementById('copyToLead');
+      const downloadPDFBtn = document.getElementById('downloadPDF');
+      const whatsappBtn = document.getElementById('whatsappBtn');
+      const premiumResult = document.getElementById('premiumResult');
 
-      if (coverType === 'comprehensive') {
-        switch(vehicleClass) {
-          case 'privateCar':
-            base = sumInsured * (claimRecord === 'no' ? 0.035 : 0.04);
-            if (base < 250000) base = 250000;
-            break;
-          case 'motorcycle':
-            base = sumInsured * (claimRecord === 'no' ? 0.05 : 0.06);
-            if (bodaboda) base += 15000;
-            if (base < 125000) base = 125000;
-            break;
-          case 'threeWheeler':
-            base = sumInsured * (claimRecord === 'no' ? 0.06 : 0.07);
-            if (bodaboda) base += 45000;
-            if (base < 125000) base = 125000;
-            break;
-          case 'commercialGoods':
-            base = sumInsured * (claimRecord === 'no' ? 0.0425 : 0.0475);
-            if (base < 500000) base = 500000;
-            break;
-          case 'trailer':
-            base = sumInsured * (claimRecord === 'no' ? 0.04 : 0.0475);
-            break;
-          case 'oilTanker':
-            // differentiate steel/aluminium/old? default steel 6%
-            base = sumInsured * 0.06;
-            if (base < 2000000) base = 2000000;
-            break;
-          case 'passengerVehicle':
-            base = sumInsured * (claimRecord === 'no' ? 0.055 : 0.06);
-            base += numSeats * 15000;
-            if (base < 500000) base = 500000;
-            break;
-          case 'specialVehicle':
-            base = sumInsured * 0.02;
-            if (base < 250000) base = 250000;
-            break;
-          default:
-            base = 0;
-        }
-      } else if (coverType === 'tpo') {
-        switch(vehicleClass) {
-          case 'privateCar': base = 100000; break;
-          case 'motorcycle': base = 50000 + (bodaboda ? 15000 : 0); break;
-          case 'threeWheeler': base = 75000 + (bodaboda ? 45000 : 0); break;
-          case 'commercialGoods':
-            if (weight <= 2) base = 150000;
-            else if (weight <= 5) base = 200000;
-            else if (weight <= 10) base = 250000;
-            else base = 300000;
-            break;
-          case 'trailer': base = 100000; break;
-          case 'oilTanker': base = 750000; break;
-          case 'passengerVehicle':
-            base = Math.max(150000, 15000 * numSeats);
-            break;
-          case 'specialVehicle': base = 100000; break;
-          default: base = 0;
-        }
-      }
+      // Set default whatsapp float link
+      whatsappFloat.href = buildWhatsAppLink(WHATSAPP_NUMBER, 'Hello Wolfguard, I need assistance with a quote.');
 
-      // VAT and totals
-      const vat = Math.round(base * VAT);
-      const total = Math.round(base + vat);
+      // Testimonials
+      const testimonials = [
+        { text: "Fast, clear and professional. My claim was handled smoothly.", name: "M. Komba" },
+        { text: "Saved me money and time — the online quote was accurate.", name: "A. Juma" },
+        { text: "Downloaded the PDF, showed it to my manager and we signed up.", name: "R. Mwakyusa" }
+      ];
+      let testiIndex = 0;
+      const testiInner = document.getElementById('testiInner');
+      function renderTestimonial(i){ const t = testimonials[i]; testiInner.innerHTML = `<div class="text-sm text-gray-700 italic">"${t.text}"</div><div class="mt-3 text-xs font-semibold text-gray-600">— ${t.name}</div>`; }
+      document.getElementById('nextTesti').addEventListener('click', () => { testiIndex = (testiIndex+1)%testimonials.length; renderTestimonial(testiIndex); });
+      document.getElementById('prevTesti').addEventListener('click', () => { testiIndex = (testiIndex-1+testimonials.length)%testimonials.length; renderTestimonial(testiIndex); });
+      renderTestimonial(0);
+      setInterval(() => { testiIndex = (testiIndex+1)%testimonials.length; renderTestimonial(testiIndex); }, 7000);
 
-      // display
-      document.getElementById('displayBase').textContent = base.toLocaleString();
-      document.getElementById('displayVAT').textContent = vat.toLocaleString();
-      document.getElementById('displayTotal').textContent = total.toLocaleString();
-      document.getElementById('premiumResult').classList.remove('hidden');
-
-      // prepare WhatsApp button text (prefill)
-      const shortVehicle = vehicleClassEl.options[vehicleClassEl.selectedIndex].text;
-      const message = `Hello Wolfguard — I need help with a quote.
-Vehicle: ${shortVehicle}
-Cover: ${coverType === 'comprehensive' ? 'Comprehensive' : 'Third Party'}
-Sum insured: ${sumInsured ? sumInsured.toLocaleString() : 'N/A'}
-Total premium: TZS ${total.toLocaleString()}`;
-      document.getElementById('whatsappBtn').onclick = () => {
-        window.open(buildWhatsAppLink(message), '_blank');
-      };
-
-      // Prepare PDF download
-      document.getElementById('downloadPDF').onclick = () => downloadQuotePDF({
-        vehicleClass: shortVehicle,
-        coverType: coverType === 'comprehensive' ? 'Comprehensive' : 'Third Party Only',
-        sumInsured,
-        base,
-        vat,
-        total,
-        seats: numSeats,
-        bodaboda,
-        weight
+      // FAQ toggles
+      document.querySelectorAll('.faq-q').forEach(btn => {
+        btn.addEventListener('click', () => btn.nextElementSibling.classList.toggle('hidden'));
       });
 
-      // Save last calculated to window for copying to lead form
-      window.lastCalc = { vehicleClass, coverType, sumInsured, numSeats, bodaboda, weight, base, vat, total };
-    }
+      // Modal helpers
+      function openModal(id){ document.getElementById(id).classList.remove('hidden'); }
+      function closeModal(id){ document.getElementById(id).classList.add('hidden'); }
 
-    // Copy contents into lead form hidden fields + visible vehicle number if provided
-    function copyToLeadForm() {
-      if (!window.lastCalc) { alert('Please calculate a premium first.'); return; }
-      const calc = window.lastCalc;
-      document.getElementById('leadVehicleClass').value = calc.vehicleClass;
-      document.getElementById('leadCoverType').value = calc.coverType;
-      document.getElementById('leadSumInsured').value = calc.sumInsured || '';
-      document.getElementById('leadNumSeats').value = calc.numSeats || '';
-      document.getElementById('leadBodaboda').value = calc.bodaboda ? 'yes' : 'no';
-      document.getElementById('leadVehicleWeight').value = calc.weight || '';
-      document.getElementById('leadBasePremium').value = calc.base;
-      document.getElementById('leadVatPremium').value = calc.vat;
-      document.getElementById('leadTotalPremium').value = calc.total;
+      document.getElementById('openClaim').addEventListener('click', () => openModal('claimModal'));
+      document.getElementById('cancelClaim').addEventListener('click', () => closeModal('claimModal'));
+      document.getElementById('openRenew').addEventListener('click', () => openModal('renewModal'));
+      document.getElementById('cancelRenew').addEventListener('click', () => closeModal('renewModal'));
+      document.getElementById('ctaQuote').addEventListener('click', () => document.getElementById('calculator').scrollIntoView({behavior:'smooth'}));
 
-      // reveal the contact section and scroll
-      document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
-      // flash a small message
-      alert('Calculator values copied to the lead form — please complete name, phone and email then submit.');
-    }
+      // Exit intent
+      let exitShown = false;
+      document.addEventListener('mouseleave', (e)=>{ if(e.clientY<=0 && !exitShown){ exitShown=true; openModal('exitModal'); } });
+      document.getElementById('sendExit').addEventListener('click', sendExitEmail);
+      document.getElementById('closeExit').addEventListener('click', ()=>closeModal('exitModal'));
 
-    // Download PDF summary
-    function downloadQuotePDF(data) {
-      const { jsPDF } = window.jspdf;
-      const doc = new jsPDF();
-      doc.setFontSize(16);
-      doc.text('Wolfguard Insurance - Quote', 20, 20);
-      doc.setFontSize(11);
-      let y = 36;
-      doc.text(`Vehicle Class: ${data.vehicleClass}`, 20, y); y+=8;
-      doc.text(`Cover Type: ${data.coverType}`, 20, y); y+=8;
-      doc.text(`Sum Insured: TZS ${data.sumInsured ? data.sumInsured.toLocaleString() : 'N/A'}`, 20, y); y+=8;
-      if (data.seats) { doc.text(`Seats: ${data.seats}`, 20, y); y+=8; }
-      if (data.bodaboda) { doc.text(`Bodaboda Passenger: Yes`, 20, y); y+=8; }
-      if (data.weight) { doc.text(`Weight (T): ${data.weight}`, 20, y); y+=8; }
-      doc.text(`Base Premium: TZS ${data.base.toLocaleString()}`, 20, y); y+=8;
-      doc.text(`VAT (18%): TZS ${data.vat.toLocaleString()}`, 20, y); y+=8;
-      doc.text(`Total Premium: TZS ${data.total.toLocaleString()}`, 20, y); y+=10;
-      doc.text('This is an indicative quote based on adopted market rates.', 20, y);
-      doc.save('wolfguard-quote.pdf');
-    }
+      // Calculator logic elements
+      const vehicleClassEl = document.getElementById('vehicleClass');
+      const coverTypeEl = document.getElementById('coverType');
+      const additionalFields = document.getElementById('additionalFields');
+      const seatField = document.getElementById('seatField');
+      const bodabodaField = document.getElementById('bodabodaField');
+      const weightField = document.getElementById('weightField');
 
-    // LEAD FORM SUBMISSION (sends to Formspree endpoint). Replace endpoint above.
-    const leadForm = document.getElementById('leadForm');
-    leadForm.addEventListener('submit', async function(e) {
-      e.preventDefault();
-      // simple validation
-      const formData = new FormData(leadForm);
+      vehicleClassEl.addEventListener('change', updateFields);
+      coverTypeEl.addEventListener('change', updateFields);
 
-      // send to Formspree
-      try {
-        const response = await fetch(leadForm.action.replace('YOUR_FORMSPREE_ENDPOINT', FORMSPREE_ENDPOINT), {
-          method: 'POST',
-          body: formData,
-          headers: { 'Accept': 'application/json' }
-        });
-        if (response.ok) {
-          // show thank you
-          document.getElementById('thankYouModal').classList.remove('hidden');
-          leadForm.reset();
-          // auto close
-          setTimeout(() => closeThankYou(), 5000);
-          // Also prepare WhatsApp ping to agents (optional)
-          const total = formData.get('totalPremium') || window.lastCalc?.total;
-          const msg = `New lead from ${formData.get('name')}: ${formData.get('vehicleClass')} (${formData.get('vehicleNumber')}) — Premium: ${total || 'N/A'}`;
-          // open whatsapp agent in a new tab (optional); comment out if you don't want this
-          // window.open(buildWhatsAppLink(msg), '_blank');
-        } else {
-          alert('Submission failed. Please try again.');
-        }
-      } catch (err) {
-        console.error(err);
-        alert('Error submitting lead. Please check your connection.');
+      function updateFields(){
+        const vc = vehicleClassEl.value; const ct = coverTypeEl.value;
+        additionalFields.classList.add('hidden'); seatField.classList.add('hidden'); bodabodaField.classList.add('hidden'); weightField.classList.add('hidden');
+        if(!vc||!ct) return;
+        additionalFields.classList.remove('hidden');
+        if(vc==='passengerVehicle') seatField.classList.remove('hidden');
+        if((vc==='motorcycle'||vc==='threeWheeler')&&ct==='tpo') bodabodaField.classList.remove('hidden');
+        if(vc==='commercialGoods'&&ct==='tpo') weightField.classList.remove('hidden');
       }
-    });
 
-    function closeThankYou() { document.getElementById('thankYouModal').classList.add('hidden'); }
+      // Calculation (same rules but fixed/complete)
+      function calculatePremium(){
+        const vehicleClass = vehicleClassEl.value;
+        const coverType = coverTypeEl.value;
+        const sumInsured = parseFloat(document.getElementById('sumInsured').value) || 0;
+        const claimRecord = document.getElementById('claimRecord') ? document.getElementById('claimRecord').value : 'no';
+        const numSeats = parseInt(document.getElementById('numSeats').value) || 0;
+        const bodaboda = document.getElementById('bodabodaOption') ? document.getElementById('bodabodaOption').checked : false;
+        const weight = parseFloat(document.getElementById('vehicleWeight').value) || 0;
+        const VAT = 0.18;
 
-    // Claim form submit (same approach)
-    const claimForm = document.getElementById('claimForm');
-    if (claimForm) {
-      claimForm.addEventListener('submit', async function(e) {
-        // Formspree file upload works with multipart POST
-        // keep UI simple: show a small alert or modal after success
-        // Form action has YOUR_FORMSPREE_ENDPOINT placeholder — update to your endpoint
-        // We'll allow default behavior but prevent page reload to show custom message
-        e.preventDefault();
-        const formData = new FormData(claimForm);
-        try {
-          const resp = await fetch(claimForm.action.replace('YOUR_FORMSPREE_ENDPOINT', FORMSPREE_ENDPOINT), {
-            method: 'POST',
-            body: formData,
-            headers: { 'Accept': 'application/json' }
-          });
-          if (resp.ok) {
-            alert('Claim submitted. We will contact you shortly.');
-            claimForm.reset();
-            closeClaimModal();
-          } else {
-            alert('Claim submission failed. Try again.');
+        if(!vehicleClass || !coverType || (coverType==='comprehensive' && (!sumInsured || sumInsured<=0))){ alert('Please select vehicle class, type of cover and enter a valid sum insured for comprehensive cover.'); return; }
+
+        let base = 0;
+        if(coverType==='comprehensive'){
+          switch(vehicleClass){
+            case 'privateCar':
+              base = sumInsured * (claimRecord==='no' ? 0.035 : 0.04);
+              if(base < 250000) base = 250000;
+              break;
+            case 'motorcycle':
+              base = sumInsured * (claimRecord==='no' ? 0.05 : 0.06);
+              if(bodaboda) base += 15000;
+              if(base < 125000) base = 125000;
+              break;
+            case 'threeWheeler':
+              base = sumInsured * (claimRecord==='no' ? 0.06 : 0.07);
+              if(bodaboda) base += 45000;
+              if(base < 125000) base = 125000;
+              break;
+            case 'commercialGoods':
+              base = sumInsured * (claimRecord==='no' ? 0.0425 : 0.0475);
+              if(base < 500000) base = 500000;
+              break;
+            case 'trailer':
+              base = sumInsured * (claimRecord==='no' ? 0.04 : 0.0475);
+              break;
+            case 'oilTanker':
+              base = sumInsured * 0.06;
+              if(base < 2000000) base = 2000000;
+              break;
+            case 'passengerVehicle':
+              base = sumInsured * (claimRecord==='no' ? 0.055 : 0.06);
+              base += numSeats * 15000;
+              if(base < 500000) base = 500000;
+              break;
+            case 'specialVehicle':
+              base = sumInsured * 0.02;
+              if(base < 250000) base = 250000;
+              break;
+            default: base = 0;
           }
-        } catch (err) {
-          console.error(err);
-          alert('Error submitting claim.');
+        } else if(coverType==='tpo'){
+          switch(vehicleClass){
+            case 'privateCar': base = 100000; break;
+            case 'motorcycle': base = 50000 + (bodaboda ? 15000 : 0); break;
+            case 'threeWheeler': base = 75000 + (bodaboda ? 45000 : 0); break;
+            case 'commercialGoods':
+              if(weight <= 2) base = 150000;
+              else if(weight <= 5) base = 200000;
+              else if(weight <= 10) base = 250000;
+              else base = 300000;
+              break;
+            case 'trailer': base = 100000; break;
+            case 'oilTanker': base = 750000; break;
+            case 'passengerVehicle': base = Math.max(150000, 15000 * numSeats); break;
+            case 'specialVehicle': base = 100000; break;
+            default: base = 0;
+          }
         }
-      });
-    }
 
-    // Renewal reminder submit
-    const renewForm = document.getElementById('renewForm');
-    if (renewForm) {
-      renewForm.addEventListener('submit', async function(e) {
+        const vat = Math.round(base * VAT);
+        const total = Math.round(base + vat);
+
+        document.getElementById('displayBase').textContent = base.toLocaleString();
+        document.getElementById('displayVAT').textContent = vat.toLocaleString();
+        document.getElementById('displayTotal').textContent = total.toLocaleString();
+        premiumResult.classList.remove('hidden');
+
+        const shortVehicle = vehicleClassEl.options[vehicleClassEl.selectedIndex].text;
+        const message = `Hello Wolfguard — I need help with a quote.
+Vehicle: ${shortVehicle}
+Cover: ${coverType==='comprehensive'? 'Comprehensive' : 'Third Party'}
+Sum insured: ${sumInsured? sumInsured.toLocaleString() : 'N/A'}
+Total premium: TZS ${total.toLocaleString()}`;
+
+        whatsappBtn.onclick = () => { window.open(buildWhatsAppLink(WHATSAPP_NUMBER, message), '_blank'); };
+
+        downloadPDFBtn.onclick = () => downloadQuotePDF({ vehicleClass: shortVehicle, coverType: (coverType==='comprehensive'? 'Comprehensive' : 'Third Party Only'), sumInsured, base, vat, total, seats: numSeats, bodaboda, weight });
+
+        window.lastCalc = { vehicleClass, coverType, sumInsured, numSeats, bodaboda, weight, base, vat, total };
+      }
+
+      calcBtn.addEventListener('click', calculatePremium);
+
+      // Copy to lead form
+      copyBtn.addEventListener('click', () => {
+        if(!window.lastCalc){ alert('Please calculate a premium first.'); return; }
+        const calc = window.lastCalc;
+        document.getElementById('leadVehicleClass').value = calc.vehicleClass;
+        document.getElementById('leadCoverType').value = calc.coverType;
+        document.getElementById('leadSumInsured').value = calc.sumInsured || '';
+        document.getElementById('leadNumSeats').value = calc.numSeats || '';
+        document.getElementById('leadBodaboda').value = calc.bodaboda ? 'yes' : 'no';
+        document.getElementById('leadVehicleWeight').value = calc.weight || '';
+        document.getElementById('leadBasePremium').value = calc.base;
+        document.getElementById('leadVatPremium').value = calc.vat;
+        document.getElementById('leadTotalPremium').value = calc.total;
+        document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+        alert('Calculator values copied to the lead form — please complete name, phone and email then submit.');
+      });
+
+      // PDF generator
+      function downloadQuotePDF(data){
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+        doc.setFontSize(16);
+        doc.text('Wolfguard Insurance - Quote', 20, 20);
+        doc.setFontSize(11);
+        let y = 36;
+        doc.text(`Vehicle Class: ${data.vehicleClass}`, 20, y); y+=8;
+        doc.text(`Cover Type: ${data.coverType}`, 20, y); y+=8;
+        doc.text(`Sum Insured: TZS ${data.sumInsured ? data.sumInsured.toLocaleString() : 'N/A'}`, 20, y); y+=8;
+        if(data.seats){ doc.text(`Seats: ${data.seats}`, 20, y); y+=8; }
+        if(data.bodaboda){ doc.text(`Bodaboda Passenger: Yes`, 20, y); y+=8; }
+        if(data.weight){ doc.text(`Weight (T): ${data.weight}`, 20, y); y+=8; }
+        doc.text(`Base Premium: TZS ${data.base.toLocaleString()}`, 20, y); y+=8;
+        doc.text(`VAT (18%): TZS ${data.vat.toLocaleString()}`, 20, y); y+=8;
+        doc.text(`Total Premium: TZS ${data.total.toLocaleString()}`, 20, y); y+=10;
+        doc.text('This is an indicative quote based on adopted market rates.', 20, y);
+        doc.save('wolfguard-quote.pdf');
+      }
+
+      // ----------------- Form submission improvements -----------------
+      // Generic helper to post FormData to Formspree (if endpoint set)
+      async function postToFormspree(action, formData){
+        if(!action) return { ok:false, message:'No Formspree endpoint configured.' };
+        try{
+          const resp = await fetch(action, { method:'POST', body: formData, headers:{ 'Accept':'application/json' } });
+          return resp;
+        }catch(err){ console.error(err); return { ok:false, message:err.message } }
+      }
+
+      // Optionally send via EmailJS (if configured) -- requires user to set EMAILJS_USER/SERVICE/TEMPLATE
+      async function sendViaEmailJS(formData){
+        if(!EMAILJS_USER || !EMAILJS_SERVICE || !EMAILJS_TEMPLATE) return { ok:false, message:'EmailJS not configured.' };
+        // lazy-load emailjs
+        if(typeof emailjs === 'undefined'){
+          const s = document.createElement('script'); s.src='https://cdn.jsdelivr.net/npm/emailjs-com@2.6.4/dist/email.min.js'; document.head.appendChild(s);
+          await new Promise(r=>s.onload=r);
+          emailjs.init(EMAILJS_USER);
+        }
+        const templateParams = Object.fromEntries(formData.entries());
+        try{
+          const res = await emailjs.send(EMAILJS_SERVICE, EMAILJS_TEMPLATE, templateParams);
+          return { ok:true, res };
+        }catch(err){ console.error(err); return { ok:false, message:err } }
+      }
+
+      // Claim form handling
+      const claimForm = document.getElementById('claimForm');
+      claimForm.addEventListener('submit', async (e) => {
         e.preventDefault();
-        const fd = new FormData(renewForm);
-        try {
-          const r = await fetch(renewForm.action.replace('YOUR_FORMSPREE_ENDPOINT', FORMSPREE_ENDPOINT), {
-            method: 'POST',
-            body: fd,
-            headers: { 'Accept': 'application/json' }
-          });
-          if (r.ok) {
-            alert('Renewal reminder saved. We will notify you near expiry (you may receive an email).');
-            renewForm.reset();
-            closeRenewModal();
-          } else alert('Failed to save reminder.');
-        } catch (err) { alert('Error saving reminder.'); }
+        const submitBtn = claimForm.querySelector('button[type="submit"]');
+        submitBtn.disabled = true; submitBtn.textContent = 'Submitting...';
+
+        const fd = new FormData(claimForm);
+        // add receiver fields for template convenience
+        fd.append('receiver_email', RECEIVER_EMAIL);
+
+        // 1) Try EmailJS if configured
+        let sent = false;
+        if(EMAILJS_USER && EMAILJS_SERVICE && EMAILJS_TEMPLATE){
+          const r = await sendViaEmailJS(fd);
+          if(r.ok) sent = true;
+        }
+
+        // 2) Try Formspree if provided
+        if(!sent && FORMSPREE_ENDPOINT){
+          const action = `https://formspree.io/f/${FORMSPREE_ENDPOINT}`;
+          const r = await postToFormspree(action, fd);
+          if(r && r.ok){ sent = true; }
+        }
+
+        // 3) Always open WhatsApp to notify agent (so they get instant ping)
+        const summary = `New claim from ${fd.get('claimName')||'N/A'} - Phone: ${fd.get('claimPhone')||'N/A'} - Vehicle: ${fd.get('claimVehicleNumber')||'N/A'} - Details: ${fd.get('claimDetails')||'N/A'}`;
+        // Open in new tab so user stays on page
+        window.open(buildWhatsAppLink(AGENT_WHATSAPP_NUMBER, summary), '_blank');
+
+        // 4) Show thank you modal and reset form
+        openModal('thankYouModal');
+        claimForm.reset();
+        submitBtn.disabled = false; submitBtn.textContent = 'Submit Claim';
+
+        // 5) If nothing was sent server-side, include instructions in console
+        if(!sent){ console.warn('Claim was not sent to email server. Configure EmailJS or Formspree endpoint for direct email delivery.'); }
       });
-    }
 
-    // Exit modal email send (simple Formspree POST)
-    function sendExitEmail() {
-      const email = document.getElementById('exitEmail').value;
-      if (!email) return alert('Enter an email');
-      // send to Formspree quickly
-      fetch(`https://formspree.io/f/${FORMSPREE_ENDPOINT}`, {
-        method: 'POST',
-        body: JSON.stringify({ email }),
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }
-      }).then(res => {
-        if (res.ok) {
-          alert('Thank you — we sent an instant quote to your email (if provided).');
-          closeExitModal();
-        } else alert('Could not send. Try again.');
-      }).catch(() => alert('Error sending email.'));
-    }
+      // Lead form submit (similar approach)
+      const leadForm = document.getElementById('leadForm');
+      leadForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const submitBtn = leadForm.querySelector('button[type="submit"]');
+        submitBtn.disabled = true; submitBtn.textContent = 'Sending...';
 
-    // Utility: scroll to calculator
-    function scrollToCalc(){ document.getElementById('calculator').scrollIntoView({behavior:'smooth'}); }
+        const fd = new FormData(leadForm);
+        fd.append('receiver_email', RECEIVER_EMAIL);
 
-    // Utility: Clear lead visible fields
-    function clearLeadFields(){
-      document.getElementById('leadVehicleNumber').value = '';
-      leadForm.reset();
-    }
+        let sent = false;
+        if(EMAILJS_USER && EMAILJS_SERVICE && EMAILJS_TEMPLATE){
+          const r = await sendViaEmailJS(fd);
+          if(r.ok) sent = true;
+        }
 
-    // small safety: if FORMSPREE_ENDPOINT not set => hide formsubmission or warn
-    if (!FORMSPREE_ENDPOINT || FORMSPREE_ENDPOINT === 'YOUR_FORMSPREE_ENDPOINT') {
-      console.warn('Please update FORMSPREE_ENDPOINT with your actual Formspree ID. Form submissions will fail until updated.');
-    }
+        if(!sent && FORMSPREE_ENDPOINT){
+          const action = `https://formspree.io/f/${FORMSPREE_ENDPOINT}`;
+          const r = await postToFormspree(action, fd);
+          if(r && r.ok) sent = true;
+        }
 
-    // buildWhatsAppLink used earlier
-    function buildWhatsAppLink(msg) {
-      const encoded = encodeURIComponent(msg || '');
-      return `https://wa.me/${WHATSAPP_NUMBER}?text=${encoded}`;
-    }
+        // notify team on whatsapp as well
+        const msg = `New lead from ${fd.get('name')||'N/A'} - Phone: ${fd.get('phone')||'N/A'} - Vehicle: ${fd.get('vehicleClass')||'N/A'} - Premium: ${fd.get('totalPremium')||'N/A'}`;
+        window.open(buildWhatsAppLink(AGENT_WHATSAPP_NUMBER, msg), '_blank');
 
-    // Auto-close thank you modal when clicking outside
-    document.getElementById('thankYouModal').addEventListener('click', (e) => {
-      if (e.target.id === 'thankYouModal') closeThankYou();
-    });
+        openModal('thankYouModal');
+        leadForm.reset(); submitBtn.disabled = false; submitBtn.textContent = 'Submit Lead';
+
+        if(!sent){ console.warn('Lead not sent to email server — add EmailJS or Formspree endpoint.'); }
+      });
+
+      // Renew form
+      const renewForm = document.getElementById('renewForm');
+      renewForm.addEventListener('submit', async (e)=>{
+        e.preventDefault();
+        const fd = new FormData(renewForm); fd.append('receiver_email', RECEIVER_EMAIL);
+        if(FORMSPREE_ENDPOINT){ await postToFormspree(`https://formspree.io/f/${FORMSPREE_ENDPOINT}`, fd); }
+        openModal('thankYouModal'); renewForm.reset();
+      });
+
+      // Exit modal quick send
+      async function sendExitEmail(){
+        const email = document.getElementById('exitEmail').value;
+        if(!email) return alert('Enter an email');
+        if(FORMSPREE_ENDPOINT){
+          await fetch(`https://formspree.io/f/${FORMSPREE_ENDPOINT}`, { method:'POST', body: JSON.stringify({ email }), headers:{ 'Content-Type':'application/json','Accept':'application/json' } });
+        }
+        alert('Thank you — we will email you shortly if address is valid.'); closeModal('exitModal');
+      }
+
+      // Clear lead
+      document.getElementById('clearLead').addEventListener('click', ()=>{ document.getElementById('leadVehicleNumber').value=''; leadForm.reset(); });
+
+      // thank you modal close
+      document.getElementById('closeThank').addEventListener('click', ()=>closeModal('thankYouModal'));
+
+      // click outside to close thank you
+      document.getElementById('thankYouModal').addEventListener('click', (e)=>{ if(e.target.id==='thankYouModal') closeModal('thankYouModal'); });
+
+      // safety console warning
+      if(!FORMSPREE_ENDPOINT && !(EMAILJS_USER && EMAILJS_SERVICE && EMAILJS_TEMPLATE)){
+        console.warn('No server/email provider configured. To deliver emails automatically: 1) set FORMSPREE_ENDPOINT (Formspree) OR 2) set EmailJS credentials. WhatsApp notifications will still open for instant alerts.');
+      }
+
+    }); // DOMContentLoaded end
   </script>
 </body>
 </html>
-<!-- Footer -->
-  <footer class="bg-blue-900 text-white py-10">
-    <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-3 gap-6 text-center md:text-left">
-      <div>
-        <h3 class="text-xl font-semibold mb-2">Wolfguard Insurance</h3>
-        <p class="text-gray-300 text-sm">Comprehensive protection for individuals, businesses, and families across Tanzania.</p>
-      </div>
-      <div>
-        <h4 class="font-semibold mb-2">Contact Us</h4>
-        <p class="text-gray-300 text-sm">Email: <a href="mailto:wolfgangvictor75@gmail.com" class="underline">wolfgangvictor75@gmail.com</a></p>
-        <p class="text-gray-300 text-sm">Phone: <a href="tel:+255769715177" class="underline">+255 769 715 177</a></p>
-      </div>
-      <div>
-        <h4 class="font-semibold mb-2">Follow Us</h4>
-        <div class="flex justify-center md:justify-start space-x-4">
-          <a href="https://instagram.com/wolfguard" target="_blank" class="hover:text-gray-300">Instagram</a>
-          <a href="https://linkedin.com/company/wolfguard" target="_blank" class="hover:text-gray-300">LinkedIn</a>
-          <a href="https://wa.me/255769715177" target="_blank" class="hover:text-gray-300">WhatsApp</a>
-        </div>
-      </div>
-    </div>
-    <p class="text-center text-gray-400 text-sm mt-8">© 2025 Wolfguard Insurance. All rights reserved.</p>
-  </footer>
