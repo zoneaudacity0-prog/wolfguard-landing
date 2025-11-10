@@ -5,46 +5,52 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Wolfguard Insurance — Auto Quote & Lead Capture</title>
   <meta name="description" content="Wolfguard Insurance — Fast digital motor insurance quotes, downloadable PDF quotes, WhatsApp support and online claim submission. Serving Tanzania." />
-  <meta name="keywords" content="insurance, motor insurance, Tanzania, quote, premium calculator, claims" />
-  <meta name="author" content="Wolfguard Insurance" />
-
-  <!-- Local structured data (LocalBusiness) -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "InsuranceAgency",
-    "name": "Wolfguard Insurance",
-    "description": "Motor and commercial insurance — fast digital quotes, claims handling and WhatsApp support.",
-    "telephone": "+255769715177",
-    "email": "wolfgangvictor75@gmail.com",
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": "Dar es Salaam",
-      "addressRegion": "Tanzania",
-      "addressCountry": "TZ"
-    }
-  }
-  </script>
-
-  <link rel="icon" href="/favicon.ico" />
+  <meta name="keywords" content="insurance, motor insurance, Tanzania, auto quote, Wolfguard Insurance" />
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- jsPDF for PDF Quote -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
   <style>
-    /* Theme: Navy Blue + Grey (user chose Theme D) */
-    :root{
-      --brand-500:#0b3b5a; /* navy */
-      --brand-600:#072b41;
-      --muted:#6b7280; /* gray */
+    :root {
+      --brand-500: #1d4ed8; /* Brand primary color */
     }
-    .sticky-cta{position:fixed;right:18px;bottom:18px;z-index:60}
-    .testimonial-card{min-height:120px}
-    /* small responsive tweaks */
-    @media (max-width:640px){ .max-w-6xl{padding-left:1rem;padding-right:1rem} }
   </style>
 </head>
-<body class="bg-gray-50 text-gray-800">
+<body class="bg-gray-50 font-sans">
+
+  <!-- Header with Navigation -->
+  <header class="bg-white shadow-sm fixed w-full z-50">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+      <!-- Logo / Brand -->
+      <h1 class="text-2xl md:text-3xl font-bold" style="color:var(--brand-500)">Wolfguard Insurance</h1>
+
+      <!-- Desktop Navigation -->
+      <nav class="hidden md:block">
+        <ul class="flex gap-6 text-gray-700 font-medium">
+          <li><a href="#calculator" class="hover:text-[color:var(--brand-500)]">Calculator</a></li>
+          <li><a href="#contact" class="hover:text-[color:var(--brand-500)]">Get Quote</a></li>
+          <li><a href="#testimonials" class="hover:text-[color:var(--brand-500)]">Testimonials</a></li>
+          <li><a href="#faq" class="hover:text-[color:var(--brand-500)]">FAQ</a></li>
+        </ul>
+      </nav>
+
+      <!-- Mobile Menu Button -->
+      <div class="md:hidden">
+        <button id="mobileMenuBtn" class="text-gray-700">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="hidden absolute right-0 mt-2 bg-white shadow-lg rounded p-4 md:hidden w-48">
+      <ul class="flex flex-col gap-4 text-gray-700 font-medium">
+        <li><a href="#calculator">Calculator</a></li>
+        <li><a href="#contact">Get Quote</a></li>
+        <li><a href="#testimonials">Testimonials</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+    </div>
+  </header>
 
   <!-- HERO -->
   <header class="bg-white shadow-sm">
