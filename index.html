@@ -1,829 +1,147 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Wolfguard Insurance — Auto Quote & Lead Capture</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Insurance Calculators</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
-    :root{
-      --brand-500:#0b3b5a;
-      --brand-600:#072b41;
-      --muted:#6b7280;
-    }
-    .sticky-cta{position:fixed;right:18px;bottom:18px;z-index:60}
-    .testimonial-card{min-height:120px}
-    @media (max-width:640px){ .max-w-6xl{padding-left:1rem;padding-right:1rem} }
-    /* small style for product nav pills so we don't alter layout otherwise */
-    .product-pill { cursor:pointer; padding:0.5rem 1rem; border-radius:8px; }
-    .product-pill.active { background:var(--brand-500); color:white; }
+    body { font-family: 'Inter', sans-serif; margin:0; padding:0; background:#f8f9fa; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+    .tabs { display: flex; cursor: pointer; margin-bottom: 20px; }
+    .tab { flex: 1; padding: 12px 20px; text-align: center; background: #e0e0e0; border-radius: 6px 6px 0 0; margin-right: 2px; transition: background 0.3s; }
+    .tab.active { background: #007bff; color: #fff; font-weight: 600; }
+    .tab-content { background: #fff; padding: 20px; border-radius: 0 6px 6px 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); display: none; }
+    .tab-content.active { display: block; }
+    input, select, button { padding: 8px; margin: 6px 0; width: 100%; max-width: 300px; }
+    .result { margin-top: 12px; font-weight: 600; }
+    /* Optional: responsive tweaks */
+    @media(max-width:768px){ .tabs{flex-direction:column;} .tab{margin-bottom:2px;} }
   </style>
 </head>
-<body class="bg-gray-50 text-gray-800">
-
-  <!-- HERO -->
-  <header class="bg-white shadow-sm">
-    <div class="max-w-6xl mx-auto px-6 py-10 text-center">
-      <h1 class="text-4xl md:text-5xl font-bold" style="color:var(--brand-500)">Protect What Matters with Wolfguard Insurance</h1>
-      <p class="mt-3 text-gray-600 max-w-2xl mx-auto">Fast quotes, trusted cover — fully digital. Use the calculator or get a free quote instantly.</p>
-      <div class="mt-6 flex justify-center gap-4">
-        <a href="#calculator" class="bg-[color:var(--brand-500)] hover:bg-[color:var(--brand-600)] text-white px-6 py-3 rounded-lg font-medium">Open Premium Calculator</a>
-        <a href="#contact" class="bg-[color:var(--brand-600)] hover:opacity-95 text-white px-6 py-3 rounded-lg font-medium">Get a Free Quote</a>
-      </div>
+<body>
+  <div class="container">
+    <h1>Insurance Calculators</h1>
+    <div class="tabs">
+      <div class="tab active" data-tab="motor">Motor</div>
+      <div class="tab" data-tab="health">Health</div>
+      <div class="tab" data-tab="travel">Travel</div>
+      <div class="tab" data-tab="property">Property</div>
     </div>
-  </header>
 
-  <!-- TRUST BADGES -->
-  <section class="max-w-6xl mx-auto px-6 py-8">
-    <div class="flex flex-col md:flex-row items-center justify-between gap-6">
-      <div class="flex items-center gap-4">
-        <img src="https://img.icons8.com/ios-filled/48/4CAF50/lock.png" alt="Secure" class="w-10 h-10">
-        <div>
-          <div class="text-sm font-semibold">Secure & Private</div>
-          <div class="text-xs text-gray-500">SSL protected & GDPR-aware</div>
-        </div>
-      </div>
-      <div class="flex items-center gap-4">
-        <img src="https://img.icons8.com/ios-filled/48/2563EB/medal.png" alt="licensed" class="w-10 h-10">
-        <div>
-          <div class="text-sm font-semibold">Licensed Provider</div>
-          <div class="text-xs text-gray-500">Registered with TIRA & local partners</div>
-        </div>
-      </div>
-      <div class="flex items-center gap-4">
-        <img src="https://img.icons8.com/ios-filled/48/FFB020/handshake.png" alt="support" class="w-10 h-10">
-        <div>
-          <div class="text-sm font-semibold">24/7 Digital Assistance</div>
-          <div class="text-xs text-gray-500">Instant quotes, PDF reports & WhatsApp support</div>
-        </div>
-      </div>
+    <!-- MOTOR CALCULATOR -->
+    <div class="tab-content active" id="motor">
+      <h2>Motor Insurance</h2>
+      <label>Vehicle Type</label>
+      <select id="motorType">
+        <option value="car">Car</option>
+        <option value="bodaboda">Bodaboda</option>
+        <option value="truck">Truck</option>
+      </select>
+      <label>Vehicle Value (TZS)</label>
+      <input type="number" id="motorValue" placeholder="Enter value">
+      <button onclick="calculateMotor()">Calculate</button>
+      <div class="result" id="motorResult"></div>
     </div>
-  </section>
 
-  <!-- MAIN GRID: Calculator + Benefits -->
-  <main class="max-w-6xl mx-auto px-6 grid lg:grid-cols-2 gap-8 pb-12">
+    <!-- HEALTH CALCULATOR -->
+    <div class="tab-content" id="health">
+      <h2>Health Insurance</h2>
+      <label>Age</label>
+      <input type="number" id="healthAge" placeholder="Enter age">
+      <label>Plan Type</label>
+      <select id="healthPlan">
+        <option value="basic">Basic</option>
+        <option value="comprehensive">Comprehensive</option>
+      </select>
+      <button onclick="calculateHealth()">Calculate</button>
+      <div class="result" id="healthResult"></div>
+    </div>
 
-    <!-- CALCULATOR COLUMN -->
-    <section id="calculator" class="bg-white p-6 rounded-xl shadow">
-      <div class="flex items-center justify-between">
-        <div>
-          <h2 class="text-2xl font-bold" style="color:var(--brand-500)">Premium Calculators</h2>
-          <p class="text-sm text-gray-600 mt-1">Switch between products (A2 navigation) — Motor, Health, Travel, Property.</p>
-        </div>
-        <!-- A2 product navigation pills -->
-        <div class="flex gap-2">
-          <div class="product-pill active" data-product="motor">Motor</div>
-          <div class="product-pill" data-product="health">Health</div>
-          <div class="product-pill" data-product="travel">Travel</div>
-          <div class="product-pill" data-product="property">Property</div>
-        </div>
-      </div>
+    <!-- TRAVEL CALCULATOR -->
+    <div class="tab-content" id="travel">
+      <h2>Travel Insurance</h2>
+      <label>Trip Duration (days)</label>
+      <input type="number" id="travelDays" placeholder="Enter days">
+      <label>Destination Risk Level</label>
+      <select id="travelRisk">
+        <option value="low">Low</option>
+        <option value="medium">Medium</option>
+        <option value="high">High</option>
+      </select>
+      <button onclick="calculateTravel()">Calculate</button>
+      <div class="result" id="travelResult"></div>
+    </div>
 
-      <div class="mt-6">
-        <!-- MOTOR calculator (keeps your existing layout and fields) -->
-        <div class="product-calculator" id="calc-motor">
-          <form id="calcFormMotor" class="space-y-4" onsubmit="return false;">
-            <div>
-              <label class="block text-sm font-medium text-gray-700">Vehicle Class</label>
-              <select id="vehicleClass" class="mt-1 block w-full border-gray-200 rounded-md p-2">
-                <option value="">-- Select --</option>
-                <option value="privateCar">Private Car</option>
-                <option value="motorcycle">Motorcycle (2-Wheelers)</option>
-                <option value="threeWheeler">Three Wheeler</option>
-                <option value="commercialGoods">Commercial Goods Vehicle</option>
-                <option value="trailer">Trailer</option>
-                <option value="oilTanker">Oil Tanker</option>
-                <option value="passengerVehicle">Passenger Vehicle</option>
-                <option value="specialVehicle">Special Type Vehicle</option>
-              </select>
-            </div>
-
-            <div>
-              <label class="block text-sm font-medium text-gray-700">Type of Cover</label>
-              <select id="coverType" class="mt-1 block w-full border-gray-200 rounded-md p-2">
-                <option value="">-- Select --</option>
-                <option value="comprehensive">Comprehensive</option>
-                <option value="tpo">Third Party Only (TPO)</option>
-              </select>
-            </div>
-
-            <div>
-              <label class="block text-sm font-medium text-gray-700">Sum Insured (TZS)</label>
-              <input id="sumInsured" type="number" placeholder="e.g., 10000000" class="mt-1 block w-full border-gray-200 rounded-md p-2" />
-            </div>
-
-            <div id="additionalFields" class="space-y-3 hidden">
-              <div>
-                <label class="block text-sm font-medium text-gray-700">Claim Record</label>
-                <select id="claimRecord" class="mt-1 block w-full border-gray-200 rounded-md p-2">
-                  <option value="no">No Claims</option>
-                  <option value="yes">With Claim Record</option>
-                </select>
-              </div>
-
-              <div id="seatField" class="hidden">
-                <label class="block text-sm font-medium text-gray-700">Number of Seats</label>
-                <input id="numSeats" type="number" value="1" min="1" class="mt-1 block w-full border-gray-200 rounded-md p-2" />
-              </div>
-
-              <div id="bodabodaField" class="hidden">
-                <label class="inline-flex items-center text-sm">
-                  <input id="bodabodaOption" type="checkbox" class="mr-2" />
-                  <span>Add Passenger (Bodaboda / Three-wheeler passenger)</span>
-                </label>
-              </div>
-
-              <div id="weightField" class="hidden">
-                <label class="block text-sm font-medium text-gray-700">Vehicle Weight (Tonnes)</label>
-                <input id="vehicleWeight" type="number" value="2" step="0.1" min="0" class="mt-1 block w-full border-gray-200 rounded-md p-2" />
-              </div>
-            </div>
-
-            <div class="flex gap-3">
-              <button type="button" id="calcBtn" class="flex-1 bg-[color:var(--brand-500)] hover:bg-[color:var(--brand-600)] text-white py-2 rounded">Calculate</button>
-              <button type="button" id="copyToLead" title="Copy to lead form" class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 py-2 rounded">Copy to Lead</button>
-            </div>
-
-            <div id="premiumResult" class="mt-4 hidden bg-gray-50 p-4 rounded">
-              <div class="text-sm text-gray-600">Base Premium: <span id="displayBase">—</span></div>
-              <div class="text-sm text-gray-600">VAT (18%): <span id="displayVAT">—</span></div>
-              <div class="text-lg font-semibold" style="color:var(--brand-500)">Total: <span id="displayTotal">—</span> TZS</div>
-              <div class="mt-3 flex gap-2">
-                <button id="downloadPDF" class="bg-[color:var(--brand-500)] hover:bg-[color:var(--brand-600)] text-white py-2 px-3 rounded">Download Quote (PDF)</button>
-                <button id="whatsappBtn" class="bg-green-500 hover:bg-green-600 text-white py-2 px-3 rounded">Contact via WhatsApp</button>
-              </div>
-            </div>
-            <p class="mt-3 text-xs text-gray-500">Tip: Use "Copy to Lead" to auto-fill the lead form with these values for faster submission.</p>
-          </form>
-        </div>
-
-        <!-- HEALTH calculator -->
-        <div class="product-calculator hidden" id="calc-health">
-          <form id="calcFormHealth" class="space-y-4" onsubmit="return false;">
-            <div>
-              <label class="block text-sm font-medium text-gray-700">Age</label>
-              <input id="healthAge" type="number" min="0" value="30" class="mt-1 block w-full border-gray-200 rounded-md p-2"/>
-            </div>
-            <div>
-              <label class="block text-sm font-medium text-gray-700">Plan Level</label>
-              <select id="healthPlan" class="mt-1 block w-full border-gray-200 rounded-md p-2">
-                <option value="basic">Basic</option>
-                <option value="standard">Standard</option>
-                <option value="premium">Premium</option>
-              </select>
-            </div>
-            <div>
-              <label class="block text-sm font-medium text-gray-700">Sum Insured (TZS)</label>
-              <input id="healthSum" type="number" placeholder="e.g., 5000000" class="mt-1 block w-full border-gray-200 rounded-md p-2" />
-            </div>
-            <div class="flex gap-3">
-              <button type="button" onclick="calculateHealth()" class="flex-1 bg-[color:var(--brand-500)] hover:bg-[color:var(--brand-600)] text-white py-2 rounded">Calculate</button>
-              <button type="button" onclick="copyHealthToLead()" class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 py-2 rounded">Copy to Lead</button>
-            </div>
-            <div id="healthResult" class="mt-4 hidden bg-gray-50 p-4 rounded">
-              <div class="text-sm text-gray-600">Base Premium: <span id="healthBase">—</span></div>
-              <div class="text-sm text-gray-600">VAT (18%): <span id="healthVAT">—</span></div>
-              <div class="text-lg font-semibold" style="color:var(--brand-500)">Total: <span id="healthTotal">—</span> TZS</div>
-              <div class="mt-3 flex gap-2">
-                <button onclick="downloadHealthPDF()" class="bg-[color:var(--brand-500)] hover:bg-[color:var(--brand-600)] text-white py-2 px-3 rounded">Download Quote (PDF)</button>
-                <button onclick="whatsappHealth()" class="bg-green-500 hover:bg-green-600 text-white py-2 px-3 rounded">Contact via WhatsApp</button>
-              </div>
-            </div>
-          </form>
-        </div>
-
-        <!-- TRAVEL calculator -->
-        <div class="product-calculator hidden" id="calc-travel">
-          <form id="calcFormTravel" class="space-y-4" onsubmit="return false;">
-            <div>
-              <label class="block text-sm font-medium text-gray-700">Trip Duration (days)</label>
-              <input id="travelDays" type="number" min="1" value="7" class="mt-1 block w-full border-gray-200 rounded-md p-2"/>
-            </div>
-            <div>
-              <label class="block text-sm font-medium text-gray-700">Trip Destination Type</label>
-              <select id="travelDest" class="mt-1 block w-full border-gray-200 rounded-md p-2">
-                <option value="regional">Regional</option>
-                <option value="international">International</option>
-              </select>
-            </div>
-            <div>
-              <label class="block text-sm font-medium text-gray-700">Number of Travelers</label>
-              <input id="travelPeople" type="number" min="1" value="1" class="mt-1 block w-full border-gray-200 rounded-md p-2"/>
-            </div>
-            <div class="flex gap-3">
-              <button type="button" onclick="calculateTravel()" class="flex-1 bg-[color:var(--brand-500)] hover:bg-[color:var(--brand-600)] text-white py-2 rounded">Calculate</button>
-              <button type="button" onclick="copyTravelToLead()" class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 py-2 rounded">Copy to Lead</button>
-            </div>
-            <div id="travelResult" class="mt-4 hidden bg-gray-50 p-4 rounded">
-              <div class="text-sm text-gray-600">Base Premium per person: <span id="travelBase">—</span></div>
-              <div class="text-sm text-gray-600">VAT (18%): <span id="travelVAT">—</span></div>
-              <div class="text-lg font-semibold" style="color:var(--brand-500)">Total: <span id="travelTotal">—</span> TZS</div>
-              <div class="mt-3 flex gap-2">
-                <button onclick="downloadTravelPDF()" class="bg-[color:var(--brand-500)] hover:bg-[color:var(--brand-600)] text-white py-2 px-3 rounded">Download Quote (PDF)</button>
-                <button onclick="whatsappTravel()" class="bg-green-500 hover:bg-green-600 text-white py-2 px-3 rounded">Contact via WhatsApp</button>
-              </div>
-            </div>
-          </form>
-        </div>
-
-        <!-- PROPERTY calculator -->
-        <div class="product-calculator hidden" id="calc-property">
-          <form id="calcFormProperty" class="space-y-4" onsubmit="return false;">
-            <div>
-              <label class="block text-sm font-medium text-gray-700">Property Value (TZS)</label>
-              <input id="propValue" type="number" placeholder="e.g., 100000000" class="mt-1 block w-full border-gray-200 rounded-md p-2"/>
-            </div>
-            <div>
-              <label class="block text-sm font-medium text-gray-700">Property Type</label>
-              <select id="propType" class="mt-1 block w-full border-gray-200 rounded-md p-2">
-                <option value="residential">Residential</option>
-                <option value="commercial">Commercial</option>
-              </select>
-            </div>
-            <div>
-              <label class="block text-sm font-medium text-gray-700">Fire Protection? (Yes/No)</label>
-              <select id="propFire" class="mt-1 block w-full border-gray-200 rounded-md p-2">
-                <option value="yes">Yes</option>
-                <option value="no">No</option>
-              </select>
-            </div>
-            <div class="flex gap-3">
-              <button type="button" onclick="calculateProperty()" class="flex-1 bg-[color:var(--brand-500)] hover:bg-[color:var(--brand-600)] text-white py-2 rounded">Calculate</button>
-              <button type="button" onclick="copyPropertyToLead()" class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 py-2 rounded">Copy to Lead</button>
-            </div>
-            <div id="propertyResult" class="mt-4 hidden bg-gray-50 p-4 rounded">
-              <div class="text-sm text-gray-600">Base Premium: <span id="propBase">—</span></div>
-              <div class="text-sm text-gray-600">VAT (18%): <span id="propVAT">—</span></div>
-              <div class="text-lg font-semibold" style="color:var(--brand-500)">Total: <span id="propTotal">—</span> TZS</div>
-              <div class="mt-3 flex gap-2">
-                <button onclick="downloadPropertyPDF()" class="bg-[color:var(--brand-500)] hover:bg-[color:var(--brand-600)] text-white py-2 px-3 rounded">Download Quote (PDF)</button>
-                <button onclick="whatsappProperty()" class="bg-green-500 hover:bg-green-600 text-white py-2 px-3 rounded">Contact via WhatsApp</button>
-              </div>
-            </div>
-          </form>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- RIGHT COLUMN: Trust, Testimonials, FAQ -->
-    <aside class="space-y-6">
-      <div class="bg-white p-4 rounded-xl shadow">
-        <h3 class="font-semibold text-lg" style="color:var(--brand-500)">Why choose Wolfguard?</h3>
-        <ul class="mt-3 space-y-2 text-sm text-gray-600">
-          <li>• Fast digital quotes & downloadable PDF</li>
-          <li>• Licensed & trusted locally</li>
-          <li>• 24/7 WhatsApp support for urgent cases</li>
-          <li>• Clear transparent premiums (VAT inclusive)</li>
-        </ul>
-      </div>
-
-      <div class="bg-white p-4 rounded-xl shadow">
-        <h3 class="font-semibold text-lg" style="color:var(--brand-500)">What clients say</h3>
-        <div id="testimonials" class="mt-3 relative">
-          <div class="testimonial-card p-4 rounded bg-gray-50" id="testiInner"></div>
-          <div class="mt-3 flex justify-center gap-2 text-sm text-gray-500">
-            <button id="prevTesti" class="px-2 py-1 rounded bg-gray-200">Prev</button>
-            <button id="nextTesti" class="px-2 py-1 rounded bg-gray-200">Next</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="bg-white p-4 rounded-xl shadow">
-        <h3 class="font-semibold text-lg" style="color:var(--brand-500)">Frequently asked</h3>
-        <div class="mt-3 space-y-2">
-          <button class="faq-q w-full text-left p-3 bg-gray-50 rounded">What documents are needed to make a claim?</button>
-          <div class="faq-a hidden p-3 text-sm text-gray-600">Copy of ID, police abstract, vehicle photos, and claim form — upload through our claim portal.</div>
-
-          <button class="faq-q w-full text-left p-3 bg-gray-50 rounded">How long until I receive policy documents?</button>
-          <div class="faq-a hidden p-3 text-sm text-gray-600">Once payment is confirmed, we email policy documents immediately as PDF.</div>
-
-          <button class="faq-q w-full text-left p-3 bg-gray-50 rounded">Is my data safe?</button>
-          <div class="faq-a hidden p-3 text-sm text-gray-600">Yes — we only use collected data for quote & service and keep it secure.</div>
-        </div>
-      </div>
-
-      <div class="bg-white p-4 rounded-xl shadow space-y-3">
-        <button onclick="openClaimModal()" class="w-full bg-red-600 hover:bg-red-700 text-white py-2 rounded">File a Claim</button>
-        <button onclick="openRenewModal()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-2 rounded">Renewal Reminder</button>
-      </div>
-    </aside>
-  </main>
-
-  <!-- LEAD FORM SECTION -->
-  <section id="contact" class="bg-white p-6 max-w-4xl mx-auto rounded-xl shadow mb-12">
-    <h2 class="text-2xl font-bold" style="color:var(--brand-500)">Get Your Free Insurance Quote</h2>
-    <p class="text-sm text-gray-600 mt-1">Complete the form and we’ll email your quote right away.</p>
-
-    <form id="leadForm" class="mt-4 space-y-3 max-w-xl" action="https://formspree.io/f/YOUR_FORMSPREE_ENDPOINT" method="POST">
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-        <input name="name" required placeholder="Full Name" class="p-2 border rounded" />
-        <input name="email" type="email" required placeholder="Email" class="p-2 border rounded" />
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-2">
-        <input name="phone" placeholder="Phone number" required class="p-2 border rounded" />
-        <input name="vehicleNumber" id="leadVehicleNumber" placeholder="Vehicle number (e.g. T123 ABC)" class="p-2 border rounded" />
-      </div>
-
-      <!-- Hidden fields -->
-      <input type="hidden" name="productType" id="leadProductType" />
-      <input type="hidden" name="vehicleClass" id="leadVehicleClass" />
-      <input type="hidden" name="coverType" id="leadCoverType" />
-      <input type="hidden" name="sumInsured" id="leadSumInsured" />
-      <input type="hidden" name="numSeats" id="leadNumSeats" />
-      <input type="hidden" name="bodaboda" id="leadBodaboda" />
-      <input type="hidden" name="vehicleWeight" id="leadVehicleWeight" />
-      <input type="hidden" name="basePremium" id="leadBasePremium" />
-      <input type="hidden" name="vatPremium" id="leadVatPremium" />
-      <input type="hidden" name="totalPremium" id="leadTotalPremium" />
-      <textarea name="message" rows="3" placeholder="Additional details (optional)" class="w-full p-2 border rounded"></textarea>
-
-      <div class="flex gap-3">
-        <button class="bg-[color:var(--brand-500)] hover:bg-[color:var(--brand-600)] text-white px-4 py-2 rounded" type="submit">Submit Lead</button>
-        <button type="button" class="bg-gray-200 px-4 py-2 rounded" onclick="clearLeadFields()">Clear</button>
-      </div>
-
-      <p class="text-xs text-gray-500 mt-2">We respect your privacy. Your details are kept confidential.</p>
-    </form>
-  </section>
-
-  <!-- CLAIM MODAL -->
-  <div id="claimModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
-    <div class="bg-white rounded-lg p-6 max-w-lg w-full">
-      <h3 class="text-lg font-semibold">File a Claim</h3>
-      <p class="text-sm text-gray-600">Upload incident details and photos — we'll contact you shortly.</p>
-
-      <form id="claimForm" action="https://formspree.io/f/YOUR_FORMSPREE_ENDPOINT" method="POST" enctype="multipart/form-data" class="mt-3 space-y-3">
-        <input name="claimName" required placeholder="Full Name" class="p-2 border rounded w-full" />
-        <input name="claimPhone" required placeholder="Phone number" class="p-2 border rounded w-full" />
-        <input name="claimEmail" type="email" required placeholder="Email" class="p-2 border rounded w-full" />
-        <input name="claimVehicleNumber" placeholder="Vehicle number" class="p-2 border rounded w-full" />
-        <textarea name="claimDetails" placeholder="Describe what happened" rows="4" class="p-2 border rounded w-full"></textarea>
-        <label class="block text-sm">Attach photo(s) (optional)</label>
-        <input type="file" name="photos" accept="image/*" multiple class="w-full" />
-        <div class="flex justify-end gap-2">
-          <button type="button" class="px-4 py-2 rounded bg-gray-200" onclick="closeClaimModal()">Cancel</button>
-          <button type="submit" class="px-4 py-2 rounded bg-red-600 text-white">Submit Claim</button>
-        </div>
-      </form>
+    <!-- PROPERTY CALCULATOR -->
+    <div class="tab-content" id="property">
+      <h2>Property Insurance</h2>
+      <label>Property Value (TZS)</label>
+      <input type="number" id="propertyValue" placeholder="Enter value">
+      <label>Property Type</label>
+      <select id="propertyType">
+        <option value="residential">Residential</option>
+        <option value="commercial">Commercial</option>
+      </select>
+      <button onclick="calculateProperty()">Calculate</button>
+      <div class="result" id="propertyResult"></div>
     </div>
   </div>
 
-  <!-- RENEWAL MODAL -->
-  <div id="renewModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
-    <div class="bg-white rounded-lg p-6 max-w-md w-full">
-      <h3 class="text-lg font-semibold mb-2">Renewal Reminder</h3>
-      <p class="text-sm text-gray-600 mb-3">Add your policy expiry date and we'll send you a reminder.</p>
-      <form id="renewForm" action="https://formspree.io/f/YOUR_FORMSPREE_ENDPOINT" method="POST" class="space-y-3">
-        <input name="renewName" placeholder="Full Name" required class="p-2 border rounded w-full" />
-        <input name="renewEmail" type="email" required placeholder="Email" class="p-2 border rounded w-full" />
-        <input name="renewVehicleNumber" placeholder="Vehicle number" class="p-2 border rounded w-full" />
-        <label class="block text-sm">Policy expiry date</label>
-        <input name="expiryDate" type="date" required class="p-2 border rounded w-full" />
-        <div class="flex justify-end gap-2">
-          <button type="button" class="px-4 py-2 rounded bg-gray-200" onclick="closeRenewModal()">Cancel</button>
-          <button type="submit" class="px-4 py-2 rounded bg-indigo-600 text-white">Save Reminder</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <!-- EXIT-INTENT MODAL -->
-  <div id="exitModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
-    <div class="bg-white rounded-lg p-6 max-w-md w-full text-center">
-      <h3 class="text-xl font-semibold" style="color:var(--brand-500)">Wait — get a quick quote before you go</h3>
-      <p class="text-sm text-gray-600 mt-2">We can email you an instant quote — no calls, no pressure.</p>
-      <div class="mt-4">
-        <input id="exitEmail" type="email" placeholder="Enter your email" class="p-2 border rounded w-full" />
-        <div class="mt-3 flex gap-2 justify-center">
-          <button class="px-4 py-2 rounded bg-green-600 text-white" onclick="sendExitEmail()">Send Quote</button>
-          <button class="px-4 py-2 rounded bg-gray-200" onclick="closeExitModal()">No thanks</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- STICKY CTA -->
-  <div class="sticky-cta">
-    <button onclick="scrollToCalc()" title="Get a Quote" class="bg-[color:var(--brand-500)] hover:bg-[color:var(--brand-600)] text-white px-4 py-3 rounded-full shadow-lg">Get Quote</button>
-  </div>
-
-  <!-- WHATSAPP FLOAT -->
-  <a id="whatsappFloat" href="#" target="_blank" class="fixed left-4 bottom-6 z-50" title="Chat on WhatsApp">
-    <img src="https://img.icons8.com/fluency/48/000000/whatsapp.png" alt="WhatsApp" />
-  </a>
-
-  <!-- THANK YOU MODAL -->
-  <div id="thankYouModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
-    <div class="bg-white rounded-lg p-6 max-w-sm w-full text-center">
-      <h3 class="text-xl font-semibold" style="color:var(--brand-500)">Thanks — We received your request</h3>
-      <p class="text-sm mt-2 text-gray-600">A copy has been sent to your email. Our team will contact you shortly.</p>
-      <div class="mt-4">
-        <button class="px-4 py-2 bg-[color:var(--brand-500)] text-white rounded" onclick="closeThankYou()">Close</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- SCRIPTS -->
   <script>
-    // ---------- Config: update these ----------
-    const FORMSPREE_ENDPOINT = 'YOUR_FORMSPREE_ENDPOINT'; // replace with your Formspree id
-    const WHATSAPP_NUMBER = '255769715177'; // international format
-    // ------------------------------------------
-
-    // Helpers
-    function buildWhatsAppLink(message) {
-      return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-    }
-    document.getElementById('whatsappFloat').href = buildWhatsAppLink('Hello Wolfguard, I need assistance with a quote.');
-
-    // Testimonials
-    const testimonials = [
-      { text: "Fast, clear and professional. My claim was handled smoothly.", name: "M. Komba" },
-      { text: "Saved me money and time — the online quote was accurate.", name: "A. Juma" },
-      { text: "Downloaded the PDF, showed it to my manager and we signed up.", name: "R. Mwakyusa" }
-    ];
-    let testiIndex = 0;
-    const testiInner = document.getElementById('testiInner');
-    function renderTestimonial(i){ testiInner.innerHTML = `<div class="text-sm text-gray-700 italic">"${testimonials[i].text}"</div><div class="mt-3 text-xs font-semibold text-gray-600">— ${testimonials[i].name}</div>`; }
-    renderTestimonial(0);
-    document.getElementById('nextTesti').addEventListener('click', ()=>{ testiIndex=(testiIndex+1)%testimonials.length; renderTestimonial(testiIndex); });
-    document.getElementById('prevTesti').addEventListener('click', ()=>{ testiIndex=(testiIndex-1+testimonials.length)%testimonials.length; renderTestimonial(testiIndex); });
-    setInterval(()=>{ testiIndex=(testiIndex+1)%testimonials.length; renderTestimonial(testiIndex); }, 7000);
-
-    // FAQ toggles
-    document.querySelectorAll('.faq-q').forEach(btn => btn.addEventListener('click', ()=> btn.nextElementSibling.classList.toggle('hidden')));
-
-    // Modals
-    function openClaimModal(){ document.getElementById('claimModal').classList.remove('hidden'); }
-    function closeClaimModal(){ document.getElementById('claimModal').classList.add('hidden'); }
-    function openRenewModal(){ document.getElementById('renewModal').classList.remove('hidden'); }
-    function closeRenewModal(){ document.getElementById('renewModal').classList.add('hidden'); }
-    function openExitModal(){ document.getElementById('exitModal').classList.remove('hidden'); }
-    function closeExitModal(){ document.getElementById('exitModal').classList.add('hidden'); }
-    function closeThankYou(){ document.getElementById('thankYouModal').classList.add('hidden'); }
-
-    document.addEventListener('mouseleave',(e)=>{ if(e.clientY<=0) openExitModal(); });
-
-    // Product navigation (A2)
-    const pills = document.querySelectorAll('.product-pill');
-    const calculators = document.querySelectorAll('.product-calculator');
-    function setActiveProduct(name){
-      pills.forEach(p=> p.classList.toggle('active', p.dataset.product===name));
-      calculators.forEach(c=> c.classList.toggle('hidden', c.id!=='calc-'+name));
-      // set productType hidden in lead form
-      document.getElementById('leadProductType').value = name;
-    }
-    pills.forEach(p => p.addEventListener('click', ()=> setActiveProduct(p.dataset.product)));
-    // default
-    setActiveProduct('motor');
-
-    // ========== MOTOR calculator logic (cleaned) ==========
-    const vehicleClassEl = document.getElementById('vehicleClass');
-    const coverTypeEl = document.getElementById('coverType');
-    const additionalFields = document.getElementById('additionalFields');
-    const seatField = document.getElementById('seatField');
-    const bodabodaField = document.getElementById('bodabodaField');
-    const weightField = document.getElementById('weightField');
-
-    function updateFields() {
-      const vc = vehicleClassEl.value, ct = coverTypeEl.value;
-      additionalFields.classList.add('hidden'); seatField.classList.add('hidden'); bodabodaField.classList.add('hidden'); weightField.classList.add('hidden');
-      if(!vc||!ct) return;
-      additionalFields.classList.remove('hidden');
-      if(vc==='passengerVehicle') seatField.classList.remove('hidden');
-      if((vc==='motorcycle'||vc==='threeWheeler')&&ct==='tpo') bodabodaField.classList.remove('hidden');
-      if(vc==='commercialGoods'&&ct==='tpo') weightField.classList.remove('hidden');
-    }
-    vehicleClassEl.addEventListener('change', updateFields);
-    coverTypeEl.addEventListener('change', updateFields);
-
-    function calculatePremium(){
-      const vehicleClass = vehicleClassEl.value;
-      const coverType = coverTypeEl.value;
-      const sumInsured = parseFloat(document.getElementById('sumInsured').value) || 0;
-      const claimRecord = document.getElementById('claimRecord') ? document.getElementById('claimRecord').value : 'no';
-      const numSeats = parseInt(document.getElementById('numSeats').value) || 0;
-      const bodaboda = document.getElementById('bodabodaOption').checked;
-      const weight = parseFloat(document.getElementById('vehicleWeight').value) || 0;
-      const VAT = 0.18;
-
-      if(!vehicleClass || !coverType || (coverType==='comprehensive' && (!sumInsured || sumInsured<=0))){
-        alert('Please select vehicle class, type of cover and enter a valid sum insured for comprehensive cover.');
-        return;
-      }
-
-      let base=0;
-      if(coverType==='comprehensive'){
-        switch(vehicleClass){
-          case 'privateCar':
-            base = sumInsured * (claimRecord==='no' ? 0.035 : 0.04);
-            if(base < 250000) base = 250000; break;
-          case 'motorcycle':
-            base = sumInsured * (claimRecord==='no' ? 0.05 : 0.06); if(bodaboda) base += 15000; if(base < 125000) base = 125000; break;
-          case 'threeWheeler':
-            base = sumInsured * (claimRecord==='no' ? 0.06 : 0.07); if(bodaboda) base += 45000; if(base < 125000) base = 125000; break;
-          case 'commercialGoods':
-            base = sumInsured * (claimRecord==='no' ? 0.0425 : 0.0475); if(base < 500000) base = 500000; break;
-          case 'trailer':
-            base = sumInsured * (claimRecord==='no' ? 0.04 : 0.0475); break;
-          case 'oilTanker':
-            base = sumInsured * 0.06; if(base < 2000000) base = 2000000; break;
-          case 'passengerVehicle':
-            base = sumInsured * (claimRecord==='no' ? 0.055 : 0.06); base += numSeats * 15000; if(base < 500000) base = 500000; break;
-          case 'specialVehicle':
-            base = sumInsured * 0.02; if(base < 250000) base = 250000; break;
-          default: base = 0;
-        }
-      } else if(coverType==='tpo'){
-        switch(vehicleClass){
-          case 'privateCar': base=100000; break;
-          case 'motorcycle': base=50000 + (bodaboda?15000:0); break;
-          case 'threeWheeler': base=75000 + (bodaboda?45000:0); break;
-          case 'commercialGoods':
-            if(weight<=2) base=150000; else if(weight<=5) base=200000; else if(weight<=10) base=250000; else base=300000; break;
-          case 'trailer': base=100000; break;
-          case 'oilTanker': base=750000; break;
-          case 'passengerVehicle': base=Math.max(150000,15000*numSeats); break;
-          case 'specialVehicle': base=100000; break;
-          default: base=0;
-        }
-      }
-
-      const vat = Math.round(base * VAT);
-      const total = Math.round(base + vat);
-
-      document.getElementById('displayBase').textContent = base.toLocaleString();
-      document.getElementById('displayVAT').textContent = vat.toLocaleString();
-      document.getElementById('displayTotal').textContent = total.toLocaleString();
-      document.getElementById('premiumResult').classList.remove('hidden');
-
-      const shortVehicle = vehicleClassEl.options[vehicleClassEl.selectedIndex].text;
-      const message = `Hello Wolfguard — I need a motor quote.
-Product: Motor
-Vehicle: ${shortVehicle}
-Cover: ${coverType==='comprehensive'?'Comprehensive':'Third Party'}
-Sum insured: ${sumInsured?sumInsured.toLocaleString():'N/A'}
-Total premium: TZS ${total.toLocaleString()}`;
-
-      document.getElementById('whatsappBtn').onclick = ()=> window.open(buildWhatsAppLink(message),'_blank');
-
-      document.getElementById('downloadPDF').onclick = ()=> downloadQuotePDF({
-        title:'Motor Quote',
-        items:[
-          ['Vehicle', shortVehicle],
-          ['Cover', coverType==='comprehensive'?'Comprehensive':'Third Party'],
-          ['Sum Insured', sumInsured?sumInsured.toLocaleString():'N/A'],
-          ['Base', base.toLocaleString()],
-          ['VAT (18%)', vat.toLocaleString()],
-          ['Total', total.toLocaleString()]
-        ]
+    // TAB SWITCHING
+    const tabs = document.querySelectorAll('.tab');
+    const contents = document.querySelectorAll('.tab-content');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        contents.forEach(c => c.classList.remove('active'));
+        document.getElementById(tab.dataset.tab).classList.add('active');
       });
-
-      window.lastCalc = { product:'motor', vehicleClass, coverType, sumInsured, numSeats, bodaboda: bodaboda?true:false, weight, base, vat, total };
-    }
-
-    document.getElementById('calcBtn').addEventListener('click', calculatePremium);
-    document.getElementById('copyToLead').addEventListener('click', ()=> {
-      if(!window.lastCalc){ alert('Please calculate first'); return; }
-      const c = window.lastCalc;
-      document.getElementById('leadProductType').value = 'motor';
-      document.getElementById('leadVehicleClass').value = c.vehicleClass||'';
-      document.getElementById('leadCoverType').value = c.coverType||'';
-      document.getElementById('leadSumInsured').value = c.sumInsured||'';
-      document.getElementById('leadNumSeats').value = c.numSeats||'';
-      document.getElementById('leadBodaboda').value = c.bodaboda?'yes':'no';
-      document.getElementById('leadVehicleWeight').value = c.weight||'';
-      document.getElementById('leadBasePremium').value = c.base||'';
-      document.getElementById('leadVatPremium').value = c.vat||'';
-      document.getElementById('leadTotalPremium').value = c.total||'';
-      document.getElementById('contact').scrollIntoView({behavior:'smooth'});
-      alert('Calculator values copied to lead form.');
     });
 
-    // PDF helper
-    function downloadQuotePDF(payload){
-      const { jsPDF } = window.jspdf;
-      const doc = new jsPDF();
-      doc.setFontSize(16);
-      doc.text('Wolfguard Insurance - Quote', 20, 20);
-      doc.setFontSize(11);
-      let y=36;
-      if(payload.title) { doc.text(payload.title, 20, y); y+=8; }
-      for(const [label, val] of payload.items){
-        doc.text(`${label}: ${val}`, 20, y); y+=8;
-      }
-      doc.save('wolfguard-quote.pdf');
+    // MOTOR CALCULATION LOGIC
+    function calculateMotor() {
+      const type = document.getElementById('motorType').value;
+      const value = parseFloat(document.getElementById('motorValue').value);
+      if(isNaN(value) || value<=0){ alert('Enter a valid value'); return; }
+      let premium = 0;
+      if(type==='car'){ premium = value*0.05; }
+      else if(type==='bodaboda'){ premium = value*0.03; }
+      else if(type==='truck'){ premium = value*0.06; }
+      document.getElementById('motorResult').innerText = `Premium: TZS ${premium.toLocaleString()}`;
     }
 
-    // ========== HEALTH calculator ==========
-    function calculateHealth(){
-      const age = parseInt(document.getElementById('healthAge').value) || 0;
+    // HEALTH CALCULATION LOGIC
+    function calculateHealth() {
+      const age = parseInt(document.getElementById('healthAge').value);
       const plan = document.getElementById('healthPlan').value;
-      const sum = parseFloat(document.getElementById('healthSum').value) || 0;
-      if(!sum || sum<=0){ alert('Enter valid sum insured'); return; }
-
-      // simple formula: base rate depends on plan; age loading
-      let rate = plan==='basic'?0.015 : plan==='standard'?0.02 : 0.03; // percent of sum
-      let ageLoading = age>50 ? 1.25 : (age>40?1.12:1.0);
-      let base = Math.round(sum * rate * ageLoading);
-      if(base < 50000) base = 50000;
-      const vat = Math.round(base * 0.18);
-      const total = base + vat;
-
-      document.getElementById('healthBase').textContent = base.toLocaleString();
-      document.getElementById('healthVAT').textContent = vat.toLocaleString();
-      document.getElementById('healthTotal').textContent = total.toLocaleString();
-      document.getElementById('healthResult').classList.remove('hidden');
-
-      window.lastCalc = { product:'health', age, plan, sum, base, vat, total };
-    }
-    function copyHealthToLead(){
-      if(!window.lastCalc || window.lastCalc.product!=='health'){ alert('Calculate health quote first'); return; }
-      const c = window.lastCalc;
-      document.getElementById('leadProductType').value = 'health';
-      document.getElementById('leadSumInsured').value = c.sum || '';
-      document.getElementById('leadBasePremium').value = c.base || '';
-      document.getElementById('leadVatPremium').value = c.vat || '';
-      document.getElementById('leadTotalPremium').value = c.total || '';
-      document.getElementById('contact').scrollIntoView({behavior:'smooth'});
-      alert('Health quote copied to lead form.');
-    }
-    function downloadHealthPDF(){
-      if(!window.lastCalc || window.lastCalc.product!=='health') return alert('No health quote ready');
-      const c = window.lastCalc;
-      downloadQuotePDF({ title:'Health Quote', items:[ ['Age', c.age], ['Plan', c.plan], ['Sum Insured', c.sum.toLocaleString()], ['Base', c.base.toLocaleString()], ['VAT (18%)', c.vat.toLocaleString()], ['Total', c.total.toLocaleString()] ]});
-    }
-    function whatsappHealth(){
-      if(!window.lastCalc || window.lastCalc.product!=='health') return alert('Calculate first');
-      const c = window.lastCalc;
-      const msg = `Hello Wolfguard — I need a health quote.
-Product: Health
-Plan: ${c.plan}
-Age: ${c.age}
-Sum Insured: ${c.sum.toLocaleString()}
-Premium: TZS ${c.total.toLocaleString()}`;
-      window.open(buildWhatsAppLink(msg), '_blank');
+      if(isNaN(age) || age<=0){ alert('Enter a valid age'); return; }
+      let premium = (plan==='basic') ? 50000 : 100000;
+      if(age>50){ premium *= 1.5; }
+      document.getElementById('healthResult').innerText = `Premium: TZS ${premium.toLocaleString()}`;
     }
 
-    // ========== TRAVEL calculator ==========
-    function calculateTravel(){
-      const days = parseInt(document.getElementById('travelDays').value) || 1;
-      const dest = document.getElementById('travelDest').value;
-      const people = parseInt(document.getElementById('travelPeople').value) || 1;
-
-      // base per person per day depending on destination
-      const perDayRate = dest==='regional' ? 3000 : 8000; // TZS
-      let basePerPerson = perDayRate * days;
-      // duration discount for long trips
-      if(days>30) basePerPerson *= 0.9;
-      basePerPerson = Math.round(basePerPerson);
-      const base = Math.round(basePerPerson * people);
-      const vat = Math.round(base * 0.18);
-      const total = base + vat;
-
-      document.getElementById('travelBase').textContent = basePerPerson.toLocaleString();
-      document.getElementById('travelVAT').textContent = vat.toLocaleString();
-      document.getElementById('travelTotal').textContent = total.toLocaleString();
-      document.getElementById('travelResult').classList.remove('hidden');
-
-      window.lastCalc = { product:'travel', days, dest, people, base, vat, total, basePerPerson };
-    }
-    function copyTravelToLead(){
-      if(!window.lastCalc || window.lastCalc.product!=='travel'){ alert('Calculate travel quote first'); return; }
-      const c = window.lastCalc;
-      document.getElementById('leadProductType').value = 'travel';
-      document.getElementById('leadBasePremium').value = c.base || '';
-      document.getElementById('leadVatPremium').value = c.vat || '';
-      document.getElementById('leadTotalPremium').value = c.total || '';
-      document.getElementById('contact').scrollIntoView({behavior:'smooth'});
-      alert('Travel quote copied to lead form.');
-    }
-    function downloadTravelPDF(){
-      if(!window.lastCalc || window.lastCalc.product!=='travel') return alert('No travel quote ready');
-      const c = window.lastCalc;
-      downloadQuotePDF({ title:'Travel Quote', items:[ ['Days', c.days], ['Destination', c.dest], ['People', c.people], ['Base per person (TZS)', c.basePerPerson.toLocaleString()], ['Total base', c.base.toLocaleString()], ['VAT (18%)', c.vat.toLocaleString()], ['Total', c.total.toLocaleString()] ]});
-    }
-    function whatsappTravel(){
-      if(!window.lastCalc || window.lastCalc.product!=='travel') return alert('Calculate first');
-      const c = window.lastCalc;
-      const msg = `Hello Wolfguard — I need a travel quote.
-Product: Travel
-Destination: ${c.dest}
-Days: ${c.days}
-People: ${c.people}
-Total Premium: TZS ${c.total.toLocaleString()}`;
-      window.open(buildWhatsAppLink(msg), '_blank');
+    // TRAVEL CALCULATION LOGIC
+    function calculateTravel() {
+      const days = parseInt(document.getElementById('travelDays').value);
+      const risk = document.getElementById('travelRisk').value;
+      if(isNaN(days) || days<=0){ alert('Enter valid days'); return; }
+      let base = 10000*days;
+      if(risk==='medium'){ base *= 1.2; }
+      else if(risk==='high'){ base *= 1.5; }
+      document.getElementById('travelResult').innerText = `Premium: TZS ${base.toLocaleString()}`;
     }
 
-    // ========== PROPERTY calculator ==========
-    function calculateProperty(){
-      const value = parseFloat(document.getElementById('propValue').value) || 0;
-      const type = document.getElementById('propType').value;
-      const fire = document.getElementById('propFire').value === 'yes';
-      if(!value || value<=0) { alert('Enter valid property value'); return; }
-
-      // simple percentage: residential 0.12% annual, commercial 0.2%. Fire protection discount
-      let rate = type==='residential'?0.0012:0.002;
-      let base = Math.round(value * rate);
-      if(fire) base = Math.round(base * 0.9);
-      const vat = Math.round(base * 0.18);
-      const total = base + vat;
-
-      document.getElementById('propBase').textContent = base.toLocaleString();
-      document.getElementById('propVAT').textContent = vat.toLocaleString();
-      document.getElementById('propTotal').textContent = total.toLocaleString();
-      document.getElementById('propertyResult').classList.remove('hidden');
-
-      window.lastCalc = { product:'property', value, type, fire, base, vat, total };
+    // PROPERTY CALCULATION LOGIC
+    function calculateProperty() {
+      const value = parseFloat(document.getElementById('propertyValue').value);
+      const type = document.getElementById('propertyType').value;
+      if(isNaN(value) || value<=0){ alert('Enter a valid value'); return; }
+      let premium = (type==='residential') ? value*0.04 : value*0.06;
+      document.getElementById('propertyResult').innerText = `Premium: TZS ${premium.toLocaleString()}`;
     }
-    function copyPropertyToLead(){
-      if(!window.lastCalc || window.lastCalc.product!=='property'){ alert('Calculate property quote first'); return; }
-      const c = window.lastCalc;
-      document.getElementById('leadProductType').value = 'property';
-      document.getElementById('leadBasePremium').value = c.base || '';
-      document.getElementById('leadVatPremium').value = c.vat || '';
-      document.getElementById('leadTotalPremium').value = c.total || '';
-      document.getElementById('contact').scrollIntoView({behavior:'smooth'});
-      alert('Property quote copied to lead form.');
-    }
-    function downloadPropertyPDF(){
-      if(!window.lastCalc || window.lastCalc.product!=='property') return alert('No property quote ready');
-      const c = window.lastCalc;
-      downloadQuotePDF({ title:'Property Quote', items:[ ['Property Value', c.value.toLocaleString()], ['Type', c.type], ['Fire Protect', c.fire?'Yes':'No'], ['Base', c.base.toLocaleString()], ['VAT (18%)', c.vat.toLocaleString()], ['Total', c.total.toLocaleString()] ]});
-    }
-    function whatsappProperty(){
-      if(!window.lastCalc || window.lastCalc.product!=='property') return alert('Calculate first');
-      const c = window.lastCalc;
-      const msg = `Hello Wolfguard — I need a property quote.
-Product: Property
-Type: ${c.type}
-Value: ${c.value.toLocaleString()}
-Total Premium: TZS ${c.total.toLocaleString()}`;
-      window.open(buildWhatsAppLink(msg), '_blank');
-    }
-
-    // Lead form submit (Formspree)
-    document.getElementById('leadForm').addEventListener('submit', async function(e){
-      e.preventDefault();
-      const form = e.target;
-      const fd = new FormData(form);
-      try{
-        const res = await fetch(form.action.replace('YOUR_FORMSPREE_ENDPOINT', FORMSPREE_ENDPOINT), { method:'POST', body: fd, headers:{ 'Accept':'application/json' }});
-        if(res.ok){
-          document.getElementById('thankYouModal').classList.remove('hidden');
-          form.reset();
-          setTimeout(()=> closeThankYou(), 5000);
-        } else {
-          alert('Submission failed. Please try again.');
-        }
-      }catch(err){
-        console.error(err);
-        alert('Error submitting lead. Check console.');
-      }
-    });
-
-    // Claim and renew forms same approach
-    document.getElementById('claimForm').addEventListener('submit', async function(e){
-      e.preventDefault();
-      const f = e.target;
-      const fd = new FormData(f);
-      try{
-        const r = await fetch(f.action.replace('YOUR_FORMSPREE_ENDPOINT', FORMSPREE_ENDPOINT), { method:'POST', body: fd, headers: { 'Accept':'application/json' }});
-        if(r.ok){ alert('Claim submitted. We will contact you.'); f.reset(); closeClaimModal(); }
-        else alert('Claim submission failed.');
-      }catch(err){ console.error(err); alert('Error sending claim.'); }
-    });
-    document.getElementById('renewForm').addEventListener('submit', async function(e){
-      e.preventDefault();
-      const f = e.target;
-      const fd = new FormData(f);
-      try{
-        const r = await fetch(f.action.replace('YOUR_FORMSPREE_ENDPOINT', FORMSPREE_ENDPOINT), { method:'POST', body: fd, headers: { 'Accept':'application/json' }});
-        if(r.ok){ alert('Renewal saved.'); f.reset(); closeRenewModal(); }
-        else alert('Failed to save renewal.');
-      }catch(err){ console.error(err); alert('Error saving renewal.'); }
-    });
-
-    // Exit modal send
-    function sendExitEmail(){
-      const email = document.getElementById('exitEmail').value;
-      if(!email) return alert('Enter email');
-      fetch(`https://formspree.io/f/${FORMSPREE_ENDPOINT}`, { method:'POST', body: JSON.stringify({ email }), headers:{ 'Content-Type':'application/json','Accept':'application/json' }})
-      .then(r=> { if(r.ok){ alert('Thanks — we will email you.'); closeExitModal(); } else alert('Failed to send.'); })
-      .catch(()=> alert('Error sending.'));
-    }
-
-    // Utility
-    function scrollToCalc(){ document.getElementById('calculator').scrollIntoView({behavior:'smooth'}); }
-    function clearLeadFields(){ document.getElementById('leadVehicleNumber').value=''; document.getElementById('leadForm').reset(); }
-    if(!FORMSPREE_ENDPOINT || FORMSPREE_ENDPOINT==='YOUR_FORMSPREE_ENDPOINT') console.warn('Set FORMSPREE_ENDPOINT constant to enable form submissions.');
-
-    // Auto-close thank you by clicking outside
-    document.getElementById('thankYouModal').addEventListener('click',(e)=>{ if(e.target.id==='thankYouModal') closeThankYou(); });
-
   </script>
 </body>
 </html>
